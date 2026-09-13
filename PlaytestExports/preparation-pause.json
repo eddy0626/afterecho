@@ -1,0 +1,9 @@
+{
+  "test": "pause during four-beat preparation",
+  "phase": "Paused",
+  "hitsStable": true,
+  "missesStable": true,
+  "musicStopped": true,
+  "countsStopped": true,
+  "time": 58.091782945736554
+}

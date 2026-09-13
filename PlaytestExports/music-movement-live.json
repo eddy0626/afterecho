@@ -1,0 +1,579 @@
+{
+  "state": "passed",
+  "checks": [
+    "PASS tutorial ends with music stopped",
+    "PASS ready screen does not consume music time",
+    "PASS main music and chart reset together to zero",
+    "PASS main starts with fresh counters",
+    "PASS count-in cannot cause misses or damage",
+    "PASS main begins at song opening",
+    "PASS pause freezes music and chart",
+    "PASS pause resets Feel movement pose",
+    "PASS four-beat resume preserves next note",
+    "PASS reduced motion keeps steps and suppresses movement effects",
+    "PASS reduced motion restores visual position",
+    "PASS unexpected audio stop pauses without unfair miss",
+    "PASS original song still playing at the final door",
+    "PASS real-time full-song run clears six encounters",
+    "PASS all notes resolve once across pause and interruption",
+    "PASS music reaches the stage ending at 136 seconds",
+    "PASS observed audio and DSP time stay within 150 ms",
+    "PASS Feel lift, body stretch, and afterimage observed in motion",
+    "PASS retry returns audio and counters to zero"
+  ],
+  "maxDrift": 0.021338568635684396,
+  "samples": [
+    {
+      "phase": "Playing",
+      "song": 0.14789147286830939,
+      "audio": 0.147891164,
+      "drift": 3.0904232062312076E-07,
+      "Misses": 0,
+      "Steps": 0
+    },
+    {
+      "phase": "Playing",
+      "song": 2.2598914728682757,
+      "audio": 2.2598865,
+      "drift": 4.9696486712491605E-06,
+      "Misses": 0,
+      "Steps": 0
+    },
+    {
+      "phase": "Playing",
+      "song": 4.3505581395348827,
+      "audio": 4.35054445,
+      "drift": 1.3686867646356404E-05,
+      "Misses": 0,
+      "Steps": 2
+    },
+    {
+      "phase": "Playing",
+      "song": 6.3558914728682794,
+      "audio": 6.35589552,
+      "drift": 4.0463883124175481E-06,
+      "Misses": 0,
+      "Steps": 5
+    },
+    {
+      "phase": "Playing",
+      "song": 8.3612248062015624,
+      "audio": 8.361224,
+      "drift": 6.3170205066853669E-07,
+      "Misses": 0,
+      "Steps": 9
+    },
+    {
+      "phase": "Playing",
+      "song": 10.451891472868283,
+      "audio": 10.4518824,
+      "drift": 9.1105025603610557E-06,
+      "Misses": 0,
+      "Steps": 13
+    },
+    {
+      "phase": "Playing",
+      "song": 12.54255813953489,
+      "audio": 12.5638771,
+      "drift": 1.8542977272772987E-05,
+      "Misses": 0,
+      "Steps": 17
+    },
+    {
+      "phase": "Playing",
+      "song": 14.65455813953497,
+      "audio": 14.6545582,
+      "drift": 4.2227725316479336E-08,
+      "Misses": 0,
+      "Steps": 19
+    },
+    {
+      "phase": "Playing",
+      "song": 16.766558139534936,
+      "audio": 16.7665539,
+      "drift": 4.2607507566572167E-06,
+      "Misses": 0,
+      "Steps": 22
+    },
+    {
+      "phase": "Playing",
+      "song": 18.857224806201543,
+      "audio": 18.85721,
+      "drift": 1.4646899785475398E-05,
+      "Misses": 0,
+      "Steps": 24
+    },
+    {
+      "phase": "Playing",
+      "song": 20.1997829457365,
+      "audio": 20.1997738,
+      "drift": 9.1572843530229875E-06,
+      "Misses": 0,
+      "Steps": 27
+    },
+    {
+      "phase": "Playing",
+      "song": 22.290449612403222,
+      "audio": 22.29043,
+      "drift": 1.9543433495528006E-05,
+      "Misses": 0,
+      "Steps": 31
+    },
+    {
+      "phase": "Playing",
+      "song": 24.295782945736505,
+      "audio": 24.29576,
+      "drift": 2.3744686700410966E-05,
+      "Misses": 0,
+      "Steps": 34
+    },
+    {
+      "phase": "Playing",
+      "song": 26.301116279069902,
+      "audio": 26.3011112,
+      "drift": 5.0577564252307639E-06,
+      "Misses": 0,
+      "Steps": 36
+    },
+    {
+      "phase": "Playing",
+      "song": 28.306449612403185,
+      "audio": 28.30644,
+      "drift": 9.2590096301137237E-06,
+      "Misses": 0,
+      "Steps": 36
+    },
+    {
+      "phase": "Playing",
+      "song": 30.397116279069905,
+      "audio": 30.3970966,
+      "drift": 1.9645158772618743E-05,
+      "Misses": 0,
+      "Steps": 40
+    },
+    {
+      "phase": "Playing",
+      "song": 32.402449612403188,
+      "audio": 32.4024277,
+      "drift": 2.1939063344689202E-05,
+      "Misses": 0,
+      "Steps": 44
+    },
+    {
+      "phase": "Playing",
+      "song": 34.407782945736585,
+      "audio": 34.4077568,
+      "drift": 2.6140316663259E-05,
+      "Misses": 0,
+      "Steps": 48
+    },
+    {
+      "phase": "Playing",
+      "song": 36.498449612403192,
+      "audio": 36.498436,
+      "drift": 1.3638282098327181E-05,
+      "Misses": 0,
+      "Steps": 51
+    },
+    {
+      "phase": "Playing",
+      "song": 38.589116279069913,
+      "audio": 38.5890923,
+      "drift": 2.40244312408322E-05,
+      "Misses": 0,
+      "Steps": 57
+    },
+    {
+      "phase": "Playing",
+      "song": 40.701116279069879,
+      "audio": 40.701088,
+      "drift": 2.8327409722805896E-05,
+      "Misses": 0,
+      "Steps": 61
+    },
+    {
+      "phase": "Playing",
+      "song": 42.706449612403162,
+      "audio": 42.70644,
+      "drift": 9.6404793339388561E-06,
+      "Misses": 0,
+      "Steps": 66
+    },
+    {
+      "phase": "Playing",
+      "song": 44.797116279069883,
+      "audio": 44.7970963,
+      "drift": 2.0026628476443875E-05,
+      "Misses": 0,
+      "Steps": 70
+    },
+    {
+      "phase": "Playing",
+      "song": 46.802449612403166,
+      "audio": 46.8024254,
+      "drift": 2.4227881681326835E-05,
+      "Misses": 0,
+      "Steps": 75
+    },
+    {
+      "phase": "Playing",
+      "song": 48.829116279069922,
+      "audio": 48.8290939,
+      "drift": 2.2345964453052147E-05,
+      "Misses": 0,
+      "Steps": 79
+    },
+    {
+      "phase": "Playing",
+      "song": 49.85989147286827,
+      "audio": 49.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 81
+    },
+    {
+      "phase": "Playing",
+      "song": 51.843891472868194,
+      "audio": 51.8438759,
+      "drift": 1.5587858428034451E-05,
+      "Misses": 0,
+      "Steps": 81
+    },
+    {
+      "phase": "Playing",
+      "song": 53.84922480620159,
+      "audio": 53.8492279,
+      "drift": 3.0990718471457512E-06,
+      "Misses": 0,
+      "Steps": 83
+    },
+    {
+      "phase": "Playing",
+      "song": 55.854558139534873,
+      "audio": 55.854557,
+      "drift": 1.1021813577372086E-06,
+      "Misses": 0,
+      "Steps": 86
+    },
+    {
+      "phase": "Playing",
+      "song": 57.85989147286827,
+      "audio": 57.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 90
+    },
+    {
+      "phase": "Playing",
+      "song": 59.865224806201553,
+      "audio": 59.8652153,
+      "drift": 9.504687881189966E-06,
+      "Misses": 0,
+      "Steps": 95
+    },
+    {
+      "phase": "Playing",
+      "song": 61.84922480620159,
+      "audio": 61.849205,
+      "drift": 1.9789111746604249E-05,
+      "Misses": 0,
+      "Steps": 99
+    },
+    {
+      "phase": "Playing",
+      "song": 63.854558139534873,
+      "audio": 63.854557,
+      "drift": 1.1021813577372086E-06,
+      "Misses": 0,
+      "Steps": 103
+    },
+    {
+      "phase": "Playing",
+      "song": 65.85989147286827,
+      "audio": 65.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 106
+    },
+    {
+      "phase": "Playing",
+      "song": 67.865224806201553,
+      "audio": 67.86522,
+      "drift": 5.689990615564966E-06,
+      "Misses": 0,
+      "Steps": 111
+    },
+    {
+      "phase": "Playing",
+      "song": 69.84922480620159,
+      "audio": 69.849205,
+      "drift": 1.9789111746604249E-05,
+      "Misses": 0,
+      "Steps": 114
+    },
+    {
+      "phase": "Playing",
+      "song": 71.854558139534873,
+      "audio": 71.85456,
+      "drift": 2.7125159078877914E-06,
+      "Misses": 0,
+      "Steps": 119
+    },
+    {
+      "phase": "Playing",
+      "song": 73.85989147286827,
+      "audio": 73.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 124
+    },
+    {
+      "phase": "Playing",
+      "song": 75.865224806201553,
+      "audio": 75.86522,
+      "drift": 5.689990615564966E-06,
+      "Misses": 0,
+      "Steps": 125
+    },
+    {
+      "phase": "Playing",
+      "song": 77.87055813953495,
+      "audio": 77.8705444,
+      "drift": 1.3705941199759764E-05,
+      "Misses": 0,
+      "Steps": 126
+    },
+    {
+      "phase": "Playing",
+      "song": 79.854558139534873,
+      "audio": 79.85456,
+      "drift": 2.7125159078877914E-06,
+      "Misses": 0,
+      "Steps": 129
+    },
+    {
+      "phase": "Playing",
+      "song": 81.85989147286827,
+      "audio": 81.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 133
+    },
+    {
+      "phase": "Playing",
+      "song": 83.865224806201553,
+      "audio": 83.86522,
+      "drift": 5.689990615564966E-06,
+      "Misses": 0,
+      "Steps": 137
+    },
+    {
+      "phase": "Playing",
+      "song": 85.87055813953495,
+      "audio": 85.8705444,
+      "drift": 1.3705941199759764E-05,
+      "Misses": 0,
+      "Steps": 142
+    },
+    {
+      "phase": "Playing",
+      "song": 87.854558139534873,
+      "audio": 87.85456,
+      "drift": 2.7125159078877914E-06,
+      "Misses": 0,
+      "Steps": 146
+    },
+    {
+      "phase": "Playing",
+      "song": 89.85989147286827,
+      "audio": 89.8598862,
+      "drift": 5.3034346763070062E-06,
+      "Misses": 0,
+      "Steps": 149
+    },
+    {
+      "phase": "Playing",
+      "song": 91.865224806201553,
+      "audio": 91.86522,
+      "drift": 5.689990615564966E-06,
+      "Misses": 0,
+      "Steps": 154
+    },
+    {
+      "phase": "Playing",
+      "song": 93.87055813953495,
+      "audio": 93.8705444,
+      "drift": 1.3705941199759764E-05,
+      "Misses": 0,
+      "Steps": 157
+    },
+    {
+      "phase": "Playing",
+      "song": 95.854558139534873,
+      "audio": 95.85456,
+      "drift": 2.7125159078877914E-06,
+      "Misses": 0,
+      "Steps": 157
+    },
+    {
+      "phase": "Playing",
+      "song": 97.881224806201629,
+      "audio": 97.8812256,
+      "drift": 7.7973587053747906E-07,
+      "Misses": 0,
+      "Steps": 161
+    },
+    {
+      "phase": "Playing",
+      "song": 99.886558139534912,
+      "audio": 99.88655,
+      "drift": 7.2362145999704808E-06,
+      "Misses": 0,
+      "Steps": 164
+    },
+    {
+      "phase": "Playing",
+      "song": 101.87055813953495,
+      "audio": 101.891884,
+      "drift": 0.02132571056270649,
+      "Misses": 0,
+      "Steps": 169
+    },
+    {
+      "phase": "Playing",
+      "song": 103.87589147286823,
+      "audio": 103.87587,
+      "drift": 2.1721891670267723E-05,
+      "Misses": 0,
+      "Steps": 172
+    },
+    {
+      "phase": "Playing",
+      "song": 105.88122480620163,
+      "audio": 105.881226,
+      "drift": 7.7973587053747906E-07,
+      "Misses": 0,
+      "Steps": 175
+    },
+    {
+      "phase": "Playing",
+      "song": 107.88655813953491,
+      "audio": 107.886551,
+      "drift": 7.2362145999704808E-06,
+      "Misses": 0,
+      "Steps": 179
+    },
+    {
+      "phase": "Playing",
+      "song": 109.8918914728682,
+      "audio": 109.891884,
+      "drift": 7.6227705392284406E-06,
+      "Misses": 0,
+      "Steps": 182
+    },
+    {
+      "phase": "Playing",
+      "song": 111.87589147286823,
+      "audio": 111.87587,
+      "drift": 2.1721891670267723E-05,
+      "Misses": 0,
+      "Steps": 185
+    },
+    {
+      "phase": "Playing",
+      "song": 113.88122480620163,
+      "audio": 113.881226,
+      "drift": 7.7973587053747906E-07,
+      "Misses": 0,
+      "Steps": 185
+    },
+    {
+      "phase": "Playing",
+      "song": 115.88655813953491,
+      "audio": 115.886551,
+      "drift": 7.2362145999704808E-06,
+      "Misses": 0,
+      "Steps": 186
+    },
+    {
+      "phase": "Playing",
+      "song": 117.8918914728682,
+      "audio": 117.891884,
+      "drift": 7.6227705392284406E-06,
+      "Misses": 0,
+      "Steps": 189
+    },
+    {
+      "phase": "Playing",
+      "song": 119.89722480620159,
+      "audio": 119.897209,
+      "drift": 1.5638721123423238E-05,
+      "Misses": 0,
+      "Steps": 194
+    },
+    {
+      "phase": "Playing",
+      "song": 121.88122480620163,
+      "audio": 121.881226,
+      "drift": 7.7973587053747906E-07,
+      "Misses": 0,
+      "Steps": 198
+    },
+    {
+      "phase": "Playing",
+      "song": 123.88655813953491,
+      "audio": 123.886551,
+      "drift": 7.2362145999704808E-06,
+      "Misses": 0,
+      "Steps": 201
+    },
+    {
+      "phase": "Playing",
+      "song": 125.8918914728682,
+      "audio": 125.891884,
+      "drift": 7.6227705392284406E-06,
+      "Misses": 0,
+      "Steps": 202
+    },
+    {
+      "phase": "Playing",
+      "song": 127.89722480620148,
+      "audio": 127.897209,
+      "drift": 1.56387210097364E-05,
+      "Misses": 0,
+      "Steps": 203
+    },
+    {
+      "phase": "Playing",
+      "song": 129.902558139535,
+      "audio": 129.902542,
+      "drift": 1.6025277176368036E-05,
+      "Misses": 0,
+      "Steps": 208
+    },
+    {
+      "phase": "Playing",
+      "song": 131.88655813953491,
+      "audio": 131.886551,
+      "drift": 7.2362145999704808E-06,
+      "Misses": 0,
+      "Steps": 212
+    },
+    {
+      "phase": "Playing",
+      "song": 133.8918914728682,
+      "audio": 133.891876,
+      "drift": 1.5252165070478441E-05,
+      "Misses": 0,
+      "Steps": 215
+    },
+    {
+      "phase": "Playing",
+      "song": 135.89722480620148,
+      "audio": 135.897217,
+      "drift": 8.0093264784864E-06,
+      "Misses": 0,
+      "Steps": 215
+    }
+  ]
+}

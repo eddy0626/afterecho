@@ -1,0 +1,22 @@
+* text=auto
+*.cs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.uss text eol=lf
+*.uxml text eol=lf
+*.meta text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.psd binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.m4a binary
+*.otf binary
+*.ttf binary
+*.dll binary
+*.fbx binary
+*.unitypackage binary

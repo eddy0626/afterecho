@@ -1,0 +1,15 @@
+{
+  "test": "CSV export then native UI edit and JSON save",
+  "file": "easy-edited-20260913-002841.json",
+  "firstTime": 3.24763,
+  "lastEdit": {
+    "noteId": "AI-easy-0008",
+    "action": "shift",
+    "originalTime": 3.24263,
+    "revisedTime": 3.24763,
+    "reason": "playtest timing adjustment",
+    "timestampUtc": "2026-09-12T15:28:40.7779960Z",
+    "reviewStatus": "team_pending"
+  },
+  "passed": true
+}

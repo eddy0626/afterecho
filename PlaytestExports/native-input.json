@@ -1,0 +1,50 @@
+{
+  "snapshot": {
+    "phase": "Paused",
+    "time": 57.595334806201549,
+    "status": "Running",
+    "health": 3,
+    "Hits": 1,
+    "Misses": 84,
+    "Extras": 2,
+    "Combo": 0,
+    "Best": 1,
+    "Kills": 0,
+    "Steps": 1,
+    "Score": 100,
+    "difficulty": "easy",
+    "audio": false,
+    "pitch": 1.0,
+    "autoPlay": false,
+    "activeTweens": 0
+  },
+  "inputs": [
+    {
+      "time": 18.079319544299665,
+      "targetTime": -1.0,
+      "error": 0.0,
+      "window": 0.0,
+      "noteId": "",
+      "result": "extra",
+      "source": "Keyboard"
+    },
+    {
+      "time": 18.113349378883015,
+      "targetTime": 18.188662,
+      "error": -0.075312621116985667,
+      "window": 0.1,
+      "noteId": "AI-easy-0040",
+      "result": "hit",
+      "source": "Keyboard"
+    },
+    {
+      "time": 18.145022671340939,
+      "targetTime": -1.0,
+      "error": 0.0,
+      "window": 0.0,
+      "noteId": "",
+      "result": "extra",
+      "source": "Keyboard"
+    }
+  ]
+}

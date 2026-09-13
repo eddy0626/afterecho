@@ -1,0 +1,27 @@
+{
+  "test": "section 24-25 seconds loops with a fresh four-beat lead-in",
+  "snapshot": {
+    "phase": "Playing",
+    "time": 24.147891472868196,
+    "status": "Running",
+    "health": 5,
+    "Hits": 0,
+    "Misses": 0,
+    "Extras": 0,
+    "Combo": 0,
+    "Best": 0,
+    "Kills": 0,
+    "Steps": 0,
+    "Score": 0,
+    "difficulty": "easy",
+    "audio": true,
+    "pitch": 1.0,
+    "autoPlay": true,
+    "activeTweens": 0
+  },
+  "loop": true,
+  "loopStart": 24.0,
+  "loopEnd": 25.0,
+  "scheduledStart": 1382.4014418604652,
+  "passed": true
+}

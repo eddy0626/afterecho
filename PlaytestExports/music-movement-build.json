@@ -1,0 +1,10 @@
+{
+  "result": "Succeeded",
+  "outputPath": "/Users/youngbum/musicgame/Builds/Afterecho_WebGL_Movement_20260913",
+  "totalSizeBytes": 30443912,
+  "buildTimeMs": 213831,
+  "totalWarnings": 545,
+  "totalErrors": 0,
+  "zipBytes": 30337980,
+  "zipSHA256": "1c1ddca30d67e6beb7e447220f0c195c10373b27853db3ee65521f8e460f8257"
+}

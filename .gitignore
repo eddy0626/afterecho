@@ -1,0 +1,57 @@
+# Unity-generated local state
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+/Temp_Backups/
+/Data/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+/Assets/_Recovery/
+/Assets/_Recovery.meta
+/Assets/StreamingAssets/aa/
+/Assets/StreamingAssets/aa.meta
+
+# Editor, OS and command-line session files
+.DS_Store
+.DS_Store.meta
+Thumbs.db
+.idea/
+.vs/
+.vscode/
+.consulo/
+*.csproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.opendb
+*.VC.db
+*.booproj
+*.tmp
+*.log
+.unity/
+.codex/
+.pipeline/
+
+# Local credentials / signing material
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.mobileprovision
+
+# Root-level build packages (keep imported vendor assets under Assets)
+/*.zip
+/*.unitypackage
+/*.apk
+/*.aab

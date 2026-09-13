@@ -1,0 +1,24 @@
+{
+  "version": "0.2.2-movement.20260913",
+  "url": "https://play.unity.com/en/games/cc1a30d0-6ce8-46ae-90f4-9dab209b3d83/afterecho-0913",
+  "cdnBuildId": "367a5b68-39b0-475a-97f1-f8bf5168e5e8",
+  "visibility": "Unlisted",
+  "checks": [
+    "new title and description published",
+    "new ZIP uploaded successfully",
+    "fresh game load without Unity login",
+    "new practice-complete text and four-beat main start",
+    "keyboard movement and score updates",
+    "full stage reached STAGE 01 CLEAR at 100 percent",
+    "returned to main menu with zero score and stopped music"
+  ],
+  "browserResult": {
+    "score": 9000,
+    "bestCombo": 2,
+    "misses": 162,
+    "extras": 218,
+    "kills": 2,
+    "damage": 4
+  },
+  "note": "Browser test used periodic keyboard input with idle inspection gaps; it is an endpoint/flow check, not a musical difficulty review. Editor deterministic autoplay passed all notes with zero misses. Physical speaker/audio latency was not measured. Existing unsupported FSR upscaling warning remains; no new-build runtime errors observed."
+}

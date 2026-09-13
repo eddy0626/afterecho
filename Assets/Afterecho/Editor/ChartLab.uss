@@ -1,0 +1,12 @@
+.lab { padding: 12px; background-color: #152021; flex-grow: 1; }
+.heading { font-size: 22px; color: #bae3d8; margin-bottom: 10px; }
+.notice { white-space: normal; color: #a4b8b3; margin-bottom: 8px; }
+.toolbar { flex-direction: row; flex-wrap: wrap; margin-bottom: 8px; }
+.toolbar > * { margin-right: 8px; }
+.note-row { flex-direction: row; min-height: 30px; border-bottom-width: 1px; border-bottom-color: #2b3c3d; }
+.note-id { width: 155px; align-self: center; }
+.note-time { width: 130px; }
+.note-meta { width: 240px; align-self: center; }
+.note-action { width: 48px; }
+.notes { flex-grow: 1; }
+.status { white-space: normal; margin-top: 6px; color: #c7d8cc; }

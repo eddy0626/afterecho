@@ -1,0 +1,24 @@
+{
+  "game": {
+    "phase": "Result",
+    "time": 136.3623410852714,
+    "status": "Won",
+    "health": 5,
+    "Hits": 235,
+    "Misses": 0,
+    "Extras": 0,
+    "Combo": 235,
+    "Best": 235,
+    "Kills": 6,
+    "Steps": 198,
+    "Score": 88700,
+    "difficulty": "easy",
+    "audio": false,
+    "pitch": 1.0,
+    "autoPlay": true,
+    "activeTweens": 0
+  },
+  "passed": true,
+  "notes": 252,
+  "runtimeAudioBytes": 26184929
+}
