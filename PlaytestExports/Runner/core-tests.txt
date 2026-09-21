@@ -1,4 +1,35 @@
-101 checks passed
+138 checks passed
+PASS lab rejects invalid maxWindow -0.1
+PASS playback rejects invalid maxWindow -0.1
+PASS lab rejects invalid maxWindow 0
+PASS playback rejects invalid maxWindow 0
+PASS lab rejects invalid maxWindow NaN
+PASS playback rejects invalid maxWindow NaN
+PASS lab rejects invalid maxWindow Infinity
+PASS playback rejects invalid maxWindow Infinity
+PASS lab rejects invalid maxWindow -Infinity
+PASS playback rejects invalid maxWindow -Infinity
+PASS JSON loader rejects negative maxWindow
+PASS JSON loader rejects missing required fields
+PASS JSON loader rejects empty document
+PASS validator rejects null document
+PASS required fields and rule safety case 0
+PASS required fields and rule safety case 1
+PASS required fields and rule safety case 2
+PASS required fields and rule safety case 3
+PASS required fields and rule safety case 4
+PASS required fields and rule safety case 5
+PASS required fields and rule safety case 6
+PASS required fields and rule safety case 7
+PASS required fields and rule safety case 8
+PASS required fields and rule safety case 9
+PASS required fields and rule safety case 10
+PASS required fields and rule safety case 11
+PASS required fields and rule safety case 12
+PASS required fields and rule safety case 13
+PASS required fields and rule safety case 14
+PASS required fields and rule safety case 15
+PASS required fields and rule safety case 16
 PASS easy density, IDs, duration, four-hit recovery
 PASS easy inclusive boundary -1
 PASS easy outside boundary -1
@@ -22,6 +53,8 @@ PASS easy 20Hz spam loses
 PASS easy old door does not end runner
 PASS easy full song autoplay wins
 PASS easy completion once
+PASS easy audible tail defers completion
+PASS easy audible tail release completes exactly once
 PASS easy invincible completion
 PASS easy safe tutorial no damage
 PASS easy safe resume pending note
@@ -50,6 +83,8 @@ PASS normal 20Hz spam loses
 PASS normal old door does not end runner
 PASS normal full song autoplay wins
 PASS normal completion once
+PASS normal audible tail defers completion
+PASS normal audible tail release completes exactly once
 PASS normal invincible completion
 PASS normal safe tutorial no damage
 PASS normal safe resume pending note
@@ -78,6 +113,8 @@ PASS hard 20Hz spam loses
 PASS hard old door does not end runner
 PASS hard full song autoplay wins
 PASS hard completion once
+PASS hard audible tail defers completion
+PASS hard audible tail release completes exactly once
 PASS hard invincible completion
 PASS hard safe tutorial no damage
 PASS hard safe resume pending note

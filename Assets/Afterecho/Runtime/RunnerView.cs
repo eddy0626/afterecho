@@ -39,6 +39,7 @@ namespace Afterecho
         float messageUntil,impactUntil,ghostAt;
         bool boosted;
         MMF_Player hitFeel,hpFeel,boostFeel,fallFeel;
+        Tween stumbleTween;
         UnityEngine.UI.Image[] ghosts;
         float[] ghostEnd;
         UnityEngine.UI.Image[] dust;
@@ -249,20 +250,31 @@ namespace Afterecho
                 if(!e.practice)Play(hpFeel);
             }
             if(e.kind=="extra")
-            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);if(!game.reducedMotion)runnerImage.rectTransform.DOPunchRotation(new Vector3(0,0,-9),.12f,3).SetUpdate(true).SetId(this);if(!e.practice)Play(hpFeel);}
+            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);if(!game.reducedMotion)PlayStumble();if(!e.practice)Play(hpFeel);}
             if(e.kind=="won")Sound(clearSound,.65f);
+        }
+        void PlayStumble()
+        {
+            // Restart from the resting pose, never from another punch's in-flight angle.
+            StopStumble();
+            stumbleTween=runnerImage.rectTransform.DOPunchRotation(new Vector3(0,0,-9),.12f,3)
+                .SetUpdate(true).OnKill(()=>stumbleTween=null);
+        }
+        void StopStumble()
+        {
+            stumbleTween?.Kill();stumbleTween=null;
+            runnerImage.rectTransform.localRotation=Quaternion.identity;
         }
         void Sound(AudioClip clip,float volume){if(clip!=null)effects.PlayOneShot(clip,volume);}
         void Message(string text,Color c,float duration){status.text=text;status.color=c;messageUntil=Time.unscaledTime+duration;}
         public void StopFeedback()
         {
-            DOTween.Kill(this);
+            StopStumble();
             if(dust!=null)foreach(var d in dust)d.gameObject.SetActive(false);
             if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);
             foreach(var p in new[]{hitFeel,hpFeel,boostFeel,fallFeel})if(p!=null){p.StopFeedbacks();p.RestoreInitialValues();}
             if(ghosts!=null)foreach(var g in ghosts)g.gameObject.SetActive(false);
             if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);
-            runnerImage.rectTransform.localRotation=Quaternion.identity;
             judge.localScale=healthRoot.localScale=runnerVisual.localScale=Vector3.one;
             runnerVisual.localRotation=Quaternion.identity;hitRing.gameObject.SetActive(false);
         }

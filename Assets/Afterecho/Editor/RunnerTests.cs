@@ -11,10 +11,18 @@ namespace Afterecho.Editor
  {
   static readonly List<string> rows=new List<string>();
   static void Check(bool p,string msg){if(!p)throw new Exception("FAIL "+msg);rows.Add("PASS "+msg);}
+  static void Rejected(Action action,string message)
+  {
+   try{action();}catch(FormatException){Check(true,message);return;}
+   throw new Exception("FAIL "+message+": invalid data was accepted");
+  }
   public static void ValidateChart(ChartData c,StageData s)
   {
+   ChartValidation.Validate(c);
    if(c.format!="afterecho-chart-v1"||c.gameplayMode!="runner"||c.notes.Length<24)throw new Exception("Invalid runner chart");
-   if(c.song.id!=ChartData.Load(Resources.Load<TextAsset>("Afterecho/Charts/"+c.preset).text).song.id)throw new Exception("Song ID mismatch");
+   var original=Resources.Load<TextAsset>("Afterecho/Charts/"+c.preset);
+   if(original==null)throw new FormatException("Unknown chart preset: "+c.preset);
+   if(c.song.id!=ChartData.Load(original.text).song.id)throw new Exception("Song ID mismatch");
    int burst=1;var ids=new HashSet<string>();
    for(int i=0;i<c.notes.Length;i++)
    {
@@ -23,12 +31,41 @@ namespace Afterecho.Editor
     if(c.notes.Count(n=>n.time>=t&&n.time<=t+1.2)>5)throw new Exception("Too many simultaneous preview rings");
    }
   }
+  static void ValidateInvalidConfigurations(StageData stage,RunnerRules rules)
+  {
+   string json=Resources.Load<TextAsset>("Afterecho/RunnerCharts/easy").text;
+   foreach(double value in new[]{-.1,0,double.NaN,double.PositiveInfinity,double.NegativeInfinity})
+   {
+    var c=ChartData.Load(json);c.rules.maxWindow=value;
+    Rejected(()=>ValidateChart(c,stage),"lab rejects invalid maxWindow "+value);
+    Rejected(()=>new ChartEngine(c,stage,rules),"playback rejects invalid maxWindow "+value);
+   }
+   var imported=ChartData.Load(json);imported.rules.maxWindow=-.1;
+   Rejected(()=>ChartData.Load(JsonUtility.ToJson(imported)),"JSON loader rejects negative maxWindow");
+   Rejected(()=>ChartData.Load("{}"),"JSON loader rejects missing required fields");
+   Rejected(()=>ChartData.Load(""),"JSON loader rejects empty document");
+   Rejected(()=>ChartValidation.Validate(null),"validator rejects null document");
+   Action<ChartData>[] invalid={
+    c=>c.rules=null,c=>c.song=null,c=>c.notes=null,c=>c.notes=Array.Empty<ChartNote>(),
+    c=>c.preset="",c=>c.song.id="",c=>c.song.duration=double.NaN,
+    c=>c.rules.minGap=0,c=>c.rules.fastGap=double.NaN,c=>c.rules.recoveryGap=double.PositiveInfinity,
+    c=>c.rules.health=0,c=>c.rules.burstLimit=0,c=>c.notes[0]=null,
+    c=>c.notes[0].id="",c=>c.notes[1].id=c.notes[0].id,
+    c=>c.notes[0].time=double.NaN,c=>c.notes[1].time=c.notes[0].time
+   };
+   for(int i=0;i<invalid.Length;i++)
+   {
+    var c=ChartData.Load(json);invalid[i](c);
+    Rejected(()=>ValidateChart(c,stage),"required fields and rule safety case "+i);
+   }
+  }
   [MenuItem("Afterecho/Runner/Run Tests")]
   public static string RunAll()
   {
    rows.Clear();var rules=ScriptableObject.CreateInstance<RunnerRules>();
    try {
     var stage=JsonUtility.FromJson<StageData>(Resources.Load<TextAsset>("Afterecho/stage").text);
+    ValidateInvalidConfigurations(stage,rules);
     foreach(string p in new[]{"easy","normal","hard"})
     {
      var c=ChartData.Load(Resources.Load<TextAsset>("Afterecho/RunnerCharts/"+p).text);ValidateChart(c,stage);Check(true,p+" density, IDs, duration, four-hit recovery");
@@ -42,6 +79,7 @@ namespace Afterecho.Editor
      r=New();r.Advance(stage.duration);int m=r.Misses;Check(r.Health==0&&r.Status==RunStatus.Lost&&m==10,p+" no-input loses after ten misses");Check(r.Events.Count(e=>e.kind=="lost")==1,p+" game over once");r.Tap(stage.duration+1);r.Advance(stage.duration+2);Check(r.Misses==m&&r.Hits==0,p+" no decisions after loss");
      r=New();for(double at=0;at<stage.duration&&r.Status==RunStatus.Running;at+=.05)r.Tap(at);Check(r.Status==RunStatus.Lost,p+" 20Hz spam loses");
      r=New();foreach(var n in c.notes)r.Tap(n.time);r.Advance(stage.doorTime);Check(r.Status==RunStatus.Running,p+" old door does not end runner");r.Advance(stage.duration);Check(r.Status==RunStatus.Won&&r.Hits==c.notes.Length&&r.Misses==0&&r.Health==100,p+" full song autoplay wins");Check(r.Events.Count(e=>e.kind=="won")==1,p+" completion once");
+     r=New();foreach(var n in c.notes)r.Tap(n.time);r.DeferCompletion=true;r.Advance(stage.duration+.1);Check(r.Status==RunStatus.Running&&!r.Events.Any(e=>e.kind=="won"),p+" audible tail defers completion");r.DeferCompletion=false;r.Advance(stage.duration+.1);r.Advance(stage.duration+.2);Check(r.Status==RunStatus.Won&&r.Events.Count(e=>e.kind=="won")==1,p+" audible tail release completes exactly once");
      r=New();r.Invincible=true;r.Advance(stage.duration);Check(r.Status==RunStatus.Won&&r.Health==100,p+" invincible completion");
      r=New();r.PracticeEnabled=true;r.Advance(stage.MainTime-.2);Check(r.Health==100,p+" safe tutorial no damage");
      r=New();r.Tap(t);double safe=r.SafeResume(c.notes[1].time-.01);r.PrepareResume(safe);r.Advance(safe);r.Tap(c.notes[1].time);Check(r.Hits==2&&r.Misses==0,p+" safe resume pending note");

@@ -1,0 +1,11 @@
+PASS fixture is an observed post-audio judgement tail
+PASS EOF tail can pause before completion
+PASS resume request lies beyond the final audio sample
+PASS paused music time, judgement and runner stay frozen
+PASS EOF resume schedules the preparation phase
+PASS resume retains all four preparation beats
+PASS silent resume preserves the requested tail position
+PASS judgement stays frozen during the four-beat preparation
+PASS completion follows the full preparation interval
+PASS silent tail resumes to a clean win without extra judgements
+PASS no song replay or load error during EOF resume

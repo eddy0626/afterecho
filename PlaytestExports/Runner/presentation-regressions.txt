@@ -1,0 +1,14 @@
+PASS first offbeat starts exactly one sprite tween
+PASS second offbeat arrives while the first punch is active
+PASS second offbeat cancels the previous punch
+PASS overlapping offbeats retain exactly one sprite tween
+PASS overlapping offbeats return sprite rotation to zero
+PASS completed offbeat leaves no active sprite tween
+PASS feedback cleanup cancels punch and restores neutral rotation
+PASS feedback cleanup preserves an unrelated tween with the same view ID
+PASS pause during preparation cancels punch and restores neutral rotation
+PASS pause preserves unrelated tween
+PASS reduced motion creates no punch tween
+PASS reduced motion keeps neutral rotation after feedback interval
+PASS all presentation regressions
+Elapsed seconds: 0.489

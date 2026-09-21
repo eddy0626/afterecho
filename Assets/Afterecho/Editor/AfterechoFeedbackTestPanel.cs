@@ -86,75 +86,82 @@ namespace Afterecho.Editor
 
             // 2. Manual Gameplay Flow Controls (Invoking existing game/view methods directly)
             EditorGUILayout.LabelField("Manual Gameplay Controls (Clickable)", EditorStyles.boldLabel);
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
-            // Row 1: StartGame & BeginMain
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Start Game", GUILayout.Height(28)))
+            bool runtimeReady = Application.isPlaying && game.Stage != null && game.Run != null;
+            if (!runtimeReady)
+                EditorGUILayout.HelpBox("게임 진행 조작은 Play 모드에서 초기화가 끝난 뒤 사용할 수 있습니다.", MessageType.Info);
+            using (new EditorGUI.DisabledScope(!runtimeReady))
             {
-                game.StartGame();
-                lastEventDisplay = "StartGame invoked";
-            }
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-            GUI.enabled = Application.isPlaying && game.Phase == GamePhase.Ready;
-            if (GUILayout.Button("Begin Main (Ready)", GUILayout.Height(28)))
-            {
-                game.BeginMain();
-                lastEventDisplay = "BeginMain invoked";
-            }
-            GUI.enabled = true;
-            EditorGUILayout.EndHorizontal();
-
-            // Row 2: Pause / Resume & Menu
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(game.Phase == GamePhase.Paused ? "Resume Game (4-beat)" : "Pause Game", GUILayout.Height(26)))
-            {
-                if (game.Phase == GamePhase.Paused)
+                // Row 1: StartGame & BeginMain
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Start Game", GUILayout.Height(28)))
                 {
-                    game.ResumeGame();
-                    lastEventDisplay = "ResumeGame invoked";
+                    game.StartGame();
+                    lastEventDisplay = "StartGame invoked";
                 }
-                else
+
+                using (new EditorGUI.DisabledScope(game.Phase != GamePhase.Ready))
                 {
-                    game.PauseGame();
-                    lastEventDisplay = "PauseGame invoked";
+                    if (GUILayout.Button("Begin Main (Ready)", GUILayout.Height(28)))
+                    {
+                        game.BeginMain();
+                        lastEventDisplay = "BeginMain invoked";
+                    }
                 }
-            }
+                EditorGUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Main Menu", GUILayout.Height(26)))
-            {
-                game.Menu();
-                lastEventDisplay = "Menu invoked";
-            }
-            EditorGUILayout.EndHorizontal();
-
-            // Row 3: Difficulty Selectors
-            EditorGUILayout.Space(2);
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Difficulty");
-            string[] diffs = { "easy", "normal", "hard" };
-            string[] diffLabels = { "입문", "보통", "도전" };
-            for (int i = 0; i < diffs.Length; i++)
-            {
-                bool isSelected = game.difficulty == diffs[i];
-                GUI.backgroundColor = isSelected ? new Color(0.4f, 0.85f, 0.75f) : Color.white;
-                if (GUILayout.Button(diffLabels[i], GUILayout.Height(22)))
+                // Row 2: Pause / Resume & Menu
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button(game.Phase == GamePhase.Paused ? "Resume Game (4-beat)" : "Pause Game", GUILayout.Height(26)))
                 {
-                    game.SelectDifficulty(diffs[i]);
-                    lastEventDisplay = $"Difficulty set: {diffs[i]}";
+                    if (game.Phase == GamePhase.Paused)
+                    {
+                        game.ResumeGame();
+                        lastEventDisplay = "ResumeGame invoked";
+                    }
+                    else
+                    {
+                        game.PauseGame();
+                        lastEventDisplay = "PauseGame invoked";
+                    }
                 }
-            }
-            GUI.backgroundColor = Color.white;
-            EditorGUILayout.EndHorizontal();
 
-            // Row 4: LabSeek to First Combat Encounter (21.86s)
-            EditorGUILayout.Space(2);
-            if (GUILayout.Button("Seek to First Combat Encounter (21.86s)", GUILayout.Height(26)))
-            {
-                game.LabSeek(21.86);
-                lastEventDisplay = "LabSeek(21.86s) to first combat";
+                if (GUILayout.Button("Main Menu", GUILayout.Height(26)))
+                {
+                    game.Menu();
+                    lastEventDisplay = "Menu invoked";
+                }
+                EditorGUILayout.EndHorizontal();
+
+                // Row 3: Difficulty Selectors
+                EditorGUILayout.Space(2);
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("Difficulty");
+                string[] diffs = { "easy", "normal", "hard" };
+                string[] diffLabels = { "입문", "보통", "도전" };
+                for (int i = 0; i < diffs.Length; i++)
+                {
+                    bool isSelected = game.difficulty == diffs[i];
+                    GUI.backgroundColor = isSelected ? new Color(0.4f, 0.85f, 0.75f) : Color.white;
+                    if (GUILayout.Button(diffLabels[i], GUILayout.Height(22)))
+                    {
+                        game.SelectDifficulty(diffs[i]);
+                        lastEventDisplay = $"Difficulty set: {diffs[i]}";
+                    }
+                }
+                GUI.backgroundColor = Color.white;
+                EditorGUILayout.EndHorizontal();
+
+                // Row 4: LabSeek to First Combat Encounter (21.86s)
+                EditorGUILayout.Space(2);
+                if (GUILayout.Button("Seek to First Combat Encounter (21.86s)", GUILayout.Height(26)))
+                {
+                    game.LabSeek(21.86);
+                    lastEventDisplay = "LabSeek(21.86s) to first combat";
+                }
+                EditorGUILayout.EndVertical();
             }
-            EditorGUILayout.EndVertical();
 
             EditorGUILayout.Space(6);
 
@@ -236,4 +243,3 @@ namespace Afterecho.Editor
         }
     }
 }
-

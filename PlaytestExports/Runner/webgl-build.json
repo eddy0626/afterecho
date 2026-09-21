@@ -1,11 +1,11 @@
 {
   "status": "completed",
-  "buildId": "build_f935b3542eb2",
+  "buildId": "build_98b79075b674",
   "result": "Succeeded",
   "platform": "WebGL",
   "outputPath": "/Users/youngbum/musicgame/Builds/RunnerCircleWeb",
-  "totalSizeBytes": 33500106,
-  "buildTimeMs": 170788,
-  "totalWarnings": 407,
-  "totalErrors": 0
+  "totalSizeBytes": 33483727,
+  "buildTimeMs": 153955,
+  "totalWarnings": 45,
+  "totalErrors": 1
 }

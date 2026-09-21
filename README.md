@@ -24,8 +24,10 @@
 
 Web Build Support 모듈을 설치하고 위 프로필로 `Builds/RunnerCircleWeb`에 빌드합니다. 사용자 지정 웹 실행 화면은 빌드 후 `python3 Tools/Runner/web_launcher.py`로 복원합니다. 로컬 플레이는 `python3 Tools/Runner/serve.py` 실행 후 `http://127.0.0.1:8777`을 엽니다.
 
-- `Afterecho > Runner > Run Tests`: 판정·HP·질주·입력·완주 101개 검사.
+- `Afterecho > Runner > Run Tests`: 판정·HP·질주·입력·완주·잘못된 설정 138개 검사.
 - `Afterecho > Chart Lab`: runner 모드의 실제 채보와 규칙 편집, 자동 입력·무적·로그.
+- 로컬 작업은 원본 CLI를 호출하지 않는 `Tools/unity-local`을 사용합니다. [키체인 재발 후 변경한 로컬 연결 방식](Tools/LOCAL_EDITOR_WORKFLOW.md)
+- [코드 검토 수정 및 회귀검사](PlaytestExports/Runner/CODE_REVIEW_FIXES_20260921.md)
 - [팀 실행·규칙·채보 안내](PlaytestExports/Runner/README.md)
 - [Gameaify UI 제작 및 적용](PlaytestExports/Runner/UI_GAMEAIFY_20260921.md)
 - [전체 개편 검증 기록](PlaytestExports/Runner/검증기록.md)
