@@ -1,0 +1,22 @@
+{
+  "buildId": "build_98b79075b674",
+  "browser": "Codex in-app Chromium",
+  "url": "http://127.0.0.1:8777/?autoplay=1&difficulty=hard&debug=1",
+  "viewport": [
+    568,
+    320
+  ],
+  "syncMs": 250,
+  "difficulty": "hard",
+  "input": "autoplay",
+  "phase": "Result",
+  "logicalTime": 136.366,
+  "hp": 100,
+  "hits": 289,
+  "misses": 0,
+  "extras": 0,
+  "score": 110300,
+  "accuracy": 100.0,
+  "browserErrors": [],
+  "resultObservedAtUtc": "2026-09-21T12:09:28.253Z"
+}

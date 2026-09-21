@@ -29,6 +29,8 @@ source='AFTERECHO_RunnerCircle_Unity_20260921';files=[]
 for directory in ['Assets','Packages','ProjectSettings','Tools/Runner','ArtProduction/Runner','PlaytestExports/Runner']:
  for p in (ROOT/directory).rglob('*'):
   if p.is_file() and not p.name.startswith('PerformanceTestRun') and not any(x in p.parts for x in ['_Recovery','StreamingAssets']):files.append((p,Path(source)/p.relative_to(ROOT)))
+for relative in ['Tools/unity-local','Tools/test_unity_local.py','Tools/LOCAL_EDITOR_WORKFLOW.md']:
+ files.append((ROOT/relative,Path(source)/relative))
 files.append((ROOT/'PlaytestExports/Runner/README.md',Path(source)/'README_RUNNER.md'))
 reports.append(archive(OUT/(source+'.zip'),files))
 (OUT/'release-manifest.json').write_text(json.dumps(reports,indent=2))

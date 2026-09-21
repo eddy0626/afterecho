@@ -134,7 +134,7 @@ namespace Afterecho
         {
             if (!autoPlay) return;
             int i;
-            while ((i = Run.NextPending()) >= 0 && Run.Chart.notes[i].time <= time)
+            while (Run.Status == RunStatus.Running && (i = Run.NextPending()) >= 0 && Run.Chart.notes[i].time <= time)
                 Run.Tap(Run.Chart.notes[i].time,"autoplay");
         }
         void Update()
@@ -174,7 +174,7 @@ namespace Afterecho
                     ProcessTaps();
                     AutoTapUntil(LogicalTime);
                     Run.Advance(LogicalTime); Consume();
-                    if (loop && LogicalTime >= loopEnd && Phase == GamePhase.Playing) LabSeek(loopStart);
+                    if (loop && LogicalTime >= loopEnd && Phase == GamePhase.Playing) LabSeek(loopStart,Run.Chart);
                 }
             }
             view.Render(LogicalTime,Phase);

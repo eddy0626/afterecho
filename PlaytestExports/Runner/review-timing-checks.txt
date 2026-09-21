@@ -1,0 +1,24 @@
+PASS easy EOF completes with sync -250ms
+PASS easy EOF completes with sync -100ms
+PASS easy EOF completes with sync 0ms
+PASS easy EOF completes with sync 50ms
+PASS easy EOF completes with sync 100ms
+PASS easy EOF completes with sync 250ms
+PASS easy negative sync does not cut the song short
+PASS normal EOF completes with sync -250ms
+PASS normal EOF completes with sync -100ms
+PASS normal EOF completes with sync 0ms
+PASS normal EOF completes with sync 50ms
+PASS normal EOF completes with sync 100ms
+PASS normal EOF completes with sync 250ms
+PASS normal negative sync does not cut the song short
+PASS hard EOF completes with sync -250ms
+PASS hard EOF completes with sync -100ms
+PASS hard EOF completes with sync 0ms
+PASS hard EOF completes with sync 50ms
+PASS hard EOF completes with sync 100ms
+PASS hard EOF completes with sync 250ms
+PASS hard negative sync does not cut the song short
+PASS early interruption freezes instead of extrapolating to completion
+PASS runner loop 1 keeps the edited chart
+PASS runner loop 2 keeps the edited chart

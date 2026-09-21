@@ -50,8 +50,8 @@ namespace Afterecho
             }
         }
         double observedPosition, observedAt, scheduledWallStart, lastPositionAdvance;
-        bool observedPlayback;
-        public bool HasStarted => Scheduled && (UsePlaybackPosition
+        bool observedPlayback, silentTail;
+        public bool HasStarted => Scheduled && (silentTail ? PreparationRemaining<=0 : UsePlaybackPosition
             ? observedPlayback || (MusicActive && PlaybackPosition>Position+.0001)
             : AudioSettings.dspTime>=ScheduledStart);
         public double PreparationRemaining => Math.Max(0,UsePlaybackPosition
@@ -64,6 +64,7 @@ namespace Afterecho
             {
                 if(!Scheduled)return Position;
                 if(!UsePlaybackPosition)return DspSongTime;
+                if(silentTail)return Position+Math.Max(0,Time.realtimeSinceStartupAsDouble-scheduledWallStart);
                 if(!HasStarted)return Position;
                 double now=Time.realtimeSinceStartupAsDouble;
                 if(MusicActive)
@@ -73,17 +74,18 @@ namespace Afterecho
                     {if(!observedPlayback||t>observedPosition+.0001)lastPositionAdvance=now;
                         observedPosition=Math.Max(Position,t);observedAt=now;observedPlayback=true;return observedPosition;}
                 }
-                // AudioSource.time resets after natural completion. Finish only if the last
-                // actual audio sample was already at the tail; early interruption still pauses.
+                // AudioSource.time resets after natural completion. Continue from the last
+                // observed tail sample so positive sync offsets can finish their judgement
+                // timeline. Early interruptions still freeze and pause instead of advancing.
                 if(observedPlayback && observedPosition>=music.clip.length-.35)
-                    return Math.Min(music.clip.length,observedPosition+Math.Max(0,now-observedAt));
+                    return observedPosition+Math.Max(0,now-observedAt);
                 return observedPlayback?observedPosition:DspSongTime;
             }
         }
         public double EventSongTime(double inputTime) => UsePlaybackPosition
             ? SongTime + inputTime - Time.realtimeSinceStartupAsDouble
             : AudioSettings.dspTime + inputTime - Time.realtimeSinceStartupAsDouble - Anchor;
-        public bool PlaybackInterrupted => Scheduled && AudioSettings.dspTime > ScheduledStart + .35
+        public bool PlaybackInterrupted => Scheduled && !silentTail && AudioSettings.dspTime > ScheduledStart + .35
             && SongTime < music.clip.length - .25 && (!MusicActive ||
                 (UsePlaybackPosition && observedPlayback && Time.realtimeSinceStartupAsDouble-lastPositionAdvance>.8));
         public void Schedule(double position, double beat, bool countIn)
@@ -107,9 +109,12 @@ namespace Afterecho
                 { LoadError = "음악을 불러오지 못했습니다. 다시 시도해 주세요."; yield break; }
                 yield return null;
             }
+            // A positive sync offset can leave a short judgement tail after the song.
+            // Resume that tail after the count-in without seeking to an unobservable final sample.
+            silentTail=position>=song.length;
             // Prime the browser channel before scheduling the audible count-in. WebGL can
             // report Loaded before its first AudioSource channel is ready for scheduling.
-            if(UsePlaybackPosition)
+            if(UsePlaybackPosition&&!silentTail)
             {
                 warming=true;muteBeforeWarmup=music.mute;music.mute=true;
                 music.time=0;music.Play();
@@ -122,7 +127,7 @@ namespace Afterecho
                 }
                 music.Stop();music.mute=muteBeforeWarmup;warming=false;
             }
-            Position = Math.Clamp(position,0,Math.Max(0,song.length-1d/song.frequency));
+            Position = silentTail ? position : Math.Clamp(position,0,Math.Max(0,song.length-1d/song.frequency));
             observedPosition=Position;observedPlayback=false;observedAt=Time.realtimeSinceStartupAsDouble;
             double preparation = AudioSettings.dspTime + .25;
             ScheduledStart = preparation + (countIn ? 4 * beat : 0);
@@ -130,8 +135,11 @@ namespace Afterecho
             Anchor = ScheduledStart - Position;
             music.loop = false;
             // Seek in seconds: browser decoding can use a different sample rate from the import.
-            music.time = (float)Position;
-            music.PlayScheduled(ScheduledStart);
+            if(!silentTail)
+            {
+                music.time = (float)Position;
+                music.PlayScheduled(ScheduledStart);
+            }
             // WebGL runner pitch is fixed on the actual Web Audio node by RunnerAudioClock.
             if(!UsePlaybackPosition)music.pitch=1f;
             if (countIn) for (int i = 0; i < Math.Min(4,countVoices.Length); i++)
@@ -143,7 +151,7 @@ namespace Afterecho
             if (loading != null) { StopCoroutine(loading); loading = null; }
             if (music != null) { music.Stop();if(warming){music.mute=muteBeforeWarmup;warming=false;} }
             if (countVoices != null) foreach (var voice in countVoices) if (voice != null) voice.Stop();
-            Position = position; Scheduled = false;
+            Position = position; Scheduled = false;silentTail=false;
         }
     }
 }

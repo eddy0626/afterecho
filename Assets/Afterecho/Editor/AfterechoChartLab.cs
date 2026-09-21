@@ -43,7 +43,9 @@ namespace Afterecho.Editor
             var repeat=new Toggle("반복");repeat.RegisterValueChangedCallback(e=>{if(runnerMode&&Runner){Runner.loop=e.newValue;Runner.loopStart=from.value;Runner.loopEnd=to.value;}else if(Game){Game.loop=e.newValue;Game.loopStart=from.value;Game.loopEnd=to.value;}});play.Add(repeat);
             var edits=Row(root);addTime=new DoubleField("추가 시각"){value=15};edits.Add(addTime);edits.Add(new Button(AddNote){text="노트 추가"});
             var why=new TextField("수정 이유"){value=reason};why.RegisterValueChangedCallback(e=>reason=e.newValue);edits.Add(why);
-            edits.Add(new Button(ExportLog){text="입력 로그 CSV"});edits.Add(new Button(()=>status.text=runnerMode?RunnerTests.RunAll():AfterechoTests.RunAll()){text="판정 자동 검증"});
+            edits.Add(new Button(ExportLog){text="입력 로그 CSV"});
+            edits.Add(new Button(ValidateCurrentDocument){text="현재 채보 검증"});
+            edits.Add(new Button(RunBaselineTests){text="기본 채보 회귀검사"});
             var tune=Row(root);tune.Add(new Button(()=>{Selection.activeObject=AssetDatabase.LoadAssetAtPath<RunnerRules>(RunnerSceneBuilder.RulesPath);EditorGUIUtility.PingObject(Selection.activeObject);}){text="러닝 규칙 조절 (HP·질주·속도·미리보기)"});
             var header=new Label("노트 ID                       시각(초)           구간 / 판정창 / 검수 상태                  이동 · 삭제");root.Add(header);
             table=new ScrollView();table.AddToClassList("notes");root.Add(table);
@@ -104,6 +106,25 @@ namespace Afterecho.Editor
                 foreach(JObject n in members){n["role"]="attack";n["encounter"]=e["id"].DeepClone();}
             }
             return ChartData.Load(document.ToString());
+        }
+        void ValidateCurrentDocument()
+        {
+            try
+            {
+                var chart=ValidateAndUpdate();
+                DrawRows();
+                status.text=$"현재 편집 채보 검증 통과 · {chart.preset} · {chart.notes.Length} notes\n기술 규칙만 확인했습니다. 팀 청음 및 한 손 난이도 검수는 별도입니다.";
+            }
+            catch(Exception e){status.text="현재 편집 채보 검증 실패: "+e.Message;}
+        }
+        void RunBaselineTests()
+        {
+            try
+            {
+                string result=runnerMode?RunnerTests.RunAll():AfterechoTests.RunAll();
+                status.text="Resources 기본 채보 회귀검사 결과 (현재 편집본 검증과 별도)\n"+result;
+            }
+            catch(Exception e){status.text="Resources 기본 채보 회귀검사 실패: "+e.Message;}
         }
         string ExportDir {get{string p=Path.GetFullPath(runnerMode?"PlaytestExports/Runner":"PlaytestExports");Directory.CreateDirectory(p);return p;}}
         void SaveVariant()

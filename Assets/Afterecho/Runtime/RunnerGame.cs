@@ -94,7 +94,7 @@ namespace Afterecho
         {
             if(Phase!=GamePhase.Playing&&Phase!=GamePhase.Preparing)return;
             if(Phase==GamePhase.Playing)
-            { ProcessInputs();LogicalTime=clock.SongTime-syncMs/1000d;AutoUntil(LogicalTime);Run.Advance(LogicalTime);Consume(); }
+            { RefreshSongTime();ProcessInputs();AutoUntil(LogicalTime);Run.Advance(LogicalTime);Consume(); }
             if(Phase==GamePhase.Result)return;
             resumeAt=Phase==GamePhase.Preparing?resumeAt:Run.SafeResume(LogicalTime);
             LogicalTime=resumeAt;clock.Stop(resumeAt);queue.Clear();Phase=GamePhase.Paused;view.StopFeedback();view.Pause();
@@ -141,6 +141,13 @@ namespace Afterecho
                 &&key!=Key.ScrollLock&&!(key>=Key.F1&&key<=Key.F12)&&key!=Key.PrintScreen&&key!=Key.Pause;
         }
         void ProcessInputs(){queue.Sort((a,b)=>a.time.CompareTo(b.time));foreach(var p in queue)Run.Tap(p.time,p.source);queue.Clear();}
+        void RefreshSongTime()
+        {
+            double playbackTime=clock.SongTime;
+            LogicalTime=playbackTime-syncMs/1000d;
+            // A negative judgement offset must not cut the final audio short.
+            Run.DeferCompletion=playbackTime<Stage.duration;
+        }
         void AutoUntil(double t)
         {if(!autoPlay)return;int i;while(Run.Status==RunStatus.Running&&(i=Run.NextPending())>=0&&Run.Chart.notes[i].time<=t)Run.Tap(Run.Chart.notes[i].time,"autoplay");}
         void Update()
@@ -162,7 +169,7 @@ namespace Afterecho
                     resumeAt=Run.SafeResume(LogicalTime);LogicalTime=resumeAt;clock.Stop(resumeAt);queue.Clear();Phase=GamePhase.Paused;
                     view.StopFeedback();view.AudioProblem("음악이 중단됐어요. 4박 준비 후 이어갑니다.");return;
                 }
-                double previous=LogicalTime;LogicalTime=clock.SongTime-syncMs/1000d;
+                double previous=LogicalTime;RefreshSongTime();
                 ActiveSeconds+=(float)Math.Max(0,LogicalTime-previous);
                 Run.Invincible=invincible;
                 double gate=Stage.MainTime-.18;
@@ -170,7 +177,7 @@ namespace Afterecho
                 Run.Advance(IsTutorial?Math.Min(LogicalTime,gate):LogicalTime);Consume();
                 if(IsTutorial&&LogicalTime>=gate&&Phase==GamePhase.Playing)
                 {clock.Stop(0);queue.Clear();Phase=GamePhase.Ready;view.StopFeedback();view.Ready();}
-                if(loop&&LogicalTime>=loopEnd&&Phase==GamePhase.Playing)LabSeek(loopStart);
+                if(loop&&LogicalTime>=loopEnd&&Phase==GamePhase.Playing)LabSeek(loopStart,Run.Chart);
                 if(Phase==GamePhase.Playing)view.AdvanceRunner((float)Math.Max(0,LogicalTime-previous));
             }
             view.Render();

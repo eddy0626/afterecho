@@ -16,7 +16,13 @@ namespace Afterecho
         public ChartRules rules;
         public ChartNote[] notes;
         public EncounterData[] encounters;
-        public static ChartData Load(string json) => JsonUtility.FromJson<ChartData>(json);
+        public static ChartData Load(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) throw new FormatException("Invalid chart document: JSON is required");
+            var chart = JsonUtility.FromJson<ChartData>(json);
+            ChartValidation.Validate(chart);
+            return chart;
+        }
     }
     [Serializable] public class StageSection { public int fromBeat; public string name, code; }
     [Serializable] public class RoutePoint { public float x, y; }
@@ -70,6 +76,8 @@ namespace Afterecho
         int runnerHealth;
         public double Time { get; private set; }
         public bool Invincible;
+        // Hosts can wait for the audible song tail independently of judgement sync.
+        public bool DeferCompletion;
         public bool PracticeEnabled = true;
         public int NextIndex { get; private set; }
         double lastInput = double.NegativeInfinity;
@@ -77,6 +85,7 @@ namespace Afterecho
         readonly int[] enemyForNote;
         public ChartEngine(ChartData chart, StageData stage, RunnerRules runner = null)
         {
+            ChartValidation.ValidateForPlayback(chart, stage, runner);
             Chart = chart; Stage = stage; Runner = runner;
             runnerHealth = runner != null ? runner.maxHealth : 0;
             Decisions = new NoteState[chart.notes.Length]; windows = new double[chart.notes.Length];
@@ -130,12 +139,12 @@ namespace Afterecho
                         if (Health == 0) { Status = RunStatus.Lost; Events.Enqueue(new RunEvent("lost")); break; }
                     }
                 }
-                if (IsRunner && Status == RunStatus.Running && t >= Stage.duration)
+                if (IsRunner && !DeferCompletion && Status == RunStatus.Running && t >= Stage.duration)
                 { Status = RunStatus.Won; Events.Enqueue(new RunEvent("won")); }
                 if (!IsRunner && Status == RunStatus.Running && t >= Stage.doorTime)
                 { Status = RunStatus.Arrived; Events.Enqueue(new RunEvent("door")); }
             }
-            if (Status == RunStatus.Arrived && t >= Stage.duration)
+            if (!DeferCompletion && Status == RunStatus.Arrived && t >= Stage.duration)
             { Status = RunStatus.Won; Events.Enqueue(new RunEvent("won")); }
         }
         public string Tap(double t, string source = "manual")

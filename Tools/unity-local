@@ -1,0 +1,252 @@
+#!/usr/bin/env python3
+"""Authenticated local Pipeline client; never launches the Unity CLI or account tools."""
+import base64
+import http.client
+import json
+import os
+from pathlib import Path
+import re
+import stat
+import sys
+from urllib.parse import urlencode
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+MAX_RESPONSE = 16 * 1024 * 1024
+HELP = """Local AFTERECHO Editor connection (no native Unity CLI).
+Usage: Tools/unity-local command|cmd COMMAND [ARGS] [--format json]
+       Tools/unity-local status [--format json]
+       Tools/unity-local list [--query TEXT] [--detail full|compact]
+       Tools/unity-local job [status|cancel] JOB_ID
+       Tools/unity-local --help
+
+Examples:
+  Tools/unity-local command editor_status --format json
+  Tools/unity-local command eval --code 'return 1+1;' --format json
+  Tools/unity-local command eval_file --file /absolute/path/check.cs
+
+Only this repository's existing Editor descriptor is used. Output is always JSON.
+--job submits command as a detached job; --http-timeout SECONDS (1..60) bounds HTTP.
+Account, doctor, cloud, runtime targets, proxies and redirects are unsupported.
+--caller/--skill are accepted as compatibility labels; no native CLI is invoked.
+"""
+
+
+class LocalError(Exception):
+    def __init__(self, code, message, data=None):
+        super().__init__(message)
+        self.code, self.message, self.data = code, message, data
+
+
+def read_descriptor(project):
+    path = project / "Library/Pipeline/.unity-pipeline-port"
+    fd = None
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid() or info.st_mode & 0o077:
+            raise LocalError("UNSAFE_DESCRIPTOR", "Editor descriptor must be a private regular file owned by this user.")
+        with os.fdopen(fd, "rb") as stream:
+            fd = None
+            raw = stream.read(65537)
+        if len(raw) > 65536:
+            raise LocalError("INVALID_DESCRIPTOR", "Editor descriptor is too large.")
+        descriptor = json.loads(raw)
+    except LocalError:
+        raise
+    except (OSError, ValueError, UnicodeError):
+        raise LocalError("INVALID_DESCRIPTOR", "Cannot read a valid private Editor descriptor; check the open project and Pipeline server.") from None
+    finally:
+        if fd is not None:
+            os.close(fd)
+    if not isinstance(descriptor, dict):
+        raise LocalError("INVALID_DESCRIPTOR", "Editor descriptor must be an object.")
+    declared_project = descriptor.get("projectPath")
+    if not isinstance(declared_project, str) or not Path(declared_project).is_absolute() or Path(declared_project).resolve() != project:
+        raise LocalError("PROJECT_MISMATCH", "Editor descriptor does not belong to this repository.")
+    if descriptor.get("mode") not in ("editor", "batchmode"):
+        raise LocalError("EDITOR_REQUIRED", "Descriptor must identify an Editor, not a Player.")
+    port, pid = descriptor.get("port"), descriptor.get("pid")
+    if type(port) is not int or not 7800 <= port <= 7849:
+        raise LocalError("INVALID_PORT", "Expected a production Editor loopback port (7800..7849).")
+    if type(pid) is not int or not 0 < pid <= 2147483647:
+        raise LocalError("INVALID_PID", "Descriptor does not contain a valid Editor process ID.")
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        raise LocalError("EDITOR_NOT_RUNNING", "The descriptor's Editor process is no longer accessible.") from None
+    token = descriptor.get("evalToken")
+    try:
+        if not isinstance(token, str) or len(base64.b64decode(token, validate=True)) != 32:
+            raise ValueError()
+    except (ValueError, UnicodeError):
+        raise LocalError("INVALID_TOKEN", "Editor descriptor authentication is unavailable; no login or CLI fallback will run.") from None
+    return descriptor
+
+
+def redact(value, token):
+    if isinstance(value, dict):
+        return {redact(key, token): ("[redacted]" if re.sub(r"[_-]", "", key).lower() in
+                       {"evaltoken", "token", "authorization", "accesstoken", "refreshtoken"}
+                       else redact(item, token)) for key, item in value.items()}
+    if isinstance(value, list):
+        return [redact(item, token) for item in value]
+    if isinstance(value, str) and token:
+        return value.replace(token, "[redacted]")
+    return value
+
+
+def request(descriptor, method, path, body=None, timeout=60):
+    # http.client neither consults proxy settings nor follows redirects.
+    connection = http.client.HTTPConnection("127.0.0.1", descriptor["port"], timeout=timeout)
+    headers = {"Authorization": "Bearer " + descriptor["evalToken"], "Accept": "application/json"}
+    encoded = None if body is None else json.dumps(body, ensure_ascii=False).encode("utf-8")
+    if encoded is not None:
+        headers["Content-Type"] = "application/json; charset=utf-8"
+    try:
+        connection.request(method, path, body=encoded, headers=headers)
+        response = connection.getresponse()
+        if response.status in (401, 403):
+            raise LocalError("AUTHENTICATION_FAILED", "Local Editor rejected authentication. No retry, login, token rotation or native CLI fallback was attempted.")
+        if 300 <= response.status < 400:
+            raise LocalError("REDIRECT_FORBIDDEN", "Local Editor redirects are not followed.")
+        raw = response.read(MAX_RESPONSE + 1)
+        if len(raw) > MAX_RESPONSE:
+            raise LocalError("RESPONSE_TOO_LARGE", "Local Editor response exceeds the size limit.")
+        try:
+            reply = json.loads(raw)
+        except (ValueError, UnicodeError):
+            raise LocalError("INVALID_RESPONSE", "Local Editor did not return a JSON response.") from None
+        reply = redact(reply, descriptor["evalToken"])
+        if not isinstance(reply, dict):
+            raise LocalError("INVALID_RESPONSE", "Local Editor response must be an object.")
+        if not 200 <= response.status < 300:
+            raise LocalError("HTTP_" + str(response.status), "Local Editor request failed.", reply)
+        return reply
+    except LocalError:
+        raise
+    except (OSError, http.client.HTTPException, ValueError):
+        # Exception strings can contain request details. Never echo them or retry a mutation.
+        raise LocalError("CONNECTION_FAILED", "Cannot complete the local Editor request. Check Editor status before retrying; command execution may already have started.") from None
+    finally:
+        connection.close()
+
+
+def parse_options(argv, project):
+    arguments, options = [], {"timeout": 60, "job": False}
+    i = 0
+    while i < len(argv):
+        token = argv[i]
+        if token == "--":
+            arguments.extend(argv[i:])
+            break
+        name, separator, inline = token.partition("=")
+        if name in ("--format", "--project-path", "--caller", "--skill", "--http-timeout"):
+            if separator:
+                value = inline
+            else:
+                i += 1
+                if i >= len(argv):
+                    raise LocalError("INVALID_ARGUMENTS", name + " requires a value.")
+                value = argv[i]
+            if name == "--format" and value != "json":
+                raise LocalError("INVALID_ARGUMENTS", "Only --format json is supported.")
+            if name == "--project-path" and Path(value).resolve() != project:
+                raise LocalError("PROJECT_MISMATCH", "Project overrides cannot target another repository.")
+            if name == "--http-timeout":
+                try:
+                    options["timeout"] = int(value)
+                    if not 1 <= options["timeout"] <= 60:
+                        raise ValueError()
+                except ValueError:
+                    raise LocalError("INVALID_ARGUMENTS", "HTTP timeout must be 1..60 seconds.") from None
+        elif token in ("--json", "--non-interactive", "--proxy-disable", "--no-banner", "--no-pager"):
+            pass
+        elif token == "--job":
+            options["job"] = True
+        elif name in ("--proxy", "--runtime", "--runtime-path", "--host", "--url", "--port"):
+            raise LocalError("TARGET_OVERRIDE_FORBIDDEN", "Remote, runtime, proxy and port overrides are not supported.")
+        else:
+            arguments.append(token)
+        i += 1
+    return arguments, options
+
+
+def dispatch(arguments, options, descriptor):
+    action, args = arguments[0], arguments[1:]
+    timeout = options["timeout"]
+    if action in ("command", "cmd") and args:
+        if "exec.argv" not in descriptor.get("capabilities", []):
+            raise LocalError("UNSUPPORTED_PROTOCOL", "Editor does not advertise exec.argv; no native CLI fallback is allowed.")
+        body = {"argv": args, "timeout": timeout * 1000}
+        if options["job"]:
+            body["job"] = True
+        reply = request(descriptor, "POST", "/api/exec", body, timeout)
+        if reply.get("success") is not True:
+            raise LocalError(reply.get("errorCode", "COMMAND_FAILED"), "Editor command failed.", reply)
+        return reply
+    if action == "status":
+        if args:
+            raise LocalError("INVALID_ARGUMENTS", "status accepts no command arguments.")
+        reply = request(descriptor, "GET", "/api/status", timeout=timeout)
+        if reply.get("status") == "error":
+            raise LocalError("EDITOR_ERROR", "Editor reports an error state.", reply)
+        return {"result": reply}
+    if action in ("list", "command", "cmd"):
+        query = {"detail": "compact"}
+        i = 0
+        allowed = {"query", "detail", "tag", "group_by", "sort", "order", "offset", "limit"}
+        while i < len(args):
+            name, separator, value = args[i].partition("=")
+            if not name.startswith("--") or name[2:] not in allowed:
+                raise LocalError("INVALID_ARGUMENTS", "Unsupported command listing option.")
+            if not separator:
+                i += 1
+                if i >= len(args):
+                    raise LocalError("INVALID_ARGUMENTS", "Command listing option needs a value.")
+                value = args[i]
+            query[name[2:]] = value
+            i += 1
+        return {"result": request(descriptor, "GET", "/api/commands?" + urlencode(query), timeout=timeout)}
+    if action == "job":
+        cancel = bool(args and args[0] == "cancel")
+        if args and args[0] in ("status", "cancel"):
+            args = args[1:]
+        if len(args) != 1 or not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", args[0]):
+            raise LocalError("INVALID_ARGUMENTS", "Use job [status|cancel] JOB_ID returned by this Editor.")
+        reply = (request(descriptor, "POST", "/api/job/cancel", {"id": args[0]}, timeout) if cancel else
+                 request(descriptor, "GET", "/api/job?" + urlencode({"id": args[0]}), timeout=timeout))
+        if (not cancel and reply.get("state") in ("failed", "canceled")) or reply.get("success") is False:
+            raise LocalError("JOB_FAILED", "Local Editor job did not complete successfully.", reply)
+        return {"result": reply}
+    raise LocalError("INVALID_ARGUMENTS", "Only local command, status, list and job operations are supported.")
+
+
+def main(argv=None, *, project_root=None, stdout=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    stdout = sys.stdout if stdout is None else stdout
+    if not argv or any(arg in ("--help", "-h") for arg in argv[:argv.index("--") if "--" in argv else len(argv)]):
+        print(HELP, file=stdout)
+        return 0
+    token = None
+    try:
+        project = (PROJECT_ROOT if project_root is None else Path(project_root)).resolve()
+        arguments, options = parse_options(argv, project)
+        if not arguments or arguments[0] not in ("command", "cmd", "status", "list", "job"):
+            raise LocalError("INVALID_ARGUMENTS", "Use --help for local Editor operations. Account and cloud tools are unavailable.")
+        descriptor = read_descriptor(project)
+        token = descriptor["evalToken"]
+        data = dispatch(arguments, options, descriptor)
+        envelope, code = {"success": True, "data": data}, 0
+    except LocalError as error:
+        envelope = {"success": False, "errors": [{"code": error.code, "message": error.message}]}
+        if error.data is not None:
+            envelope["data"] = error.data
+        code = 1
+    except (OSError, ValueError, TypeError):
+        envelope, code = {"success": False, "errors": [{"code": "LOCAL_CLIENT_ERROR", "message": "Local Editor request could not be prepared; no fallback was attempted."}]}, 1
+    print(json.dumps(redact(envelope, token), ensure_ascii=False), file=stdout)
+    return code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
