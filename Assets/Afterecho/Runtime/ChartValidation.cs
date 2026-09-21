@@ -6,6 +6,8 @@ namespace Afterecho
     /// <summary>Shared validation for imported documents and playback, independent of Editor UI.</summary>
     public static class ChartValidation
     {
+        // Matches the current RunnerSceneBuilder approach-ring pool.
+        public const int RunnerRingCapacity = 12;
         static void Require(bool condition, string field, string message)
         {
             if (!condition) throw new FormatException("Invalid chart " + field + ": " + message);
@@ -29,6 +31,9 @@ namespace Afterecho
             Positive(chart.rules.recoveryGap, "rules.recoveryGap");
             Require(chart.rules.health > 0, "rules.health", "must be greater than zero");
             Require(chart.rules.burstLimit > 0, "rules.burstLimit", "must be greater than zero");
+            // Zero means the optional runner metadata was absent in an older document.
+            Require(Finite(chart.rules.previewSeconds) && chart.rules.previewSeconds >= 0, "rules.previewSeconds", "must be zero (default) or finite and positive");
+            Require(chart.rules.maxVisibleNotes >= 0 && chart.rules.maxVisibleNotes <= RunnerRingCapacity, "rules.maxVisibleNotes", "must be zero (default) or between one and " + RunnerRingCapacity);
             Require(chart.notes != null && chart.notes.Length > 0, "notes", "must contain at least one note");
 
             var ids = new HashSet<string>();
@@ -43,9 +48,8 @@ namespace Afterecho
             }
         }
 
-        public static void ValidateForPlayback(ChartData chart, StageData stage, RunnerRules runner = null)
+        static void ValidateStage(ChartData chart, StageData stage)
         {
-            Validate(chart);
             Require(stage != null, "stage", "is required");
             Positive(stage.duration, "stage.duration");
             Positive(stage.beat, "stage.beat");
@@ -55,6 +59,70 @@ namespace Afterecho
             for (int i = 0; i < stage.beats.Length; i++)
                 Require(Finite(stage.beats[i]) && stage.beats[i] >= 0 && (i == 0 || stage.beats[i] > stage.beats[i - 1]), "stage.beats", "must be finite, nonnegative and strictly increasing");
             Require(chart.notes[chart.notes.Length - 1].time <= stage.duration, "notes", "must end within the stage");
+        }
+
+        public static double RunnerPreviewSeconds(ChartData chart, double? previewSeconds = null)
+        {
+            double preview = previewSeconds ?? (chart.rules.previewSeconds > 0 ? chart.rules.previewSeconds : 1.2);
+            Positive(preview, "runner.previewSeconds");
+            return preview;
+        }
+
+        public static int RunnerVisibleNoteLimit(ChartData chart)
+            => chart.rules.maxVisibleNotes > 0 ? chart.rules.maxVisibleNotes : chart.preset == "easy" ? 4 : 5;
+
+        /// <summary>
+        /// Worst-case visible pending notes. A missed note remains pending through its
+        /// inclusive late window, while another note can already enter the preview.
+        /// Count closed intervals [time - preview, time + actual judgement window].
+        /// </summary>
+        public static int MaxVisiblePendingNotes(ChartData chart, double previewSeconds)
+        {
+            Validate(chart);
+            Positive(previewSeconds, "runner.previewSeconds");
+            var events = new List<KeyValuePair<double, int>>(chart.notes.Length * 2);
+            for (int i = 0; i < chart.notes.Length; i++)
+            {
+                events.Add(new KeyValuePair<double, int>(chart.notes[i].time - previewSeconds, 1));
+                events.Add(new KeyValuePair<double, int>(chart.notes[i].time + ChartEngine.Window(chart, i), -1));
+            }
+            // Entries precede exits at the same instant: both rings are visible at
+            // an inclusive judgement boundary, even if this happens for one frame.
+            events.Sort((a, b) => a.Key == b.Key ? b.Value.CompareTo(a.Value) : a.Key.CompareTo(b.Key));
+            int visible = 0, maximum = 0;
+            foreach (var item in events)
+            {
+                visible += item.Value;
+                maximum = Math.Max(maximum, visible);
+            }
+            return maximum;
+        }
+
+        public static void ValidateRunnerChart(ChartData chart, StageData stage, double? previewSeconds = null)
+        {
+            Validate(chart);
+            ValidateStage(chart, stage);
+            Require(chart.gameplayMode == "runner", "gameplayMode", "expected runner");
+            int burst = 1;
+            for (int i = 0; i < chart.notes.Length; i++)
+            {
+                var note = chart.notes[i];
+                Require(note.time >= 1.2 && note.time <= stage.duration - .12, "note " + note.id, "must allow a 1.2 second introduction and finish before the song tail");
+                if (i == 0) continue;
+                double gap = note.time - chart.notes[i - 1].time;
+                Require(gap >= chart.rules.minGap - 1e-7, "note " + note.id, "minimum interval violated");
+                Require(burst < chart.rules.burstLimit || gap >= chart.rules.recoveryGap - 1e-7, "note " + note.id, "burst recovery interval violated");
+                burst = gap < chart.rules.fastGap ? burst + 1 : 1;
+            }
+            double preview = RunnerPreviewSeconds(chart, previewSeconds);
+            int maximum = MaxVisiblePendingNotes(chart, preview), limit = RunnerVisibleNoteLimit(chart);
+            Require(maximum <= limit, "runner.visibleNotes", maximum + " simultaneous pending rings exceeds " + limit + " at preview " + preview + " seconds (including late judgement windows)");
+        }
+
+        public static void ValidateForPlayback(ChartData chart, StageData stage, RunnerRules runner = null)
+        {
+            Validate(chart);
+            ValidateStage(chart, stage);
 
             if (runner != null)
             {
@@ -65,6 +133,7 @@ namespace Afterecho
                 Positive(runner.boostSpeed, "runner.boostSpeed");
                 Positive(runner.previewSeconds, "runner.previewSeconds");
                 Positive(runner.fallSeconds, "runner.fallSeconds");
+                ValidateRunnerChart(chart, stage, runner.previewSeconds);
                 return;
             }
 

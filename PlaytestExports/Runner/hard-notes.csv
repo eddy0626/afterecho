@@ -1,290 +1,334 @@
-id,time,window,originalTime,source,section,teamReview
-AI-hard-0007,3.741497,0.06,3.68,BeatLearning,AWAKENING,pending
-AI-hard-0008,4.36,0.06,4.36,BeatLearning,AWAKENING,pending
-AI-hard-0010,4.948753,0.06,4.89,BeatLearning,AWAKENING,pending
-AI-hard-0011,5.577324,0.06,5.53,BeatLearning,AWAKENING,pending
-AI-hard-0012,6.624943,0.06,6.59,BeatLearning,AWAKENING,pending
-AI-hard-0013,6.924263,0.06,6.9,BeatLearning,AWAKENING,pending
-AI-hard-0015,7.213605,0.06,7.28,BeatLearning,AWAKENING,pending
-AI-hard-0016,8.121542,0.06,8.06,BeatLearning,AWAKENING,pending
-AI-hard-0017,8.600454,0.06,8.56,BeatLearning,AWAKENING,pending
-AI-hard-0018,8.92,0.06,8.92,BeatLearning,AWAKENING,pending
-AI-hard-0019,9.428571,0.06,9.4,BeatLearning,AWAKENING,pending
-AI-hard-0021,10.117007,0.06,10.08,BeatLearning,AWAKENING,pending
-AI-hard-0022,10.805442,0.06,10.77,BeatLearning,AWAKENING,pending
-AI-hard-0023,11.004989,0.06,10.96,BeatLearning,AWAKENING,pending
-AI-hard-0024,11.284354,0.06,11.27,BeatLearning,AWAKENING,pending
-AI-hard-0026,11.573696,0.06,11.55,BeatLearning,AWAKENING,pending
-AI-hard-0027,11.85,0.06,11.85,BeatLearning,AWAKENING,pending
-AI-hard-0028,12.04,0.06,12.04,BeatLearning,AWAKENING,pending
-AI-hard-0030,13.0,0.06,13.0,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0031,13.399546,0.06,13.47,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0032,13.60907,0.06,13.68,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0033,14.706576,0.06,14.66,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0034,15.484807,0.06,15.43,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0035,15.674376,0.06,15.62,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0037,16.412698,0.06,16.39,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0038,17.609977,0.06,17.55,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0039,18.188662,0.06,18.15,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0040,18.777324,0.06,18.73,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0042,19.3161,0.06,19.3,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0043,20.293878,0.06,20.28,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0044,20.902494,0.06,20.87,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0045,21.311565,0.06,21.35,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0046,21.690703,0.06,21.64,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0047,22.269388,0.06,22.21,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0048,22.9,0.06,22.9,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0049,23.2,0.06,23.2,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0050,23.41678,0.06,23.37,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0051,24.404535,0.06,24.36,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0052,24.57415,0.06,24.54,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0053,24.963265,0.06,24.93,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0054,25.561905,0.06,25.51,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0055,25.931066,0.06,25.9,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0056,26.150567,0.06,26.08,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0057,26.509751,0.06,26.48,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0058,27.078458,0.06,27.07,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0059,27.46,0.06,27.46,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0061,28.066213,0.06,28.04,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0062,28.475283,0.06,28.42,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0063,28.864399,0.06,28.81,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0064,29.64263,0.06,29.58,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0066,30.031746,0.06,29.97,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0067,30.420862,0.06,30.37,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0069,30.999546,0.06,30.95,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0070,31.408617,0.06,31.34,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0071,31.947392,0.06,31.91,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0072,32.336508,0.06,32.3,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0073,32.745578,0.06,32.7,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0074,33.503855,0.06,33.47,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0075,33.673469,0.06,33.66,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0076,34.06,0.06,34.06,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0077,34.681179,0.06,34.62,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0078,34.850794,0.06,34.81,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0079,35.45941,0.06,35.4,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0080,35.639002,0.06,35.6,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0081,36.217687,0.06,36.18,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0082,36.606803,0.06,36.57,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0083,36.995918,0.06,36.96,BeatLearning,FIRST PASSAGE,pending
-AI-hard-0084,37.46,0.06,37.46,BeatLearning,RESONANCE,pending
-AI-hard-0085,37.74,0.06,37.74,BeatLearning,RESONANCE,pending
-AI-hard-0086,38.053515,0.06,38.04,BeatLearning,RESONANCE,pending
-AI-hard-0087,38.452608,0.06,38.52,BeatLearning,RESONANCE,pending
-AI-hard-0088,39.330612,0.06,39.28,BeatLearning,RESONANCE,pending
-AI-hard-0089,39.709751,0.06,39.67,BeatLearning,RESONANCE,pending
-AI-hard-0090,40.118821,0.06,40.07,BeatLearning,RESONANCE,pending
-AI-hard-0091,40.497959,0.06,40.46,BeatLearning,RESONANCE,pending
-AI-hard-0092,41.106576,0.06,41.04,BeatLearning,RESONANCE,pending
-AI-hard-0093,41.42,0.06,41.42,BeatLearning,RESONANCE,pending
-AI-hard-0094,41.745125,0.06,41.8,BeatLearning,RESONANCE,pending
-AI-hard-0095,42.3,0.06,42.3,BeatLearning,RESONANCE,pending
-AI-hard-0096,42.58,0.06,42.58,BeatLearning,RESONANCE,pending
-AI-hard-0097,42.832653,0.06,42.77,BeatLearning,RESONANCE,pending
-AI-hard-0098,43.411338,0.06,43.36,BeatLearning,RESONANCE,pending
-AI-hard-0099,43.760544,0.06,43.75,BeatLearning,RESONANCE,pending
-AI-hard-0100,44.159637,0.06,44.14,BeatLearning,RESONANCE,pending
-AI-hard-0101,44.768254,0.06,44.71,BeatLearning,RESONANCE,pending
-AI-hard-0102,45.15737,0.06,45.1,BeatLearning,RESONANCE,pending
-AI-hard-0103,45.526531,0.06,45.48,BeatLearning,RESONANCE,pending
-AI-hard-0104,45.935601,0.06,45.88,BeatLearning,RESONANCE,pending
-AI-hard-0105,46.12517,0.06,46.07,BeatLearning,RESONANCE,pending
-AI-hard-0106,46.544218,0.06,46.47,BeatLearning,RESONANCE,pending
-AI-hard-0107,46.873469,0.06,46.86,BeatLearning,RESONANCE,pending
-AI-hard-0108,47.482086,0.06,47.44,BeatLearning,RESONANCE,pending
-AI-hard-0109,47.871202,0.06,47.82,BeatLearning,RESONANCE,pending
-AI-hard-0110,48.260317,0.06,48.2,BeatLearning,RESONANCE,pending
-AI-hard-0111,48.439909,0.06,48.4,BeatLearning,RESONANCE,pending
-AI-hard-0112,49.018594,0.06,48.98,BeatLearning,RESONANCE,pending
-AI-hard-0113,49.597279,0.06,49.57,BeatLearning,RESONANCE,pending
-AI-hard-0114,49.796825,0.06,49.77,BeatLearning,RESONANCE,pending
-AI-hard-0115,50.06,0.06,50.06,BeatLearning,RESONANCE,pending
-AI-hard-0116,50.575057,0.06,50.52,BeatLearning,RESONANCE,pending
-AI-hard-0117,50.964172,0.06,50.92,BeatLearning,RESONANCE,pending
-AI-hard-0118,51.463039,0.06,51.5,BeatLearning,RESONANCE,pending
-AI-hard-0119,51.931973,0.06,51.9,BeatLearning,RESONANCE,pending
-AI-hard-0120,52.47,0.06,52.47,BeatLearning,RESONANCE,pending
-AI-hard-0121,53.119274,0.06,53.06,BeatLearning,RESONANCE,pending
-AI-hard-0122,53.468481,0.06,53.46,BeatLearning,RESONANCE,pending
-AI-hard-0123,53.668027,0.06,53.64,BeatLearning,RESONANCE,pending
-AI-hard-0124,54.077098,0.06,54.02,BeatLearning,RESONANCE,pending
-AI-hard-0125,54.66576,0.06,54.6,BeatLearning,RESONANCE,pending
-AI-hard-0126,55.054875,0.06,55.0,BeatLearning,RESONANCE,pending
-AI-hard-0127,56.022676,0.06,55.97,BeatLearning,RESONANCE,pending
-AI-hard-0128,56.411791,0.06,56.36,BeatLearning,RESONANCE,pending
-AI-hard-0129,56.79093,0.06,56.74,BeatLearning,RESONANCE,pending
-AI-hard-0130,57.160091,0.06,57.11,BeatLearning,RESONANCE,pending
-AI-hard-0131,57.339683,0.06,57.31,BeatLearning,RESONANCE,pending
-AI-hard-0132,57.948299,0.06,57.9,BeatLearning,RESONANCE,pending
-AI-hard-0133,58.31746,0.06,58.3,BeatLearning,RESONANCE,pending
-AI-hard-0135,59.105669,0.06,59.07,BeatLearning,RESONANCE,pending
-AI-hard-0136,59.494785,0.06,59.46,BeatLearning,RESONANCE,pending
-AI-hard-0137,59.76,0.06,59.76,BeatLearning,RESONANCE,pending
-AI-hard-0138,60.05,0.06,60.05,BeatLearning,RESONANCE,pending
-AI-hard-0139,60.6322,0.06,60.61,BeatLearning,RESONANCE,pending
-AI-hard-0140,60.931519,0.06,60.9,BeatLearning,RESONANCE,pending
-AI-hard-0141,61.230839,0.06,61.2,BeatLearning,RESONANCE,pending
-AI-hard-0142,61.530159,0.06,61.5,BeatLearning,RESONANCE,pending
-AI-hard-0143,61.809524,0.06,61.78,BeatLearning,RESONANCE,pending
-AI-hard-0144,62.228571,0.06,62.17,BeatLearning,PRESSURE,pending
-AI-hard-0145,62.597732,0.06,62.56,BeatLearning,PRESSURE,pending
-AI-hard-0146,63.06,0.06,63.06,BeatLearning,PRESSURE,pending
-AI-hard-0147,63.47,0.06,63.47,BeatLearning,PRESSURE,pending
-AI-hard-0148,64.353741,0.06,64.3,BeatLearning,PRESSURE,pending
-AI-hard-0149,64.543311,0.06,64.5,BeatLearning,PRESSURE,pending
-AI-hard-0150,64.722902,0.06,64.68,BeatLearning,PRESSURE,pending
-AI-hard-0151,64.942404,0.06,64.89,BeatLearning,PRESSURE,pending
-AI-hard-0153,66.089796,0.06,66.05,BeatLearning,PRESSURE,pending
-AI-hard-0154,66.468934,0.06,66.44,BeatLearning,PRESSURE,pending
-AI-hard-0155,67.067574,0.06,67.01,BeatLearning,PRESSURE,pending
-AI-hard-0156,67.426757,0.06,67.5,BeatLearning,PRESSURE,pending
-AI-hard-0157,67.805896,0.06,67.79,BeatLearning,PRESSURE,pending
-AI-hard-0158,68.01542,0.06,67.98,BeatLearning,PRESSURE,pending
-AI-hard-0159,68.394558,0.06,68.37,BeatLearning,PRESSURE,pending
-AI-hard-0160,68.614059,0.06,68.56,BeatLearning,PRESSURE,pending
-AI-hard-0161,68.923356,0.06,68.96,BeatLearning,PRESSURE,pending
-AI-hard-0162,69.372336,0.06,69.35,BeatLearning,PRESSURE,pending
-AI-hard-0163,69.95102,0.06,69.91,BeatLearning,PRESSURE,pending
-AI-hard-0164,70.360091,0.06,70.31,BeatLearning,PRESSURE,pending
-AI-hard-0165,70.739229,0.06,70.7,BeatLearning,PRESSURE,pending
-AI-hard-0166,71.10839,0.06,71.08,BeatLearning,PRESSURE,pending
-AI-hard-0167,71.497506,0.06,71.47,BeatLearning,PRESSURE,pending
-AI-hard-0168,71.896599,0.06,71.86,BeatLearning,PRESSURE,pending
-AI-hard-0169,72.086168,0.06,72.06,BeatLearning,PRESSURE,pending
-AI-hard-0170,72.465306,0.06,72.45,BeatLearning,PRESSURE,pending
-AI-hard-0171,72.844444,0.06,72.83,BeatLearning,PRESSURE,pending
-AI-hard-0172,73.263492,0.06,73.21,BeatLearning,PRESSURE,pending
-AI-hard-0173,73.64263,0.06,73.7,BeatLearning,PRESSURE,pending
-AI-hard-0174,74.221315,0.06,74.17,BeatLearning,PRESSURE,pending
-AI-hard-0175,74.77,0.06,74.77,BeatLearning,PRESSURE,pending
-AI-hard-0176,74.96,0.06,74.96,BeatLearning,PRESSURE,pending
-AI-hard-0177,75.26,0.06,75.26,BeatLearning,PRESSURE,pending
-AI-hard-0178,75.787755,0.06,75.72,BeatLearning,PRESSURE,pending
-AI-hard-0179,76.336508,0.06,76.3,BeatLearning,PRESSURE,pending
-AI-hard-0180,76.7,0.06,76.7,BeatLearning,PRESSURE,pending
-AI-hard-0181,76.935147,0.06,76.88,BeatLearning,PRESSURE,pending
-AI-hard-0182,77.294331,0.06,77.27,BeatLearning,PRESSURE,pending
-AI-hard-0183,77.723356,0.06,77.67,BeatLearning,PRESSURE,pending
-AI-hard-0184,78.092517,0.06,78.06,BeatLearning,PRESSURE,pending
-AI-hard-0185,78.691156,0.06,78.65,BeatLearning,PRESSURE,pending
-AI-hard-0186,78.880726,0.06,78.83,BeatLearning,PRESSURE,pending
-AI-hard-0187,79.249887,0.06,79.21,BeatLearning,PRESSURE,pending
-AI-hard-0189,80.048073,0.06,80.1,BeatLearning,PRESSURE,pending
-AI-hard-0190,80.826304,0.06,80.77,BeatLearning,PRESSURE,pending
-AI-hard-0191,81.205442,0.06,81.16,BeatLearning,PRESSURE,pending
-AI-hard-0192,81.385034,0.06,81.35,BeatLearning,PRESSURE,pending
-AI-hard-0193,81.754195,0.06,81.74,BeatLearning,PRESSURE,pending
-AI-hard-0194,82.372789,0.06,82.31,BeatLearning,PRESSURE,pending
-AI-hard-0195,82.74195,0.06,82.7,BeatLearning,PRESSURE,pending
-AI-hard-0196,83.131066,0.06,83.08,BeatLearning,PRESSURE,pending
-AI-hard-0197,83.520181,0.06,83.47,BeatLearning,PRESSURE,pending
-AI-hard-0198,84.078912,0.06,84.06,BeatLearning,PRESSURE,pending
-AI-hard-0199,84.46,0.06,84.46,BeatLearning,PRESSURE,pending
-AI-hard-0200,84.877098,0.06,84.84,BeatLearning,PRESSURE,pending
-AI-hard-0201,85.266213,0.06,85.22,BeatLearning,PRESSURE,pending
-AI-hard-0202,85.854875,0.06,85.8,BeatLearning,PRESSURE,pending
-AI-hard-0203,86.243991,0.06,86.18,BeatLearning,PRESSURE,pending
-AI-hard-0204,86.423583,0.06,86.47,BeatLearning,PRESSURE,pending
-AI-hard-0205,86.97,0.06,86.97,BeatLearning,PRESSURE,pending
-AI-hard-0206,87.391383,0.06,87.36,BeatLearning,THE HUSH,pending
-AI-hard-0207,87.790476,0.06,87.75,BeatLearning,THE HUSH,pending
-AI-hard-0208,88.32,0.06,88.32,BeatLearning,THE HUSH,pending
-AI-hard-0209,88.718367,0.06,88.68,BeatLearning,THE HUSH,pending
-AI-hard-0210,89.27,0.06,89.27,BeatLearning,THE HUSH,pending
-AI-hard-0211,89.97,0.06,89.97,BeatLearning,THE HUSH,pending
-AI-hard-0212,90.38458,0.06,90.36,BeatLearning,THE HUSH,pending
-AI-hard-0213,90.673923,0.06,90.65,BeatLearning,THE HUSH,pending
-AI-hard-0214,91.063039,0.06,91.04,BeatLearning,THE HUSH,pending
-AI-hard-0215,91.232653,0.06,91.21,BeatLearning,THE HUSH,pending
-AI-hard-0216,91.641723,0.06,91.6,BeatLearning,THE HUSH,pending
-AI-hard-0217,92.0,0.06,92.0,BeatLearning,THE HUSH,pending
-AI-hard-0218,92.519728,0.06,92.57,BeatLearning,THE HUSH,pending
-AI-hard-0219,92.888889,0.06,92.96,BeatLearning,THE HUSH,pending
-AI-hard-0220,93.567347,0.06,93.55,BeatLearning,THE HUSH,pending
-AI-hard-0221,93.93,0.06,93.93,BeatLearning,THE HUSH,pending
-AI-hard-0222,94.235828,0.06,94.31,BeatLearning,THE HUSH,pending
-AI-hard-0223,94.724717,0.06,94.7,BeatLearning,THE HUSH,pending
-AI-hard-0224,95.512925,0.06,95.48,BeatLearning,THE HUSH,pending
-AI-hard-0225,95.882086,0.06,95.86,BeatLearning,THE HUSH,pending
-AI-hard-0226,96.06,0.06,96.06,BeatLearning,THE HUSH,pending
-AI-hard-0227,96.440816,0.06,96.45,BeatLearning,THE HUSH,pending
-AI-hard-0228,96.849887,0.06,96.83,BeatLearning,THE HUSH,pending
-AI-hard-0229,97.448526,0.06,97.4,BeatLearning,THE HUSH,pending
-AI-hard-0230,97.8,0.06,97.8,BeatLearning,THE HUSH,pending
-AI-hard-0231,98.007256,0.06,97.97,BeatLearning,THE HUSH,pending
-AI-hard-0232,98.605896,0.06,98.57,BeatLearning,THE HUSH,pending
-AI-hard-0233,98.975057,0.06,98.96,BeatLearning,THE HUSH,pending
-AI-hard-0234,99.364172,0.06,99.34,BeatLearning,PURSUIT,pending
-AI-hard-0235,100.142404,0.06,100.11,BeatLearning,PURSUIT,pending
-AI-hard-0236,100.551474,0.06,100.5,BeatLearning,PURSUIT,pending
-AI-hard-0237,100.910658,0.06,100.89,BeatLearning,PURSUIT,pending
-AI-hard-0238,101.2,0.06,101.2,BeatLearning,PURSUIT,pending
-AI-hard-0239,101.678912,0.06,101.66,BeatLearning,PURSUIT,pending
-AI-hard-0240,102.1678,0.06,102.24,BeatLearning,PURSUIT,pending
-AI-hard-0241,102.447166,0.06,102.43,BeatLearning,PURSUIT,pending
-AI-hard-0242,103.085714,0.06,103.02,BeatLearning,PURSUIT,pending
-AI-hard-0243,103.7,0.06,103.7,BeatLearning,PURSUIT,pending
-AI-hard-0244,104.27,0.06,104.27,BeatLearning,PURSUIT,pending
-AI-hard-0245,104.771882,0.06,104.76,BeatLearning,PURSUIT,pending
-AI-hard-0246,105.111111,0.06,105.05,BeatLearning,PURSUIT,pending
-AI-hard-0247,106.128798,0.06,106.11,BeatLearning,PURSUIT,pending
-AI-hard-0248,106.907029,0.06,106.88,BeatLearning,PURSUIT,pending
-AI-hard-0249,107.495692,0.06,107.46,BeatLearning,PURSUIT,pending
-AI-hard-0250,107.85,0.06,107.85,BeatLearning,PURSUIT,pending
-AI-hard-0251,108.24,0.06,108.24,BeatLearning,PURSUIT,pending
-AI-hard-0252,108.453515,0.06,108.43,BeatLearning,PURSUIT,pending
-AI-hard-0253,109.560998,0.06,109.5,BeatLearning,PURSUIT,pending
-AI-hard-0254,109.79,0.06,109.79,BeatLearning,PURSUIT,pending
-AI-hard-0255,110.199546,0.06,110.17,BeatLearning,PURSUIT,pending
-AI-hard-0256,110.778231,0.06,110.76,BeatLearning,PURSUIT,pending
-AI-hard-0257,111.52,0.06,111.52,BeatLearning,PURSUIT,pending
-AI-hard-0258,111.9,0.06,111.9,BeatLearning,IRON DOOR,pending
-AI-hard-0259,112.514286,0.06,112.58,BeatLearning,IRON DOOR,pending
-AI-hard-0260,112.913379,0.06,112.87,BeatLearning,IRON DOOR,pending
-AI-hard-0261,113.28254,0.06,113.26,BeatLearning,IRON DOOR,pending
-AI-hard-0262,113.861224,0.06,113.85,BeatLearning,IRON DOOR,pending
-AI-hard-0263,114.080726,0.06,114.04,BeatLearning,IRON DOOR,pending
-AI-hard-0264,114.579592,0.06,114.61,BeatLearning,IRON DOOR,pending
-AI-hard-0265,114.829025,0.06,114.8,BeatLearning,IRON DOOR,pending
-AI-hard-0266,115.387755,0.06,115.4,BeatLearning,IRON DOOR,pending
-AI-hard-0267,115.637188,0.06,115.57,BeatLearning,IRON DOOR,pending
-AI-hard-0268,116.016327,0.06,115.97,BeatLearning,IRON DOOR,pending
-AI-hard-0270,116.754649,0.06,116.74,BeatLearning,IRON DOOR,pending
-AI-hard-0271,116.97415,0.06,116.94,BeatLearning,IRON DOOR,pending
-AI-hard-0272,117.38322,0.06,117.32,BeatLearning,IRON DOOR,pending
-AI-hard-0273,117.921995,0.06,117.9,BeatLearning,IRON DOOR,pending
-AI-hard-0274,118.2,0.06,118.2,BeatLearning,IRON DOOR,pending
-AI-hard-0275,118.54059,0.06,118.48,BeatLearning,IRON DOOR,pending
-AI-hard-0276,118.730159,0.06,118.67,BeatLearning,IRON DOOR,pending
-AI-hard-0277,118.919728,0.06,118.86,BeatLearning,IRON DOOR,pending
-AI-hard-0278,119.318821,0.06,119.26,BeatLearning,IRON DOOR,pending
-AI-hard-0279,119.887528,0.06,119.83,BeatLearning,IRON DOOR,pending
-AI-hard-0280,120.057143,0.06,120.04,BeatLearning,IRON DOOR,pending
-AI-hard-0281,120.655782,0.06,120.6,BeatLearning,IRON DOOR,pending
-AI-hard-0282,120.835374,0.06,120.9,BeatLearning,IRON DOOR,pending
-AI-hard-0283,121.28,0.06,121.28,BeatLearning,IRON DOOR,pending
-AI-hard-0284,122.312018,0.06,122.35,BeatLearning,IRON DOOR,pending
-AI-hard-0285,122.54,0.06,122.54,BeatLearning,IRON DOOR,pending
-AI-hard-0286,123.150113,0.06,123.11,BeatLearning,IRON DOOR,pending
-AI-hard-0287,123.539229,0.06,123.5,BeatLearning,IRON DOOR,pending
-AI-hard-0288,123.918367,0.06,123.9,BeatLearning,IRON DOOR,pending
-AI-hard-0289,124.117914,0.06,124.08,BeatLearning,IRON DOOR,pending
-AI-hard-0290,124.526984,0.06,124.47,BeatLearning,IRON DOOR,pending
-AI-hard-0291,124.906122,0.06,124.86,BeatLearning,IRON DOOR,pending
-AI-hard-0292,125.295238,0.06,125.24,BeatLearning,IRON DOOR,pending
-AI-hard-0293,125.664399,0.06,125.63,BeatLearning,IRON DOOR,pending
-AI-hard-0294,126.073469,0.06,126.01,BeatLearning,IRON DOOR,pending
-AI-hard-0295,126.6322,0.06,126.7,BeatLearning,IRON DOOR,pending
-AI-hard-0296,127.021315,0.06,126.98,BeatLearning,IRON DOOR,pending
-AI-hard-0297,127.580045,0.06,127.56,BeatLearning,IRON DOOR,pending
-AI-hard-0298,127.799546,0.06,127.76,BeatLearning,IRON DOOR,pending
-AI-hard-0299,128.078912,0.06,128.14,BeatLearning,IRON DOOR,pending
-AI-hard-0300,128.547846,0.06,128.53,BeatLearning,IRON DOOR,pending
-AI-hard-0301,129.136508,0.06,129.11,BeatLearning,IRON DOOR,pending
-AI-hard-0302,129.545578,0.06,129.5,BeatLearning,IRON DOOR,pending
-AI-hard-0303,129.8,0.06,129.8,BeatLearning,IRON DOOR,pending
-AI-hard-0304,130.1,0.06,130.1,BeatLearning,IRON DOOR,pending
-AI-hard-0306,130.423583,0.06,130.46,BeatLearning,IRON DOOR,pending
-AI-hard-0309,131.640816,0.06,131.63,BeatLearning,IRON DOOR,pending
-AI-hard-0310,132.139683,0.06,132.2,BeatLearning,IRON DOOR,pending
-AI-hard-0311,132.98,0.06,132.98,BeatLearning,IRON DOOR,pending
-AI-hard-0312,133.576417,0.06,133.55,BeatLearning,IRON DOOR,pending
+noteId,rawAiTime,previousTime,currentTime,shiftMs,windowSeconds,sourceRetimed,section,source,reviewStatus,teamReview,reviewer,reviewedUtc,reason
+"AI-normal-0003",1.360000,1.360000,1.360000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0004",1.630000,1.630000,1.630000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0005",2.220000,2.220000,2.220000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0006",2.420000,2.420000,2.420000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0008",2.610000,2.610000,2.610000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0007",2.810000,2.810000,2.810000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0008",3.200000,3.242630,3.242630,42.630000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0010",3.680000,3.741497,3.741497,61.497000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0011",4.360000,4.360000,4.360000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0011",4.890000,4.948753,4.948753,58.753000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0012",5.530000,5.577324,5.577324,47.324000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0013",5.920000,5.920000,5.920000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0014",6.600000,6.624943,6.624943,24.943000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0017",7.070000,7.070000,7.070000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0018",7.290000,7.290000,7.290000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0017",7.660000,7.682540,7.682540,22.540000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0018",8.060000,8.121542,8.121542,61.542000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0019",8.560000,8.600454,8.600454,40.454000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0020",8.920000,8.920000,8.920000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0021",9.400000,9.428571,9.428571,28.571000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0022",9.900000,9.957370,9.957370,57.370000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0025",10.370000,10.326531,10.326531,-43.469000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0024",10.770000,10.805442,10.805442,35.442000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0025",10.960000,11.004989,11.004989,44.989000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0026",11.270000,11.284354,11.284354,14.354000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0028",11.550000,11.573696,11.573696,23.696000,0.060000,true,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0029",11.850000,11.850000,11.850000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0029",12.480000,12.480000,12.480000,0.000000,0.060000,false,"AWAKENING","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0031",13.000000,13.000000,13.000000,0.000000,0.060000,false,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0033",13.200000,13.180045,13.180045,-19.955000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0032",13.470000,13.399546,13.399546,-70.454000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0033",13.680000,13.609070,13.609070,-70.930000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0035",14.070000,14.107937,14.107937,37.937000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0034",14.660000,14.706576,14.706576,46.576000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0035",15.430000,15.484807,15.484807,54.807000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0036",15.620000,15.674376,15.674376,54.376000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0037",16.200000,16.253061,16.253061,53.061000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0040",17.170000,17.210884,17.210884,40.884000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0039",17.550000,17.609977,17.609977,59.977000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0040",18.150000,18.188662,18.188662,38.662000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0041",18.720000,18.777324,18.777324,57.324000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0044",19.110000,19.166440,19.166440,56.440000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0044",19.880000,19.934694,19.934694,54.694000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0046",20.280000,20.293878,20.293878,13.878000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0047",20.650000,20.712925,20.712925,62.925000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0048",20.870000,20.902494,20.902494,32.494000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0049",21.360000,21.311565,21.311565,-48.435000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0050",21.640000,21.690703,21.690703,50.703000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0051",22.210000,22.269388,22.269388,59.388000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0052",22.900000,22.900000,22.900000,0.000000,0.060000,false,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0053",23.200000,23.200000,23.200000,0.000000,0.060000,false,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0054",23.370000,23.416780,23.416780,46.780000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0055",23.760000,23.825850,23.825850,65.850000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0055",24.360000,24.404535,24.404535,44.535000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0056",24.540000,24.574150,24.574150,34.150000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0057",24.930000,24.963265,24.963265,33.265000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0058",25.510000,25.561905,25.561905,51.905000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0059",25.900000,25.931066,25.931066,31.066000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0060",26.080000,26.150567,26.150567,70.567000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0061",26.480000,26.509751,26.509751,29.751000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0062",27.070000,27.078458,27.078458,8.458000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0063",27.460000,27.460000,27.460000,0.000000,0.060000,false,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0064",27.850000,27.906576,27.906576,56.576000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0066",28.420000,28.475283,28.475283,55.283000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0067",28.810000,28.864399,28.864399,54.399000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0068",29.580000,29.642630,29.642630,62.630000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0070",29.970000,30.031746,30.031746,61.746000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0071",30.370000,30.420862,30.420862,50.862000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0073",30.950000,30.999546,30.999546,49.546000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0074",31.340000,31.408617,31.408617,68.617000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0075",31.910000,31.947392,31.947392,37.392000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0076",32.300000,32.336508,32.336508,36.508000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0077",32.700000,32.745578,32.745578,45.578000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0079",33.070000,33.124717,33.124717,54.717000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0078",33.470000,33.503855,33.503855,33.855000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0079",33.660000,33.673469,33.673469,13.469000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0080",34.060000,34.060000,34.060000,0.000000,0.060000,false,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0081",34.620000,34.681179,34.681179,61.179000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0082",34.810000,34.850794,34.850794,40.794000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0083",35.400000,35.459410,35.459410,59.410000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0084",35.600000,35.639002,35.639002,39.002000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0085",36.180000,36.217687,36.217687,37.687000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0087",36.370000,36.407256,36.407256,37.256000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0086",36.570000,36.606803,36.606803,36.803000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0087",36.960000,36.995918,36.995918,35.918000,0.060000,true,"FIRST PASSAGE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0088",37.460000,37.460000,37.460000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0089",37.740000,37.740000,37.740000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0090",38.040000,38.053515,38.053515,13.515000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0091",38.520000,38.452608,38.452608,-67.392000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0092",39.280000,39.330612,39.330612,50.612000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0093",39.670000,39.709751,39.709751,39.751000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0094",40.070000,40.118821,40.118821,48.821000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0095",40.460000,40.497959,40.497959,37.959000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0096",41.040000,41.106576,41.106576,66.576000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0097",41.420000,41.420000,41.420000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0098",41.800000,41.745125,41.745125,-54.875000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0099",42.300000,42.300000,42.300000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0100",42.580000,42.580000,42.580000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0101",42.770000,42.832653,42.832653,62.653000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0102",42.970000,43.002268,43.002268,32.268000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0103",43.360000,43.411338,43.411338,51.338000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0104",43.750000,43.760544,43.760544,10.544000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0105",44.140000,44.159637,44.159637,19.637000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0106",44.710000,44.768254,44.768254,58.254000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0107",45.100000,45.157370,45.157370,57.370000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0108",45.480000,45.526531,45.526531,46.531000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0109",45.880000,45.935601,45.935601,55.601000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0110",46.070000,46.125170,46.125170,55.170000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0111",46.470000,46.544218,46.544218,74.218000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0112",46.860000,46.873469,46.873469,13.469000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0113",47.440000,47.482086,47.482086,42.086000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0114",47.820000,47.871202,47.871202,51.202000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0115",48.200000,48.260317,48.260317,60.317000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0116",48.400000,48.439909,48.439909,39.909000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0117",48.980000,49.018594,49.018594,38.594000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0120",49.370000,49.407710,49.407710,37.710000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0118",49.570000,49.597279,49.597279,27.279000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0119",49.770000,49.796825,49.796825,26.825000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0120",50.060000,50.060000,50.060000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0121",50.520000,50.575057,50.575057,55.057000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0122",50.920000,50.964172,50.964172,44.172000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0124",51.120000,51.163719,51.163719,43.719000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0123",51.500000,51.463039,51.463039,-36.961000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0124",51.900000,51.931973,51.931973,31.973000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0125",52.080000,52.121542,52.121542,41.542000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0126",52.470000,52.470000,52.470000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0127",52.870000,52.909751,52.909751,39.751000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0121",53.060000,53.119274,53.119274,59.274000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0128",53.460000,53.468481,53.468481,8.481000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0129",53.640000,53.668027,53.668027,28.027000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0130",54.020000,54.077098,54.077098,57.098000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0131",54.600000,54.665760,54.665760,65.760000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0132",55.000000,55.054875,55.054875,54.875000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0133",55.970000,56.022676,56.022676,52.676000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0134",56.350000,56.411791,56.411791,61.791000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0135",56.740000,56.790930,56.790930,50.930000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0136",57.110000,57.160091,57.160091,50.091000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0137",57.270000,57.339683,57.339683,69.683000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0138",57.900000,57.948299,57.948299,48.299000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0139",58.300000,58.317460,58.317460,17.460000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0141",59.070000,59.105669,59.105669,35.669000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0142",59.460000,59.494785,59.494785,34.785000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0143",59.760000,59.760000,59.760000,0.000000,0.060000,false,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0144",60.220000,60.282993,60.282993,62.993000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0145",60.610000,60.632200,60.632200,22.200000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0146",60.900000,60.931519,60.931519,31.519000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0141",61.200000,61.230839,61.230839,30.839000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0142",61.500000,61.530159,61.530159,30.159000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0147",61.780000,61.809524,61.809524,29.524000,0.060000,true,"RESONANCE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0148",62.170000,62.228571,62.228571,58.571000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0149",62.560000,62.597732,62.597732,37.732000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0150",63.060000,63.060000,63.060000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0151",63.470000,63.470000,63.470000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0152",64.300000,64.353741,64.353741,53.741000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0153",64.690000,64.722902,64.722902,32.902000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0154",64.890000,64.942404,64.942404,52.404000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0155",65.270000,65.291610,65.291610,21.610000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0156",65.860000,65.870295,65.870295,10.295000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0157",66.050000,66.089796,66.089796,39.796000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0158",66.440000,66.468934,66.468934,28.934000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0159",67.000000,67.067574,67.067574,67.574000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0160",67.500000,67.426757,67.426757,-73.243000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0161",67.790000,67.805896,67.805896,15.896000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0162",67.980000,68.015420,68.015420,35.420000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0163",68.370000,68.394558,68.394558,24.558000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0164",68.560000,68.614059,68.614059,54.059000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0165",68.960000,68.923356,68.923356,-36.644000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0166",69.350000,69.372336,69.372336,22.336000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0167",69.910000,69.951020,69.951020,41.020000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0168",70.310000,70.360091,70.360091,50.091000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0169",70.700000,70.739229,70.739229,39.229000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0170",71.080000,71.108390,71.108390,28.390000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0171",71.470000,71.497506,71.497506,27.506000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0172",71.860000,71.896599,71.896599,36.599000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0173",72.060000,72.086168,72.086168,26.168000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0174",72.450000,72.465306,72.465306,15.306000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0175",72.830000,72.844444,72.844444,14.444000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0176",73.210000,73.263492,73.263492,53.492000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0178",73.700000,73.642630,73.642630,-57.370000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0178",74.170000,74.221315,74.221315,51.315000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0179",74.770000,74.770000,74.770000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0180",74.960000,74.960000,74.960000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0177",75.260000,75.260000,75.260000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0182",75.720000,75.787755,75.787755,67.755000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0183",76.110000,76.156916,76.156916,46.916000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0179",76.300000,76.336508,76.336508,36.508000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0184",76.700000,76.700000,76.700000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0185",76.880000,76.935147,76.935147,55.147000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0186",77.270000,77.294331,77.294331,24.331000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0187",77.670000,77.723356,77.723356,53.356000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0188",78.060000,78.092517,78.092517,32.517000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0189",78.640000,78.691156,78.691156,51.156000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0190",78.830000,78.880726,78.880726,50.726000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0191",79.210000,79.249887,79.249887,39.887000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0192",79.900000,79.900000,79.900000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0195",80.570000,80.570000,80.570000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0194",80.770000,80.826304,80.826304,56.304000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0195",81.160000,81.205442,81.205442,45.442000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0196",81.350000,81.385034,81.385034,35.034000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0197",81.550000,81.594558,81.594558,44.558000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0198",82.310000,82.372789,82.372789,62.789000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0199",82.700000,82.741950,82.741950,41.950000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0200",83.070000,83.131066,83.131066,61.066000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0201",83.470000,83.520181,83.520181,50.181000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0202",84.060000,84.078912,84.078912,18.912000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0203",84.460000,84.460000,84.460000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0204",84.840000,84.877098,84.877098,37.098000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0205",85.220000,85.266213,85.266213,46.213000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0206",85.600000,85.600000,85.600000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0207",85.800000,85.854875,85.854875,54.875000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0207",86.180000,86.243991,86.243991,63.991000,0.060000,true,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0209",86.970000,86.970000,86.970000,0.000000,0.060000,false,"PRESSURE","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0210",87.360000,87.391383,87.391383,31.383000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0211",87.750000,87.790476,87.790476,40.476000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0212",88.320000,88.320000,88.320000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0213",88.680000,88.718367,88.718367,38.367000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0214",89.270000,89.270000,89.270000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0217",89.670000,89.706122,89.706122,36.122000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0215",89.970000,89.970000,89.970000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0216",90.360000,90.384580,90.384580,24.580000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0217",90.640000,90.673923,90.673923,33.923000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0218",91.030000,91.063039,91.063039,33.039000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0219",91.210000,91.232653,91.232653,22.653000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0220",91.600000,91.641723,91.641723,41.723000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0221",92.000000,92.000000,92.000000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0222",92.570000,92.519728,92.519728,-50.272000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0223",92.960000,92.888889,92.888889,-71.111000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0225",93.160000,93.088435,93.088435,-71.565000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0224",93.360000,93.417687,93.417687,57.687000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0225",93.930000,93.930000,93.930000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0226",94.310000,94.235828,94.235828,-74.172000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0227",94.700000,94.724717,94.724717,24.717000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0230",95.080000,95.113832,95.113832,33.832000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0228",95.480000,95.512925,95.512925,32.925000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0229",95.860000,95.882086,95.882086,22.086000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0230",96.060000,96.060000,96.060000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0231",96.450000,96.440816,96.440816,-9.184000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0232",96.830000,96.849887,96.849887,19.887000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0233",97.400000,97.448526,97.448526,48.526000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0234",97.800000,97.800000,97.800000,0.000000,0.060000,false,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0235",97.970000,98.007256,98.007256,37.256000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0236",98.570000,98.605896,98.605896,35.896000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0237",98.960000,98.975057,98.975057,15.057000,0.060000,true,"THE HUSH","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0238",99.340000,99.364172,99.364172,24.172000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0242",99.630000,99.663492,99.663492,33.492000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0239",99.920000,99.962812,99.962812,42.812000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0240",100.110000,100.142404,100.142404,32.404000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0241",100.500000,100.551474,100.551474,51.474000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0242",100.900000,100.910658,100.910658,10.658000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0243",101.200000,101.200000,101.200000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0244",101.660000,101.678912,101.678912,18.912000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0240",102.240000,102.167800,102.167800,-72.200000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0245",102.430000,102.447166,102.447166,17.166000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0246",103.020000,103.085714,103.085714,65.714000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0247",103.700000,103.700000,103.700000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0248",104.270000,104.270000,104.270000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0249",104.760000,104.771882,104.771882,11.882000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0250",105.050000,105.111111,105.111111,61.111000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0251",106.110000,106.128798,106.128798,18.798000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0252",106.400000,106.328345,106.328345,-71.655000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0253",106.880000,106.907029,106.907029,27.029000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0254",107.460000,107.495692,107.495692,35.692000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0255",107.850000,107.850000,107.850000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0256",108.240000,108.240000,108.240000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0257",108.430000,108.453515,108.453515,23.515000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0258",109.000000,109.032200,109.032200,32.200000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0259",109.500000,109.560998,109.560998,60.998000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0260",109.790000,109.790000,109.790000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0261",110.170000,110.199546,110.199546,29.546000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0266",110.560000,110.568707,110.568707,8.707000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0262",110.760000,110.778231,110.778231,18.231000,0.060000,true,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0263",111.520000,111.520000,111.520000,0.000000,0.060000,false,"PURSUIT","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0264",111.900000,111.900000,111.900000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0265",112.580000,112.514286,112.514286,-65.714000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0266",112.870000,112.913379,112.913379,43.379000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0267",113.260000,113.282540,113.282540,22.540000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0268",113.850000,113.861224,113.861224,11.224000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0269",114.040000,114.080726,114.080726,40.726000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0273",114.230000,114.270295,114.270295,40.295000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0270",114.610000,114.579592,114.579592,-30.408000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0271",114.800000,114.829025,114.829025,29.025000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0272",115.400000,115.387755,115.387755,-12.245000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0273",115.570000,115.637188,115.637188,67.188000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0274",115.970000,116.016327,116.016327,46.327000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0276",116.740000,116.754649,116.754649,14.649000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0277",116.940000,116.974150,116.974150,34.150000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0278",117.320000,117.383220,117.383220,63.220000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0279",117.900000,117.921995,117.921995,21.995000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0280",118.200000,118.200000,118.200000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0281",118.480000,118.540590,118.540590,60.590000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0282",118.670000,118.730159,118.730159,60.159000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0283",118.860000,118.919728,118.919728,59.728000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0284",119.260000,119.318821,119.318821,58.821000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0285",119.830000,119.887528,119.887528,57.528000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0286",120.040000,120.057143,120.057143,17.143000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0287",120.600000,120.655782,120.655782,55.782000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-hard-0283",121.280000,121.280000,121.280000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0290",121.770000,121.813152,121.813152,43.152000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0291",122.350000,122.312018,122.312018,-37.982000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0292",122.540000,122.540000,122.540000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0293",123.110000,123.150113,123.150113,40.113000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0294",123.500000,123.539229,123.539229,39.229000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0295",123.900000,123.918367,123.918367,18.367000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0296",124.080000,124.117914,124.117914,37.914000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0297",124.470000,124.526984,124.526984,56.984000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0298",124.860000,124.906122,124.906122,46.122000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0299",125.240000,125.295238,125.295238,55.238000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0302",125.440000,125.464853,125.464853,24.853000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0300",125.630000,125.664399,125.664399,34.399000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0301",126.010000,126.073469,126.073469,63.469000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0302",126.700000,126.632200,126.632200,-67.800000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0303",126.980000,127.021315,127.021315,41.315000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0304",127.560000,127.580045,127.580045,20.045000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0305",127.760000,127.799546,127.799546,39.546000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0306",128.140000,128.078912,128.078912,-61.088000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0307",128.530000,128.547846,128.547846,17.846000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0308",129.110000,129.136508,129.136508,26.508000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0309",129.500000,129.545578,129.545578,45.578000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0310",129.800000,129.800000,129.800000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0311",130.100000,130.100000,130.100000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0313",130.460000,130.423583,130.423583,-36.417000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0313",130.660000,130.712925,130.712925,52.925000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0314",130.960000,130.902494,130.902494,-57.506000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0315",131.240000,131.251701,131.251701,11.701000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0316",131.630000,131.640816,131.640816,10.816000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0317",132.200000,132.139683,132.139683,-60.317000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0318",132.980000,132.980000,132.980000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0319",133.270000,133.317007,133.317007,47.007000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-normal-0319",133.550000,133.576417,133.576417,26.417000,0.060000,true,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0320",133.940000,133.940000,133.940000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0321",134.620000,134.620000,134.620000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0322",134.900000,134.900000,134.900000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""
+"AI-easy-0323",135.270000,135.270000,135.270000,0.000000,0.060000,false,"IRON DOOR","BeatLearning","selection_pending","pending","","",""

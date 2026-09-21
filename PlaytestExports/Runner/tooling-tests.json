@@ -1,0 +1,9 @@
+[
+  "PASS duplicate time in visible document is rejected",
+  "PASS failed validation does not replace edits with Resources",
+  "PASS valid edited document reports its own note count",
+  "PASS validation preserves the edited document",
+  "PASS current chart and baseline validation are separate actions",
+  "PASS legacy autoplay exits when an enemy deadline ends the run",
+  "PASS ended legacy autoplay does not append repeated input logs"
+]

@@ -1,4 +1,4 @@
-138 checks passed
+173 checks passed
 PASS lab rejects invalid maxWindow -0.1
 PASS playback rejects invalid maxWindow -0.1
 PASS lab rejects invalid maxWindow 0
@@ -30,6 +30,41 @@ PASS required fields and rule safety case 13
 PASS required fields and rule safety case 14
 PASS required fields and rule safety case 15
 PASS required fields and rule safety case 16
+PASS fixture passes former future-only density count
+PASS late pending note makes six visible rings
+PASS lab rejects late-window overlap
+PASS playback rejects same late-window overlap
+PASS explicit visible-note cap is honored by lab and playback
+PASS easy fixture has five pending rings
+PASS easy defaults to four visible rings
+PASS playback enforces easy four-ring limit
+PASS first note at 1.2 seconds and four-ring limit accepted
+PASS restored intro note is hittable in safe runner practice
+PASS practice intro does not count toward main score
+PASS restored practice misses remain harmless
+PASS closed visibility intervals count touching boundaries
+PASS visibility ends after inclusive late boundary
+PASS visibility uses neighbor-capped actual judgement windows
+PASS ordinary preview allows spaced chart
+PASS lab detects density after preview increases to two seconds
+PASS playback detects actual two-second preview density
+PASS metadata preview applies when no runtime override supplied
+PASS actual preview overrides document recommendation consistently
+PASS reject invalid metadata preview -0.1
+PASS reject invalid metadata preview NaN
+PASS reject invalid metadata preview Infinity
+PASS reject invalid metadata preview -Infinity
+PASS reject negative visible-note metadata
+PASS reject visible-note cap beyond renderer capacity
+PASS reject zero explicit preview override
+PASS reject nonfinite explicit preview override
+PASS lab rejects insufficient spacing
+PASS playback rejects insufficient spacing
+PASS lab rejects missing burst recovery
+PASS playback rejects missing burst recovery
+PASS explicit burst limit uses shared validation
+PASS runner density constraints do not alter legacy playback
+PASS legacy encounter validation remains active
 PASS easy density, IDs, duration, four-hit recovery
 PASS easy inclusive boundary -1
 PASS easy outside boundary -1

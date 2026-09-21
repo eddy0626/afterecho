@@ -59,6 +59,10 @@ Thumbs.db
 # Local review packages
 /Deliverables/
 
+# Reproducible candidate stages and local rollback snapshots
+/PlaytestExports/Runner/staging/
+/PlaytestExports/Runner/chart-backups/
+
 __pycache__/
 *.pyc
 

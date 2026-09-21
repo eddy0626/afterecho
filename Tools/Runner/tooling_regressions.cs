@@ -16,17 +16,17 @@ try
     var edited=(Newtonsoft.Json.Linq.JObject)original.DeepClone();
     edited["notes"][1]["time"]=(double)edited["notes"][0]["time"];
     documentField.SetValue(lab,edited);validate.Invoke(lab,null);
-    check(status.text.StartsWith("현재 편집 채보 검증 실패:"),"duplicate time in visible document is rejected");
+    check(status.text.StartsWith("현재 편집 채보 검사 실패:"),"duplicate time in visible document is rejected");
     check((double)edited["notes"][1]["time"]==(double)edited["notes"][0]["time"],"failed validation does not replace edits with Resources");
 
     edited=(Newtonsoft.Json.Linq.JObject)original.DeepClone();
     ((Newtonsoft.Json.Linq.JArray)edited["notes"]).RemoveAt(0);
     int count=((Newtonsoft.Json.Linq.JArray)edited["notes"]).Count;
     documentField.SetValue(lab,edited);validate.Invoke(lab,null);
-    check(status.text.StartsWith("현재 편집 채보 검증 통과")&&status.text.Contains(count+" notes"),"valid edited document reports its own note count");
+    check(status.text.StartsWith("현재 편집 채보 기술 검사 통과")&&status.text.Contains(count+" notes"),"valid edited document reports its own note count");
     check(object.ReferenceEquals(documentField.GetValue(lab),edited),"validation preserves the edited document");
     var buttons=UnityEngine.UIElements.UQueryExtensions.Query<UnityEngine.UIElements.Button>(lab.rootVisualElement).ToList();
-    check(System.Linq.Enumerable.Any(buttons,b=>b.text=="현재 채보 검증")&&System.Linq.Enumerable.Any(buttons,b=>b.text=="기본 채보 회귀검사"),"current chart and baseline validation are separate actions");
+    check(System.Linq.Enumerable.Any(buttons,b=>b.text=="현재 채보 기술 검사")&&System.Linq.Enumerable.Any(buttons,b=>b.text=="기본 채보 회귀검사"),"current chart and baseline validation are separate actions");
 
     var chart=Afterecho.ChartData.Load(UnityEngine.Resources.Load<UnityEngine.TextAsset>("Afterecho/Charts/easy").text);
     var stage=UnityEngine.JsonUtility.FromJson<Afterecho.StageData>(UnityEngine.Resources.Load<UnityEngine.TextAsset>("Afterecho/stage").text);

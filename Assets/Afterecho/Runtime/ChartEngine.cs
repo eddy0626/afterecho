@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Afterecho
 {
     [Serializable] public class SongInfo { public string id, title, sha256; public double duration; }
-    [Serializable] public class ChartRules { public double minGap, maxWindow, fastGap, recoveryGap; public int health, burstLimit; }
+    [Serializable] public class ChartRules { public double minGap, maxWindow, fastGap, recoveryGap, previewSeconds; public int health, burstLimit, maxVisibleNotes; }
     [Serializable] public class ChartNote { public string id, source, reviewStatus, teamReview, section, role, encounter; public double time, originalTime, window; }
     [Serializable] public class EncounterData { public string id; public int beat, hp; public double warning, start, end; public string[] noteIds; }
     [Serializable] public class ChartData
@@ -151,7 +151,9 @@ namespace Afterecho
         {
             Advance(t);
             if (Status != RunStatus.Running) return Log(t, -1, "ended", source);
-            if ((!IsRunner || PracticeEnabled) && t < Stage.beats[Stage.listenBeats] - .1) return Log(t, -1, "listen", source);
+            // Runner already has a separate four-beat count-in. Its restored intro
+            // notes must remain hittable in safe practice as well as the main run.
+            if (!IsRunner && t < Stage.beats[Stage.listenBeats] - .1) return Log(t, -1, "listen", source);
             if (t - lastInput < .025) return Log(t, -1, "bounce", source);
             lastInput = t;
             int closest = -1; double distance = double.PositiveInfinity;

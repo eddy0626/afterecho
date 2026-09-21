@@ -1,0 +1,23 @@
+{
+  "format": "afterecho-runner-selection-rules-v2",
+  "previewSeconds": 1.2,
+  "firstNoteSeconds": 1.2,
+  "endingMarginSeconds": 0.12,
+  "phraseBeats": 8,
+  "beamWidth": 48,
+  "eventToleranceSeconds": 0.02,
+  "timingPolicy": "inherit_prior_pending_review",
+  "scoring": {
+    "candidateBase": 100,
+    "sourceConsensus": 65,
+    "attackStrength": 35,
+    "beatProximity": 25,
+    "repeatedInterval": 20,
+    "overPhraseTarget": 350
+  },
+  "difficulties": {
+    "easy": {"minGap": 0.30, "maxWindow": 0.10, "fastGap": 0.39, "recoveryGap": 0.55, "burstLimit": 4, "maxVisibleNotes": 4, "targetNps": 1.9},
+    "normal": {"minGap": 0.22, "maxWindow": 0.08, "fastGap": 0.33, "recoveryGap": 0.44, "burstLimit": 4, "maxVisibleNotes": 5, "targetNps": 2.25},
+    "hard": {"minGap": 0.16, "maxWindow": 0.06, "fastGap": 0.27, "recoveryGap": 0.40, "burstLimit": 4, "maxVisibleNotes": 5, "targetNps": 2.65}
+  }
+}

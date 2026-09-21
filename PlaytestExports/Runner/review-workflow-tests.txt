@@ -1,0 +1,35 @@
+34 review workflow checks passed
+PASS technical refresh does not approve any note
+PASS approval requires reviewer
+PASS approval requires reason
+PASS approval requires explicit human confirmation
+PASS rejected approval attempts create no approval history
+PASS large move uses actual adjacent-limited judgement window
+PASS explicit note review approves current timing
+PASS review stores raw and previous timing plus retiming evidence
+PASS review records stable ID and UTC timestamp
+PASS editing approved timing invalidates its approval
+PASS edit preserves historic approval and appends invalidation
+PASS editing never overwrites raw or previous corrected timing
+PASS automatic invalidation is identified as system edit
+PASS all current approvals still require separate training approval
+PASS phrase review stores shared identity and range for each note
+PASS rejected phrase cannot remain globally approved
+PASS deletion preserves history and invalidates removed approval
+PASS manual note is never labeled AI generated or source-retimed
+PASS unknown nested model provenance survives edits and review
+PASS imported approved label without human evidence is unverified
+PASS two missing review IDs cannot validate one another
+PASS external timing edit invalidates stale evidence without UI callback
+PASS changed raw provenance invalidates old comparison evidence
+PASS A/B compares the exact same retained AI note IDs
+PASS A/B expands both shared endpoints instead of dropping shifted source notes
+PASS A/B explicitly counts manual notes excluded from both variants
+PASS A/B construction does not alter judgement times or review state
+PASS A/B preserves original and current times without retiming or quantizing
+PASS invalid comparison range rejected
+PASS nonfinite timing edit rejected
+PASS comparison click starts are pre-rendered at exact rounded sample positions
+PASS comparison buffer includes exactly scheduled four-beat preparation
+PASS click buffer timing is deterministic and independent of Editor update frequency
+PASS out-of-range click is rejected instead of silently omitted
