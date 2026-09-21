@@ -1,0 +1,55 @@
+{
+  "character": {
+    "service": "GPT image generation",
+    "original": true,
+    "path": "Assets/Afterecho/Runner/Art/RunnerReference_GPT.png"
+  },
+  "styleDirection": {
+    "service": "GPT image generation",
+    "path": "ArtProduction/Runner/GPT_StyleDirection.png",
+    "usage": "reference only; gameplay UI is native uGUI"
+  },
+  "motionKeyposes": {
+    "service": "Grok Imagine",
+    "path": "ArtProduction/Runner/Grok_MotionKeyposes.jpg",
+    "usage": "run, sprint, fall and recovery pose reference"
+  },
+  "sprint": {
+    "service": "Gameaify Sprite Studio",
+    "sourceExport": "frames_5e6c2cb1_256px_1789962760750.zip",
+    "keyposes": "reference-character sprint preset",
+    "frames": 63
+  },
+  "fall": {
+    "service": "Gameaify Sprite Studio",
+    "sourceExport": "frames_1a228ff8_256px_1789963892616.zip",
+    "keyposes": "three layout-sliced Grok poses; in-place interpolation",
+    "selectedFrames": 12
+  },
+  "recovery": {
+    "service": "Gameaify Sprite Studio",
+    "source": "validated fall frames played in reverse",
+    "selectedFrames": 12
+  },
+  "discardedFall": {
+    "sourceExport": "frames_a4931ee0_256px_1789963369450.zip",
+    "reason": "preset changed character proportions and face; not used at runtime"
+  },
+  "unityPreparation": {
+    "format": "256px RGBA transparent frames",
+    "footBaseline": "per-frame alpha footprint measured in Editor and serialized in new scene",
+    "animationPlayback": "active gameplay time; pause freezes frame progression",
+    "hitstop": false
+  },
+  "humanReview": {
+    "technical": "checked",
+    "oneHandAndDeviceLatency": "team_pending"
+  },
+  "run": {
+    "service": "Gameaify Sprite Studio",
+    "sourceExport": "frames_6bf1e3a3_256px_1789964444046.zip",
+    "keyposes": "four layout-sliced Grok running poses in loop order",
+    "sourceFrames": 63,
+    "selectedFrames": 16
+  }
+}

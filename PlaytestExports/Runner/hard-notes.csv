@@ -1,0 +1,290 @@
+id,time,window,originalTime,source,section,teamReview
+AI-hard-0007,3.741497,0.06,3.68,BeatLearning,AWAKENING,pending
+AI-hard-0008,4.36,0.06,4.36,BeatLearning,AWAKENING,pending
+AI-hard-0010,4.948753,0.06,4.89,BeatLearning,AWAKENING,pending
+AI-hard-0011,5.577324,0.06,5.53,BeatLearning,AWAKENING,pending
+AI-hard-0012,6.624943,0.06,6.59,BeatLearning,AWAKENING,pending
+AI-hard-0013,6.924263,0.06,6.9,BeatLearning,AWAKENING,pending
+AI-hard-0015,7.213605,0.06,7.28,BeatLearning,AWAKENING,pending
+AI-hard-0016,8.121542,0.06,8.06,BeatLearning,AWAKENING,pending
+AI-hard-0017,8.600454,0.06,8.56,BeatLearning,AWAKENING,pending
+AI-hard-0018,8.92,0.06,8.92,BeatLearning,AWAKENING,pending
+AI-hard-0019,9.428571,0.06,9.4,BeatLearning,AWAKENING,pending
+AI-hard-0021,10.117007,0.06,10.08,BeatLearning,AWAKENING,pending
+AI-hard-0022,10.805442,0.06,10.77,BeatLearning,AWAKENING,pending
+AI-hard-0023,11.004989,0.06,10.96,BeatLearning,AWAKENING,pending
+AI-hard-0024,11.284354,0.06,11.27,BeatLearning,AWAKENING,pending
+AI-hard-0026,11.573696,0.06,11.55,BeatLearning,AWAKENING,pending
+AI-hard-0027,11.85,0.06,11.85,BeatLearning,AWAKENING,pending
+AI-hard-0028,12.04,0.06,12.04,BeatLearning,AWAKENING,pending
+AI-hard-0030,13.0,0.06,13.0,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0031,13.399546,0.06,13.47,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0032,13.60907,0.06,13.68,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0033,14.706576,0.06,14.66,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0034,15.484807,0.06,15.43,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0035,15.674376,0.06,15.62,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0037,16.412698,0.06,16.39,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0038,17.609977,0.06,17.55,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0039,18.188662,0.06,18.15,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0040,18.777324,0.06,18.73,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0042,19.3161,0.06,19.3,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0043,20.293878,0.06,20.28,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0044,20.902494,0.06,20.87,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0045,21.311565,0.06,21.35,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0046,21.690703,0.06,21.64,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0047,22.269388,0.06,22.21,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0048,22.9,0.06,22.9,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0049,23.2,0.06,23.2,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0050,23.41678,0.06,23.37,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0051,24.404535,0.06,24.36,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0052,24.57415,0.06,24.54,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0053,24.963265,0.06,24.93,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0054,25.561905,0.06,25.51,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0055,25.931066,0.06,25.9,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0056,26.150567,0.06,26.08,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0057,26.509751,0.06,26.48,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0058,27.078458,0.06,27.07,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0059,27.46,0.06,27.46,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0061,28.066213,0.06,28.04,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0062,28.475283,0.06,28.42,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0063,28.864399,0.06,28.81,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0064,29.64263,0.06,29.58,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0066,30.031746,0.06,29.97,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0067,30.420862,0.06,30.37,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0069,30.999546,0.06,30.95,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0070,31.408617,0.06,31.34,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0071,31.947392,0.06,31.91,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0072,32.336508,0.06,32.3,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0073,32.745578,0.06,32.7,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0074,33.503855,0.06,33.47,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0075,33.673469,0.06,33.66,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0076,34.06,0.06,34.06,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0077,34.681179,0.06,34.62,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0078,34.850794,0.06,34.81,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0079,35.45941,0.06,35.4,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0080,35.639002,0.06,35.6,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0081,36.217687,0.06,36.18,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0082,36.606803,0.06,36.57,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0083,36.995918,0.06,36.96,BeatLearning,FIRST PASSAGE,pending
+AI-hard-0084,37.46,0.06,37.46,BeatLearning,RESONANCE,pending
+AI-hard-0085,37.74,0.06,37.74,BeatLearning,RESONANCE,pending
+AI-hard-0086,38.053515,0.06,38.04,BeatLearning,RESONANCE,pending
+AI-hard-0087,38.452608,0.06,38.52,BeatLearning,RESONANCE,pending
+AI-hard-0088,39.330612,0.06,39.28,BeatLearning,RESONANCE,pending
+AI-hard-0089,39.709751,0.06,39.67,BeatLearning,RESONANCE,pending
+AI-hard-0090,40.118821,0.06,40.07,BeatLearning,RESONANCE,pending
+AI-hard-0091,40.497959,0.06,40.46,BeatLearning,RESONANCE,pending
+AI-hard-0092,41.106576,0.06,41.04,BeatLearning,RESONANCE,pending
+AI-hard-0093,41.42,0.06,41.42,BeatLearning,RESONANCE,pending
+AI-hard-0094,41.745125,0.06,41.8,BeatLearning,RESONANCE,pending
+AI-hard-0095,42.3,0.06,42.3,BeatLearning,RESONANCE,pending
+AI-hard-0096,42.58,0.06,42.58,BeatLearning,RESONANCE,pending
+AI-hard-0097,42.832653,0.06,42.77,BeatLearning,RESONANCE,pending
+AI-hard-0098,43.411338,0.06,43.36,BeatLearning,RESONANCE,pending
+AI-hard-0099,43.760544,0.06,43.75,BeatLearning,RESONANCE,pending
+AI-hard-0100,44.159637,0.06,44.14,BeatLearning,RESONANCE,pending
+AI-hard-0101,44.768254,0.06,44.71,BeatLearning,RESONANCE,pending
+AI-hard-0102,45.15737,0.06,45.1,BeatLearning,RESONANCE,pending
+AI-hard-0103,45.526531,0.06,45.48,BeatLearning,RESONANCE,pending
+AI-hard-0104,45.935601,0.06,45.88,BeatLearning,RESONANCE,pending
+AI-hard-0105,46.12517,0.06,46.07,BeatLearning,RESONANCE,pending
+AI-hard-0106,46.544218,0.06,46.47,BeatLearning,RESONANCE,pending
+AI-hard-0107,46.873469,0.06,46.86,BeatLearning,RESONANCE,pending
+AI-hard-0108,47.482086,0.06,47.44,BeatLearning,RESONANCE,pending
+AI-hard-0109,47.871202,0.06,47.82,BeatLearning,RESONANCE,pending
+AI-hard-0110,48.260317,0.06,48.2,BeatLearning,RESONANCE,pending
+AI-hard-0111,48.439909,0.06,48.4,BeatLearning,RESONANCE,pending
+AI-hard-0112,49.018594,0.06,48.98,BeatLearning,RESONANCE,pending
+AI-hard-0113,49.597279,0.06,49.57,BeatLearning,RESONANCE,pending
+AI-hard-0114,49.796825,0.06,49.77,BeatLearning,RESONANCE,pending
+AI-hard-0115,50.06,0.06,50.06,BeatLearning,RESONANCE,pending
+AI-hard-0116,50.575057,0.06,50.52,BeatLearning,RESONANCE,pending
+AI-hard-0117,50.964172,0.06,50.92,BeatLearning,RESONANCE,pending
+AI-hard-0118,51.463039,0.06,51.5,BeatLearning,RESONANCE,pending
+AI-hard-0119,51.931973,0.06,51.9,BeatLearning,RESONANCE,pending
+AI-hard-0120,52.47,0.06,52.47,BeatLearning,RESONANCE,pending
+AI-hard-0121,53.119274,0.06,53.06,BeatLearning,RESONANCE,pending
+AI-hard-0122,53.468481,0.06,53.46,BeatLearning,RESONANCE,pending
+AI-hard-0123,53.668027,0.06,53.64,BeatLearning,RESONANCE,pending
+AI-hard-0124,54.077098,0.06,54.02,BeatLearning,RESONANCE,pending
+AI-hard-0125,54.66576,0.06,54.6,BeatLearning,RESONANCE,pending
+AI-hard-0126,55.054875,0.06,55.0,BeatLearning,RESONANCE,pending
+AI-hard-0127,56.022676,0.06,55.97,BeatLearning,RESONANCE,pending
+AI-hard-0128,56.411791,0.06,56.36,BeatLearning,RESONANCE,pending
+AI-hard-0129,56.79093,0.06,56.74,BeatLearning,RESONANCE,pending
+AI-hard-0130,57.160091,0.06,57.11,BeatLearning,RESONANCE,pending
+AI-hard-0131,57.339683,0.06,57.31,BeatLearning,RESONANCE,pending
+AI-hard-0132,57.948299,0.06,57.9,BeatLearning,RESONANCE,pending
+AI-hard-0133,58.31746,0.06,58.3,BeatLearning,RESONANCE,pending
+AI-hard-0135,59.105669,0.06,59.07,BeatLearning,RESONANCE,pending
+AI-hard-0136,59.494785,0.06,59.46,BeatLearning,RESONANCE,pending
+AI-hard-0137,59.76,0.06,59.76,BeatLearning,RESONANCE,pending
+AI-hard-0138,60.05,0.06,60.05,BeatLearning,RESONANCE,pending
+AI-hard-0139,60.6322,0.06,60.61,BeatLearning,RESONANCE,pending
+AI-hard-0140,60.931519,0.06,60.9,BeatLearning,RESONANCE,pending
+AI-hard-0141,61.230839,0.06,61.2,BeatLearning,RESONANCE,pending
+AI-hard-0142,61.530159,0.06,61.5,BeatLearning,RESONANCE,pending
+AI-hard-0143,61.809524,0.06,61.78,BeatLearning,RESONANCE,pending
+AI-hard-0144,62.228571,0.06,62.17,BeatLearning,PRESSURE,pending
+AI-hard-0145,62.597732,0.06,62.56,BeatLearning,PRESSURE,pending
+AI-hard-0146,63.06,0.06,63.06,BeatLearning,PRESSURE,pending
+AI-hard-0147,63.47,0.06,63.47,BeatLearning,PRESSURE,pending
+AI-hard-0148,64.353741,0.06,64.3,BeatLearning,PRESSURE,pending
+AI-hard-0149,64.543311,0.06,64.5,BeatLearning,PRESSURE,pending
+AI-hard-0150,64.722902,0.06,64.68,BeatLearning,PRESSURE,pending
+AI-hard-0151,64.942404,0.06,64.89,BeatLearning,PRESSURE,pending
+AI-hard-0153,66.089796,0.06,66.05,BeatLearning,PRESSURE,pending
+AI-hard-0154,66.468934,0.06,66.44,BeatLearning,PRESSURE,pending
+AI-hard-0155,67.067574,0.06,67.01,BeatLearning,PRESSURE,pending
+AI-hard-0156,67.426757,0.06,67.5,BeatLearning,PRESSURE,pending
+AI-hard-0157,67.805896,0.06,67.79,BeatLearning,PRESSURE,pending
+AI-hard-0158,68.01542,0.06,67.98,BeatLearning,PRESSURE,pending
+AI-hard-0159,68.394558,0.06,68.37,BeatLearning,PRESSURE,pending
+AI-hard-0160,68.614059,0.06,68.56,BeatLearning,PRESSURE,pending
+AI-hard-0161,68.923356,0.06,68.96,BeatLearning,PRESSURE,pending
+AI-hard-0162,69.372336,0.06,69.35,BeatLearning,PRESSURE,pending
+AI-hard-0163,69.95102,0.06,69.91,BeatLearning,PRESSURE,pending
+AI-hard-0164,70.360091,0.06,70.31,BeatLearning,PRESSURE,pending
+AI-hard-0165,70.739229,0.06,70.7,BeatLearning,PRESSURE,pending
+AI-hard-0166,71.10839,0.06,71.08,BeatLearning,PRESSURE,pending
+AI-hard-0167,71.497506,0.06,71.47,BeatLearning,PRESSURE,pending
+AI-hard-0168,71.896599,0.06,71.86,BeatLearning,PRESSURE,pending
+AI-hard-0169,72.086168,0.06,72.06,BeatLearning,PRESSURE,pending
+AI-hard-0170,72.465306,0.06,72.45,BeatLearning,PRESSURE,pending
+AI-hard-0171,72.844444,0.06,72.83,BeatLearning,PRESSURE,pending
+AI-hard-0172,73.263492,0.06,73.21,BeatLearning,PRESSURE,pending
+AI-hard-0173,73.64263,0.06,73.7,BeatLearning,PRESSURE,pending
+AI-hard-0174,74.221315,0.06,74.17,BeatLearning,PRESSURE,pending
+AI-hard-0175,74.77,0.06,74.77,BeatLearning,PRESSURE,pending
+AI-hard-0176,74.96,0.06,74.96,BeatLearning,PRESSURE,pending
+AI-hard-0177,75.26,0.06,75.26,BeatLearning,PRESSURE,pending
+AI-hard-0178,75.787755,0.06,75.72,BeatLearning,PRESSURE,pending
+AI-hard-0179,76.336508,0.06,76.3,BeatLearning,PRESSURE,pending
+AI-hard-0180,76.7,0.06,76.7,BeatLearning,PRESSURE,pending
+AI-hard-0181,76.935147,0.06,76.88,BeatLearning,PRESSURE,pending
+AI-hard-0182,77.294331,0.06,77.27,BeatLearning,PRESSURE,pending
+AI-hard-0183,77.723356,0.06,77.67,BeatLearning,PRESSURE,pending
+AI-hard-0184,78.092517,0.06,78.06,BeatLearning,PRESSURE,pending
+AI-hard-0185,78.691156,0.06,78.65,BeatLearning,PRESSURE,pending
+AI-hard-0186,78.880726,0.06,78.83,BeatLearning,PRESSURE,pending
+AI-hard-0187,79.249887,0.06,79.21,BeatLearning,PRESSURE,pending
+AI-hard-0189,80.048073,0.06,80.1,BeatLearning,PRESSURE,pending
+AI-hard-0190,80.826304,0.06,80.77,BeatLearning,PRESSURE,pending
+AI-hard-0191,81.205442,0.06,81.16,BeatLearning,PRESSURE,pending
+AI-hard-0192,81.385034,0.06,81.35,BeatLearning,PRESSURE,pending
+AI-hard-0193,81.754195,0.06,81.74,BeatLearning,PRESSURE,pending
+AI-hard-0194,82.372789,0.06,82.31,BeatLearning,PRESSURE,pending
+AI-hard-0195,82.74195,0.06,82.7,BeatLearning,PRESSURE,pending
+AI-hard-0196,83.131066,0.06,83.08,BeatLearning,PRESSURE,pending
+AI-hard-0197,83.520181,0.06,83.47,BeatLearning,PRESSURE,pending
+AI-hard-0198,84.078912,0.06,84.06,BeatLearning,PRESSURE,pending
+AI-hard-0199,84.46,0.06,84.46,BeatLearning,PRESSURE,pending
+AI-hard-0200,84.877098,0.06,84.84,BeatLearning,PRESSURE,pending
+AI-hard-0201,85.266213,0.06,85.22,BeatLearning,PRESSURE,pending
+AI-hard-0202,85.854875,0.06,85.8,BeatLearning,PRESSURE,pending
+AI-hard-0203,86.243991,0.06,86.18,BeatLearning,PRESSURE,pending
+AI-hard-0204,86.423583,0.06,86.47,BeatLearning,PRESSURE,pending
+AI-hard-0205,86.97,0.06,86.97,BeatLearning,PRESSURE,pending
+AI-hard-0206,87.391383,0.06,87.36,BeatLearning,THE HUSH,pending
+AI-hard-0207,87.790476,0.06,87.75,BeatLearning,THE HUSH,pending
+AI-hard-0208,88.32,0.06,88.32,BeatLearning,THE HUSH,pending
+AI-hard-0209,88.718367,0.06,88.68,BeatLearning,THE HUSH,pending
+AI-hard-0210,89.27,0.06,89.27,BeatLearning,THE HUSH,pending
+AI-hard-0211,89.97,0.06,89.97,BeatLearning,THE HUSH,pending
+AI-hard-0212,90.38458,0.06,90.36,BeatLearning,THE HUSH,pending
+AI-hard-0213,90.673923,0.06,90.65,BeatLearning,THE HUSH,pending
+AI-hard-0214,91.063039,0.06,91.04,BeatLearning,THE HUSH,pending
+AI-hard-0215,91.232653,0.06,91.21,BeatLearning,THE HUSH,pending
+AI-hard-0216,91.641723,0.06,91.6,BeatLearning,THE HUSH,pending
+AI-hard-0217,92.0,0.06,92.0,BeatLearning,THE HUSH,pending
+AI-hard-0218,92.519728,0.06,92.57,BeatLearning,THE HUSH,pending
+AI-hard-0219,92.888889,0.06,92.96,BeatLearning,THE HUSH,pending
+AI-hard-0220,93.567347,0.06,93.55,BeatLearning,THE HUSH,pending
+AI-hard-0221,93.93,0.06,93.93,BeatLearning,THE HUSH,pending
+AI-hard-0222,94.235828,0.06,94.31,BeatLearning,THE HUSH,pending
+AI-hard-0223,94.724717,0.06,94.7,BeatLearning,THE HUSH,pending
+AI-hard-0224,95.512925,0.06,95.48,BeatLearning,THE HUSH,pending
+AI-hard-0225,95.882086,0.06,95.86,BeatLearning,THE HUSH,pending
+AI-hard-0226,96.06,0.06,96.06,BeatLearning,THE HUSH,pending
+AI-hard-0227,96.440816,0.06,96.45,BeatLearning,THE HUSH,pending
+AI-hard-0228,96.849887,0.06,96.83,BeatLearning,THE HUSH,pending
+AI-hard-0229,97.448526,0.06,97.4,BeatLearning,THE HUSH,pending
+AI-hard-0230,97.8,0.06,97.8,BeatLearning,THE HUSH,pending
+AI-hard-0231,98.007256,0.06,97.97,BeatLearning,THE HUSH,pending
+AI-hard-0232,98.605896,0.06,98.57,BeatLearning,THE HUSH,pending
+AI-hard-0233,98.975057,0.06,98.96,BeatLearning,THE HUSH,pending
+AI-hard-0234,99.364172,0.06,99.34,BeatLearning,PURSUIT,pending
+AI-hard-0235,100.142404,0.06,100.11,BeatLearning,PURSUIT,pending
+AI-hard-0236,100.551474,0.06,100.5,BeatLearning,PURSUIT,pending
+AI-hard-0237,100.910658,0.06,100.89,BeatLearning,PURSUIT,pending
+AI-hard-0238,101.2,0.06,101.2,BeatLearning,PURSUIT,pending
+AI-hard-0239,101.678912,0.06,101.66,BeatLearning,PURSUIT,pending
+AI-hard-0240,102.1678,0.06,102.24,BeatLearning,PURSUIT,pending
+AI-hard-0241,102.447166,0.06,102.43,BeatLearning,PURSUIT,pending
+AI-hard-0242,103.085714,0.06,103.02,BeatLearning,PURSUIT,pending
+AI-hard-0243,103.7,0.06,103.7,BeatLearning,PURSUIT,pending
+AI-hard-0244,104.27,0.06,104.27,BeatLearning,PURSUIT,pending
+AI-hard-0245,104.771882,0.06,104.76,BeatLearning,PURSUIT,pending
+AI-hard-0246,105.111111,0.06,105.05,BeatLearning,PURSUIT,pending
+AI-hard-0247,106.128798,0.06,106.11,BeatLearning,PURSUIT,pending
+AI-hard-0248,106.907029,0.06,106.88,BeatLearning,PURSUIT,pending
+AI-hard-0249,107.495692,0.06,107.46,BeatLearning,PURSUIT,pending
+AI-hard-0250,107.85,0.06,107.85,BeatLearning,PURSUIT,pending
+AI-hard-0251,108.24,0.06,108.24,BeatLearning,PURSUIT,pending
+AI-hard-0252,108.453515,0.06,108.43,BeatLearning,PURSUIT,pending
+AI-hard-0253,109.560998,0.06,109.5,BeatLearning,PURSUIT,pending
+AI-hard-0254,109.79,0.06,109.79,BeatLearning,PURSUIT,pending
+AI-hard-0255,110.199546,0.06,110.17,BeatLearning,PURSUIT,pending
+AI-hard-0256,110.778231,0.06,110.76,BeatLearning,PURSUIT,pending
+AI-hard-0257,111.52,0.06,111.52,BeatLearning,PURSUIT,pending
+AI-hard-0258,111.9,0.06,111.9,BeatLearning,IRON DOOR,pending
+AI-hard-0259,112.514286,0.06,112.58,BeatLearning,IRON DOOR,pending
+AI-hard-0260,112.913379,0.06,112.87,BeatLearning,IRON DOOR,pending
+AI-hard-0261,113.28254,0.06,113.26,BeatLearning,IRON DOOR,pending
+AI-hard-0262,113.861224,0.06,113.85,BeatLearning,IRON DOOR,pending
+AI-hard-0263,114.080726,0.06,114.04,BeatLearning,IRON DOOR,pending
+AI-hard-0264,114.579592,0.06,114.61,BeatLearning,IRON DOOR,pending
+AI-hard-0265,114.829025,0.06,114.8,BeatLearning,IRON DOOR,pending
+AI-hard-0266,115.387755,0.06,115.4,BeatLearning,IRON DOOR,pending
+AI-hard-0267,115.637188,0.06,115.57,BeatLearning,IRON DOOR,pending
+AI-hard-0268,116.016327,0.06,115.97,BeatLearning,IRON DOOR,pending
+AI-hard-0270,116.754649,0.06,116.74,BeatLearning,IRON DOOR,pending
+AI-hard-0271,116.97415,0.06,116.94,BeatLearning,IRON DOOR,pending
+AI-hard-0272,117.38322,0.06,117.32,BeatLearning,IRON DOOR,pending
+AI-hard-0273,117.921995,0.06,117.9,BeatLearning,IRON DOOR,pending
+AI-hard-0274,118.2,0.06,118.2,BeatLearning,IRON DOOR,pending
+AI-hard-0275,118.54059,0.06,118.48,BeatLearning,IRON DOOR,pending
+AI-hard-0276,118.730159,0.06,118.67,BeatLearning,IRON DOOR,pending
+AI-hard-0277,118.919728,0.06,118.86,BeatLearning,IRON DOOR,pending
+AI-hard-0278,119.318821,0.06,119.26,BeatLearning,IRON DOOR,pending
+AI-hard-0279,119.887528,0.06,119.83,BeatLearning,IRON DOOR,pending
+AI-hard-0280,120.057143,0.06,120.04,BeatLearning,IRON DOOR,pending
+AI-hard-0281,120.655782,0.06,120.6,BeatLearning,IRON DOOR,pending
+AI-hard-0282,120.835374,0.06,120.9,BeatLearning,IRON DOOR,pending
+AI-hard-0283,121.28,0.06,121.28,BeatLearning,IRON DOOR,pending
+AI-hard-0284,122.312018,0.06,122.35,BeatLearning,IRON DOOR,pending
+AI-hard-0285,122.54,0.06,122.54,BeatLearning,IRON DOOR,pending
+AI-hard-0286,123.150113,0.06,123.11,BeatLearning,IRON DOOR,pending
+AI-hard-0287,123.539229,0.06,123.5,BeatLearning,IRON DOOR,pending
+AI-hard-0288,123.918367,0.06,123.9,BeatLearning,IRON DOOR,pending
+AI-hard-0289,124.117914,0.06,124.08,BeatLearning,IRON DOOR,pending
+AI-hard-0290,124.526984,0.06,124.47,BeatLearning,IRON DOOR,pending
+AI-hard-0291,124.906122,0.06,124.86,BeatLearning,IRON DOOR,pending
+AI-hard-0292,125.295238,0.06,125.24,BeatLearning,IRON DOOR,pending
+AI-hard-0293,125.664399,0.06,125.63,BeatLearning,IRON DOOR,pending
+AI-hard-0294,126.073469,0.06,126.01,BeatLearning,IRON DOOR,pending
+AI-hard-0295,126.6322,0.06,126.7,BeatLearning,IRON DOOR,pending
+AI-hard-0296,127.021315,0.06,126.98,BeatLearning,IRON DOOR,pending
+AI-hard-0297,127.580045,0.06,127.56,BeatLearning,IRON DOOR,pending
+AI-hard-0298,127.799546,0.06,127.76,BeatLearning,IRON DOOR,pending
+AI-hard-0299,128.078912,0.06,128.14,BeatLearning,IRON DOOR,pending
+AI-hard-0300,128.547846,0.06,128.53,BeatLearning,IRON DOOR,pending
+AI-hard-0301,129.136508,0.06,129.11,BeatLearning,IRON DOOR,pending
+AI-hard-0302,129.545578,0.06,129.5,BeatLearning,IRON DOOR,pending
+AI-hard-0303,129.8,0.06,129.8,BeatLearning,IRON DOOR,pending
+AI-hard-0304,130.1,0.06,130.1,BeatLearning,IRON DOOR,pending
+AI-hard-0306,130.423583,0.06,130.46,BeatLearning,IRON DOOR,pending
+AI-hard-0309,131.640816,0.06,131.63,BeatLearning,IRON DOOR,pending
+AI-hard-0310,132.139683,0.06,132.2,BeatLearning,IRON DOOR,pending
+AI-hard-0311,132.98,0.06,132.98,BeatLearning,IRON DOOR,pending
+AI-hard-0312,133.576417,0.06,133.55,BeatLearning,IRON DOOR,pending

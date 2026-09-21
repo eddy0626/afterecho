@@ -1,0 +1,32 @@
+[
+  {
+    "preset": "easy",
+    "originalNotes": 252,
+    "revisedNotes": 239,
+    "deleted": 13,
+    "minGap": 0.3000000000000007,
+    "maxPreview": 4,
+    "first": 3.24263,
+    "last": 133.317007
+  },
+  {
+    "preset": "normal",
+    "originalNotes": 283,
+    "revisedNotes": 257,
+    "deleted": 26,
+    "minGap": 0.21999999999999975,
+    "maxPreview": 4,
+    "first": 3.741497,
+    "last": 133.576417
+  },
+  {
+    "preset": "hard",
+    "originalNotes": 302,
+    "revisedNotes": 289,
+    "deleted": 13,
+    "minGap": 0.1696139999999957,
+    "maxPreview": 5,
+    "first": 3.741497,
+    "last": 133.576417
+  }
+]

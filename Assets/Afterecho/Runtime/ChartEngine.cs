@@ -11,7 +11,7 @@ namespace Afterecho
     [Serializable] public class EncounterData { public string id; public int beat, hp; public double warning, start, end; public string[] noteIds; }
     [Serializable] public class ChartData
     {
-        public string format, preset;
+        public string format, preset, gameplayMode;
         public SongInfo song;
         public ChartRules rules;
         public ChartNote[] notes;
@@ -56,6 +56,9 @@ namespace Afterecho
     {
         public readonly ChartData Chart;
         public readonly StageData Stage;
+        public readonly RunnerRules Runner;
+        public bool IsRunner => Runner != null;
+        public bool Boosted => IsRunner && Combo >= Runner.boostCombo && Status == RunStatus.Running;
         public readonly NoteState[] Decisions;
         public readonly EnemyRun[] Enemies;
         public readonly List<InputLog> Inputs = new List<InputLog>();
@@ -63,7 +66,8 @@ namespace Afterecho
         public RunStatus Status { get; private set; } = RunStatus.Running;
         public int Combo, Best, Score, Hits, Misses, Extras, Damage, Kills, Steps, PracticeHits;
         public int Multiplier => Combo >= 24 ? 4 : Combo >= 8 ? 2 : 1;
-        public int Health => Math.Max(0, Chart.rules.health - Damage);
+        public int Health => IsRunner ? runnerHealth : Math.Max(0, Chart.rules.health - Damage);
+        int runnerHealth;
         public double Time { get; private set; }
         public bool Invincible;
         public bool PracticeEnabled = true;
@@ -71,11 +75,12 @@ namespace Afterecho
         double lastInput = double.NegativeInfinity;
         readonly double[] windows;
         readonly int[] enemyForNote;
-        public ChartEngine(ChartData chart, StageData stage)
+        public ChartEngine(ChartData chart, StageData stage, RunnerRules runner = null)
         {
-            Chart = chart; Stage = stage;
+            Chart = chart; Stage = stage; Runner = runner;
+            runnerHealth = runner != null ? runner.maxHealth : 0;
             Decisions = new NoteState[chart.notes.Length]; windows = new double[chart.notes.Length];
-            Enemies = chart.encounters.Select(e => new EnemyRun { data = e, remaining = e.hp }).ToArray();
+            Enemies = runner != null ? Array.Empty<EnemyRun>() : (chart.encounters ?? Array.Empty<EncounterData>()).Select(e => new EnemyRun { data = e, remaining = e.hp }).ToArray();
             enemyForNote = new int[chart.notes.Length];
             for (int i = 0; i < chart.notes.Length; i++)
             {
@@ -108,7 +113,7 @@ namespace Afterecho
             Time = t;
             if (Status == RunStatus.Running)
             {
-                while (NextIndex < Decisions.Length && Chart.notes[NextIndex].time + windows[NextIndex] < t - 1e-9)
+                while (Status == RunStatus.Running && NextIndex < Decisions.Length && Chart.notes[NextIndex].time + windows[NextIndex] < t - 1e-9)
                 { if (Decisions[NextIndex] == NoteState.Pending) Resolve(NextIndex, false, 0); NextIndex++; }
                 foreach (var e in Enemies)
                 {
@@ -125,7 +130,9 @@ namespace Afterecho
                         if (Health == 0) { Status = RunStatus.Lost; Events.Enqueue(new RunEvent("lost")); break; }
                     }
                 }
-                if (Status == RunStatus.Running && t >= Stage.doorTime)
+                if (IsRunner && Status == RunStatus.Running && t >= Stage.duration)
+                { Status = RunStatus.Won; Events.Enqueue(new RunEvent("won")); }
+                if (!IsRunner && Status == RunStatus.Running && t >= Stage.doorTime)
                 { Status = RunStatus.Arrived; Events.Enqueue(new RunEvent("door")); }
             }
             if (Status == RunStatus.Arrived && t >= Stage.duration)
@@ -135,7 +142,7 @@ namespace Afterecho
         {
             Advance(t);
             if (Status != RunStatus.Running) return Log(t, -1, "ended", source);
-            if (t < Stage.beats[Stage.listenBeats] - .1) return Log(t, -1, "listen", source);
+            if ((!IsRunner || PracticeEnabled) && t < Stage.beats[Stage.listenBeats] - .1) return Log(t, -1, "listen", source);
             if (t - lastInput < .025) return Log(t, -1, "bounce", source);
             lastInput = t;
             int closest = -1; double distance = double.PositiveInfinity;
@@ -147,7 +154,11 @@ namespace Afterecho
             }
             if (closest >= 0 && distance <= windows[closest] + 1e-9)
             { Resolve(closest, true, t - Chart.notes[closest].time); return Log(t, closest, "hit", source); }
-            Extras++; Combo = 0; Events.Enqueue(new RunEvent("extra", p: PracticeEnabled && t < Stage.MainTime));
+            bool practice = PracticeEnabled && t < Stage.MainTime;
+            Extras++; Combo = 0;
+            if (IsRunner && !practice) ApplyRunnerDamage(Runner.extraDamage);
+            Events.Enqueue(new RunEvent("extra", p: practice));
+            CheckRunnerLoss();
             return Log(t, closest, "extra", source);
         }
         string Log(double t, int i, string result, string source)
@@ -166,6 +177,7 @@ namespace Afterecho
             else if (hit)
             {
                 Hits++; Combo++; Best = Math.Max(Best, Combo); Score += 100 * Multiplier;
+                if (IsRunner) runnerHealth = Math.Min(Runner.maxHealth, runnerHealth + Runner.hitRecovery);
                 int ei = enemyForNote[i]; var e = ei >= 0 ? Enemies[ei] : null;
                 if (e != null && e.state != EnemyState.Killed && e.state != EnemyState.Escaped && e.state != EnemyState.Skipped)
                 {
@@ -174,8 +186,16 @@ namespace Afterecho
                 }
                 else Steps++;
             }
-            else { Misses++; Combo = 0; }
+            else { Misses++; Combo = 0; if (IsRunner) ApplyRunnerDamage(Runner.missDamage); }
             Events.Enqueue(new RunEvent(kind, i, n.id, enemyId, practice, error));
+            CheckRunnerLoss();
+        }
+        void ApplyRunnerDamage(int amount)
+        { if (!Invincible) { int actual = Math.Min(runnerHealth, amount); runnerHealth -= actual; Damage += actual; } }
+        void CheckRunnerLoss()
+        {
+            if (IsRunner && runnerHealth == 0 && Status == RunStatus.Running)
+            { Status = RunStatus.Lost; Events.Enqueue(new RunEvent("lost")); }
         }
         public double SafeResume(double at)
         { int n = NextPending(); return Math.Max(0, Math.Min(at, n < 0 ? at : Chart.notes[n].time - windows[n] - .12)); }

@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-21",
+  "service": "Gameaify Editor",
+  "url": "https://gameaify.com/editor",
+  "model": "GPT-Image-2",
+  "generationAsset": "e7931a48-4bc0-483d-9d4a-cba390e53dcf",
+  "backgroundRemovalAsset": "dea25735-0caa-4726-a452-677226ce84ad",
+  "actualSize": [
+    1024,
+    1024
+  ],
+  "requestedSize": [
+    2048,
+    2048
+  ],
+  "workflow": "Generated through website UI, then Gameaify Remove Background; downloaded via UI. Sliced inside connected Unity Editor using Sprite Editor Data Provider capability checks. Native uGUI labels, fills and judgement rings remain separate.",
+  "assets": [
+    "MenuFrame",
+    "ActionPlate",
+    "HealthHousing",
+    "OverdriveBadge"
+  ],
+  "sha256": "040a7b4aa0579cf357ac5efcaf7abe621a76b2246a4a596e1530cf98a9d0f8cd",
+  "review": "Actual Unity menu, gameplay, boost badge, HP fill and pause reviewed. Public Unity Play load/input/pause checked."
+}

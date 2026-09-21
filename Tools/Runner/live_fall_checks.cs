@@ -1,0 +1,10 @@
+var g=UnityEngine.Object.FindAnyObjectByType<Afterecho.RunnerGame>();g.difficulty="hard";g.autoPlay=false;g.invincible=true;g.StartRun();
+int first=g.Run.NextPending();g.DebugTap(g.Run.Chart.notes[first].time+g.Run.WindowAt(first)+.01);
+if(!g.view.Falling)throw new System.Exception("fall not started");
+var f=typeof(Afterecho.RunnerView).GetField("fallUntil",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);double end=(double)f.GetValue(g.view);
+int next=g.Run.NextPending();int before=g.Run.Hits;g.DebugTap(g.Run.Chart.notes[next].time);
+if(g.Run.Hits!=before+1||!g.view.Falling)throw new System.Exception("input while falling rejected");
+next=g.Run.NextPending();g.DebugTap(g.Run.Chart.notes[next].time+g.Run.WindowAt(next)+.01);
+if((double)f.GetValue(g.view)!=end)throw new System.Exception("repeat miss extended fall");
+g.Menu();g.invincible=false;
+System.IO.File.WriteAllText("PlaytestExports/Runner/live-fall-checks.txt","PASS missing note starts fall\nPASS next note succeeds during fall\nPASS repeated miss does not extend fall\n");return "3 fall checks passed";

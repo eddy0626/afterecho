@@ -1,0 +1,28 @@
+{
+  "pauseAt": 122.930113,
+  "result": {
+    "phase": "Result",
+    "time": 136.36866760253906,
+    "health": 100,
+    "Hits": 25,
+    "Misses": 0,
+    "Extras": 0,
+    "Combo": 25,
+    "Best": 25,
+    "Score": 4700,
+    "status": "Won",
+    "boost": false,
+    "runnerSide": 0,
+    "lap": 0.33433337671036983,
+    "falling": false,
+    "audio": false,
+    "audioPosition": 0.0,
+    "songTime": 136.36866760253906,
+    "pitch": 1.0,
+    "autoPlay": true,
+    "invincible": false,
+    "difficulty": "easy",
+    "IsTutorial": false,
+    "AcceptedInputs": 0
+  }
+}

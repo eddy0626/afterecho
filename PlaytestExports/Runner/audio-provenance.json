@@ -1,0 +1,42 @@
+[
+  {
+    "clip": "Good",
+    "source": "AFTERECHO_RUNNER_GOO_#1-1789962431674 (1).wav",
+    "service": "ElevenLabs sound effects",
+    "variant": 1,
+    "maximumDuration": 0.18,
+    "processing": "silenceremove=start_periods=1:start_duration=0.001:start_threshold=-48dB,atrim=duration=0.18,asetpts=PTS-STARTPTS,afade=t=out:st=0.145:d=0.035,volume=1.0,alimiter=limit=0.85:level=false"
+  },
+  {
+    "clip": "Perfect",
+    "source": "AFTERECHO_RUNNER_PER_#1-1789962474736.wav",
+    "service": "ElevenLabs sound effects",
+    "variant": 1,
+    "maximumDuration": 0.22,
+    "processing": "silenceremove=start_periods=1:start_duration=0.001:start_threshold=-48dB,atrim=duration=0.22,asetpts=PTS-STARTPTS,afade=t=out:st=0.185:d=0.035,volume=1.0,alimiter=limit=0.85:level=false"
+  },
+  {
+    "clip": "Fall",
+    "source": "AFTERECHO_RUNNER_FAL_#1-1789962788908.wav",
+    "service": "ElevenLabs sound effects",
+    "variant": 1,
+    "maximumDuration": 0.35,
+    "processing": "silenceremove=start_periods=1:start_duration=0.001:start_threshold=-48dB,atrim=duration=0.35,asetpts=PTS-STARTPTS,afade=t=out:st=0.31499999999999995:d=0.035,volume=0.85,alimiter=limit=0.85:level=false"
+  },
+  {
+    "clip": "Boost",
+    "source": "AFTERECHO_RUNNER_BOO_#1-1789962881580.wav",
+    "service": "ElevenLabs sound effects",
+    "variant": 1,
+    "maximumDuration": 0.55,
+    "processing": "silenceremove=start_periods=1:start_duration=0.001:start_threshold=-48dB,atrim=duration=0.55,asetpts=PTS-STARTPTS,afade=t=out:st=0.515:d=0.035,volume=0.75,alimiter=limit=0.85:level=false"
+  },
+  {
+    "clip": "Clear",
+    "source": "AFTERECHO_RUNNER_CLE_#1-1789963048875.wav",
+    "service": "ElevenLabs sound effects",
+    "variant": 1,
+    "maximumDuration": 1.0,
+    "processing": "silenceremove=start_periods=1:start_duration=0.001:start_threshold=-48dB,atrim=duration=1.0,asetpts=PTS-STARTPTS,afade=t=out:st=0.965:d=0.035,volume=0.8,alimiter=limit=0.85:level=false"
+  }
+]
