@@ -1,0 +1,6 @@
+PASS music, notes, runner freeze while paused
+PASS four beat resume
+PASS held/repeated keyboard state accepts one edge
+PASS real keyboard event hits DSP note
+PASS interrupted audio pauses game
+PASS restart starts fresh at zero

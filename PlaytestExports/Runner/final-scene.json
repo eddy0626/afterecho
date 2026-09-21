@@ -1,0 +1,12 @@
+{
+  "scene": "Assets/Afterecho/Scenes/Stage01_RunnerCircle.unity",
+  "dirty": false,
+  "run": 16,
+  "sprint": 63,
+  "fall": 12,
+  "recover": 12,
+  "renderMode": "ScreenSpaceCamera",
+  "camera": "Main Camera",
+  "autoPlay": false,
+  "invincible": false
+}

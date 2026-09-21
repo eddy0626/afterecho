@@ -1,0 +1,2 @@
+PASS touch then synthetic mouse is one contact
+PASS mouse then touch is one contact

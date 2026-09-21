@@ -1,0 +1,112 @@
+111 checks passed
+PASS easy schema/density/burst
+PASS easy inclusive boundary -1
+PASS easy outside boundary -1
+PASS easy inclusive boundary 1
+PASS easy outside boundary 1
+PASS easy contact bounce no duplicate hit
+PASS easy extra resets combo without damage
+PASS easy note misses never damage
+PASS easy warned encounter active
+PASS easy one deadline one damage
+PASS easy no input loses at health limit
+PASS easy full autoplay wins all six encounters
+PASS easy every main note exactly once
+PASS easy combo and multiplier
+PASS easy remaining notes move after early kills
+PASS easy full-song main starts at zero and scores intro notes
+PASS easy full-song main completes without double-offset
+PASS easy early kill
+PASS easy killed enemy no delayed damage
+PASS easy safe resume does not reset decisions or cause miss
+PASS easy next note after resume hittable
+PASS easy invincible no input completes
+PASS easy window cap
+PASS easy adjacent windows never overlap
+PASS easy last combat note inclusive late boundary E1
+PASS easy last combat window deadline exactly one damage E1
+PASS easy last combat note inclusive late boundary E2
+PASS easy last combat window deadline exactly one damage E2
+PASS easy last combat note inclusive late boundary E3
+PASS easy last combat window deadline exactly one damage E3
+PASS easy last combat note inclusive late boundary E4
+PASS easy last combat window deadline exactly one damage E4
+PASS easy last combat note inclusive late boundary E5
+PASS easy last combat window deadline exactly one damage E5
+PASS easy last combat note inclusive late boundary E6
+PASS easy last combat window deadline exactly one damage E6
+PASS easy formal rest no omission
+PASS normal schema/density/burst
+PASS normal inclusive boundary -1
+PASS normal outside boundary -1
+PASS normal inclusive boundary 1
+PASS normal outside boundary 1
+PASS normal contact bounce no duplicate hit
+PASS normal extra resets combo without damage
+PASS normal note misses never damage
+PASS normal warned encounter active
+PASS normal one deadline one damage
+PASS normal no input loses at health limit
+PASS normal full autoplay wins all six encounters
+PASS normal every main note exactly once
+PASS normal combo and multiplier
+PASS normal remaining notes move after early kills
+PASS normal full-song main starts at zero and scores intro notes
+PASS normal full-song main completes without double-offset
+PASS normal early kill
+PASS normal killed enemy no delayed damage
+PASS normal safe resume does not reset decisions or cause miss
+PASS normal next note after resume hittable
+PASS normal invincible no input completes
+PASS normal window cap
+PASS normal adjacent windows never overlap
+PASS normal last combat note inclusive late boundary E1
+PASS normal last combat window deadline exactly one damage E1
+PASS normal last combat note inclusive late boundary E2
+PASS normal last combat window deadline exactly one damage E2
+PASS normal last combat note inclusive late boundary E3
+PASS normal last combat window deadline exactly one damage E3
+PASS normal last combat note inclusive late boundary E4
+PASS normal last combat window deadline exactly one damage E4
+PASS normal last combat note inclusive late boundary E5
+PASS normal last combat window deadline exactly one damage E5
+PASS normal last combat note inclusive late boundary E6
+PASS normal last combat window deadline exactly one damage E6
+PASS normal formal rest no omission
+PASS hard schema/density/burst
+PASS hard inclusive boundary -1
+PASS hard outside boundary -1
+PASS hard inclusive boundary 1
+PASS hard outside boundary 1
+PASS hard contact bounce no duplicate hit
+PASS hard extra resets combo without damage
+PASS hard note misses never damage
+PASS hard warned encounter active
+PASS hard one deadline one damage
+PASS hard no input loses at health limit
+PASS hard full autoplay wins all six encounters
+PASS hard every main note exactly once
+PASS hard combo and multiplier
+PASS hard remaining notes move after early kills
+PASS hard full-song main starts at zero and scores intro notes
+PASS hard full-song main completes without double-offset
+PASS hard early kill
+PASS hard killed enemy no delayed damage
+PASS hard safe resume does not reset decisions or cause miss
+PASS hard next note after resume hittable
+PASS hard invincible no input completes
+PASS hard window cap
+PASS hard adjacent windows never overlap
+PASS hard last combat note inclusive late boundary E1
+PASS hard last combat window deadline exactly one damage E1
+PASS hard last combat note inclusive late boundary E2
+PASS hard last combat window deadline exactly one damage E2
+PASS hard last combat note inclusive late boundary E3
+PASS hard last combat window deadline exactly one damage E3
+PASS hard last combat note inclusive late boundary E4
+PASS hard last combat window deadline exactly one damage E4
+PASS hard last combat note inclusive late boundary E5
+PASS hard last combat window deadline exactly one damage E5
+PASS hard last combat note inclusive late boundary E6
+PASS hard last combat window deadline exactly one damage E6
+PASS hard formal rest no omission

@@ -1,0 +1,27 @@
+{
+  "build": "build_f711ade53221",
+  "method": "Actual Chrome WebGL, Computer Use, autoplay hard, touch viewport 844x390",
+  "firstStart": "Successful after silent music-channel warm-up; no retry required",
+  "rotationPause": 31.767,
+  "resumedClockSamples": [
+    51.774,
+    61.78,
+    71.785,
+    81.785,
+    101.79,
+    111.796,
+    121.801
+  ],
+  "playbackRate": 1.0,
+  "result": {
+    "time": 136.366,
+    "hits": 289,
+    "misses": 0,
+    "extras": 0,
+    "hp": 100,
+    "score": 110300,
+    "accuracy": 100,
+    "timestamp": "2026-09-21T05:45:14.646Z"
+  },
+  "knownLimitation": "Fresh load in Chrome viewport emulation can render small until a viewport resize. Native PC window normal. Real phone pending."
+}

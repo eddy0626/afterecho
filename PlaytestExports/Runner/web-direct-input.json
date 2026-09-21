@@ -1,0 +1,29 @@
+{
+  "keyboard": {
+    "key": "J",
+    "viewport": "1280x720",
+    "time": 3.345,
+    "hits": 1,
+    "misses": 0,
+    "extras": 0,
+    "hp": 100,
+    "timestamp": "2026-09-21T05:34:42.592Z"
+  },
+  "touch": {
+    "viewport": "845x390",
+    "time": 3.784,
+    "hits": 1,
+    "misses": 1,
+    "extras": 1,
+    "note": "Second note accepted via touch. The preceding keyboard input was early; its extra/miss was correctly penalized."
+  },
+  "noInput": {
+    "time": 8.71,
+    "hits": 0,
+    "misses": 10,
+    "extras": 0,
+    "hp": 0,
+    "result": "Game over once"
+  },
+  "method": "Computer Use browser input, autoPlay off"
+}

@@ -1,0 +1,36 @@
+{
+  "build": "build_e39252680f9e",
+  "browser": "Chrome, mobile viewport 844x390, touch emulation",
+  "mode": "hard autoplay",
+  "note": "Observed through browser console and actual canvas UI; final build changes only WebGL safe-area layout.",
+  "result": {
+    "time": 136.367,
+    "hits": 289,
+    "misses": 0,
+    "extras": 0,
+    "hp": 100,
+    "score": 110300,
+    "accuracy": 100
+  },
+  "pauseResume": [
+    {
+      "pauseTime": 28.684,
+      "resumeFirst": 28.685,
+      "tenSecondsLater": 38.69,
+      "rate": 1.0
+    },
+    {
+      "portraitPauseTime": 98.181,
+      "resumeFirst": 98.191,
+      "tenSecondsLater": 108.197,
+      "rate": 1.0
+    }
+  ],
+  "lastPlayingSample": {
+    "time": 128.202,
+    "webAudioPosition": 128.202,
+    "rate": 1.0,
+    "timestamp": "2026-09-21T05:23:22.844Z"
+  },
+  "resultTimestamp": "2026-09-21T05:23:30.940Z"
+}

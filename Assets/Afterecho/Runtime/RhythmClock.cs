@@ -14,10 +14,78 @@ namespace Afterecho
         public bool Scheduled { get; private set; }
         public string LoadError { get; private set; }
         Coroutine loading;
-        public double SongTime => Scheduled ? Position + Math.Max(0,AudioSettings.dspTime-ScheduledStart) : Position;
-        public double EventSongTime(double inputTime) => AudioSettings.dspTime + inputTime - Time.realtimeSinceStartupAsDouble - Anchor;
+        bool warming, muteBeforeWarmup;
+        // The WebGL runner reads the actual Web Audio node position through its plugin.
+        // Use it for the runner so frame stalls cannot drift the chart away from music.
+        public bool UsePlaybackPosition { get; set; }
+        #if UNITY_WEBGL && !UNITY_EDITOR
+        [System.Runtime.InteropServices.DllImport("__Internal")]
+        static extern double AfterechoWeb_MusicState(double duration,int mode);
+        #endif
+        public double PlaybackPosition
+        {
+            get {
+                #if UNITY_WEBGL && !UNITY_EDITOR
+                if(UsePlaybackPosition)return AfterechoWeb_MusicState(music.clip.length,0);
+                #endif
+                return music.time;
+            }
+        }
+        public double PlaybackRate
+        {
+            get {
+                #if UNITY_WEBGL && !UNITY_EDITOR
+                if(UsePlaybackPosition)return AfterechoWeb_MusicState(music.clip.length,1);
+                #endif
+                return music.pitch;
+            }
+        }
+        bool MusicActive
+        {
+            get {
+                #if UNITY_WEBGL && !UNITY_EDITOR
+                if(UsePlaybackPosition)return PlaybackPosition>-900;
+                #endif
+                return music.isPlaying;
+            }
+        }
+        double observedPosition, observedAt, scheduledWallStart, lastPositionAdvance;
+        bool observedPlayback;
+        public bool HasStarted => Scheduled && (UsePlaybackPosition
+            ? observedPlayback || (MusicActive && PlaybackPosition>Position+.0001)
+            : AudioSettings.dspTime>=ScheduledStart);
+        public double PreparationRemaining => Math.Max(0,UsePlaybackPosition
+            ? scheduledWallStart-Time.realtimeSinceStartupAsDouble : ScheduledStart-AudioSettings.dspTime);
+        public bool StartTimedOut => Scheduled && !HasStarted && Time.realtimeSinceStartupAsDouble>scheduledWallStart+2;
+        public double DspSongTime => Scheduled ? Position + Math.Max(0,AudioSettings.dspTime-ScheduledStart) : Position;
+        public double SongTime
+        {
+            get
+            {
+                if(!Scheduled)return Position;
+                if(!UsePlaybackPosition)return DspSongTime;
+                if(!HasStarted)return Position;
+                double now=Time.realtimeSinceStartupAsDouble;
+                if(MusicActive)
+                {
+                    double t=PlaybackPosition;
+                    if(t>=Position-.03)
+                    {if(!observedPlayback||t>observedPosition+.0001)lastPositionAdvance=now;
+                        observedPosition=Math.Max(Position,t);observedAt=now;observedPlayback=true;return observedPosition;}
+                }
+                // AudioSource.time resets after natural completion. Finish only if the last
+                // actual audio sample was already at the tail; early interruption still pauses.
+                if(observedPlayback && observedPosition>=music.clip.length-.35)
+                    return Math.Min(music.clip.length,observedPosition+Math.Max(0,now-observedAt));
+                return observedPlayback?observedPosition:DspSongTime;
+            }
+        }
+        public double EventSongTime(double inputTime) => UsePlaybackPosition
+            ? SongTime + inputTime - Time.realtimeSinceStartupAsDouble
+            : AudioSettings.dspTime + inputTime - Time.realtimeSinceStartupAsDouble - Anchor;
         public bool PlaybackInterrupted => Scheduled && AudioSettings.dspTime > ScheduledStart + .35
-            && SongTime < music.clip.length - .25 && !music.isPlaying;
+            && SongTime < music.clip.length - .25 && (!MusicActive ||
+                (UsePlaybackPosition && observedPlayback && Time.realtimeSinceStartupAsDouble-lastPositionAdvance>.8));
         public void Schedule(double position, double beat, bool countIn)
         {
             Stop(position); LoadError = null;
@@ -39,14 +107,33 @@ namespace Afterecho
                 { LoadError = "음악을 불러오지 못했습니다. 다시 시도해 주세요."; yield break; }
                 yield return null;
             }
+            // Prime the browser channel before scheduling the audible count-in. WebGL can
+            // report Loaded before its first AudioSource channel is ready for scheduling.
+            if(UsePlaybackPosition)
+            {
+                warming=true;muteBeforeWarmup=music.mute;music.mute=true;
+                music.time=0;music.Play();
+                double warmStarted=Time.realtimeSinceStartupAsDouble;
+                while(!MusicActive)
+                {
+                    if(Time.realtimeSinceStartupAsDouble-warmStarted>10)
+                    {music.Stop();music.mute=muteBeforeWarmup;warming=false;LoadError="음악을 불러오지 못했습니다. 다시 시도해 주세요.";yield break;}
+                    yield return null;
+                }
+                music.Stop();music.mute=muteBeforeWarmup;warming=false;
+            }
             Position = Math.Clamp(position,0,Math.Max(0,song.length-1d/song.frequency));
+            observedPosition=Position;observedPlayback=false;observedAt=Time.realtimeSinceStartupAsDouble;
             double preparation = AudioSettings.dspTime + .25;
             ScheduledStart = preparation + (countIn ? 4 * beat : 0);
+            scheduledWallStart=Time.realtimeSinceStartupAsDouble+.25+(countIn?4*beat:0);
             Anchor = ScheduledStart - Position;
-            music.loop = false; music.pitch = 1;
+            music.loop = false;
             // Seek in seconds: browser decoding can use a different sample rate from the import.
             music.time = (float)Position;
             music.PlayScheduled(ScheduledStart);
+            // WebGL runner pitch is fixed on the actual Web Audio node by RunnerAudioClock.
+            if(!UsePlaybackPosition)music.pitch=1f;
             if (countIn) for (int i = 0; i < Math.Min(4,countVoices.Length); i++)
             { countVoices[i].clip = click; countVoices[i].volume = i == 0 ? .32f : .22f; countVoices[i].PlayScheduled(preparation + i * beat); }
             Scheduled = true; loading = null;
@@ -54,7 +141,7 @@ namespace Afterecho
         public void Stop(double position)
         {
             if (loading != null) { StopCoroutine(loading); loading = null; }
-            if (music != null) music.Stop();
+            if (music != null) { music.Stop();if(warming){music.mute=muteBeforeWarmup;warming=false;} }
             if (countVoices != null) foreach (var voice in countVoices) if (voice != null) voice.Stop();
             Position = position; Scheduled = false;
         }

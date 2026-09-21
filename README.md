@@ -1,47 +1,39 @@
-# 잔향 AFTERECHO
+# 잔향 AFTERECHO — RUNNER
 
-한 손으로 곡의 채보에 맞춰 이동하고 공격하는 어두운 실내 리듬게임의 Unity 프로토타입입니다.
+[브라우저에서 바로 플레이](https://play.unity.com/en/games/c81e0f9d-00d9-4904-87ee-8844fdfe0af6/afterecho-runner)
 
-현재 공유 빌드: **0.2.2-movement.20260913**
+고정된 중앙 원으로 리듬을 맞추면서 캐릭터가 네 벽을 달리는 한 손 리듬게임입니다. 원곡 136.36초, 세 난이도, Gameaify UI·스프라이트, Feel·DOTween 피드백을 포함합니다.
 
-[브라우저에서 플레이](https://play.unity.com/en/games/cc1a30d0-6ce8-46ae-90f4-9dab209b3d83/afterecho-0913)
+현재 개발 브랜치: `feature/runner-circle` · Unity **6000.6.0f1**
 
-## 프로젝트 열기
+## 실행
 
-1. 이 비공개 저장소에 접근할 수 있는 계정으로 복제합니다.
+1. 저장소 권한이 있는 계정으로 복제합니다.
    ```sh
-   git clone https://github.com/eddy0626/afterecho.git
+   git clone --branch feature/runner-circle https://github.com/eddy0626/afterecho.git
    ```
-2. Unity Hub에서 복제한 폴더를 추가하고 **Unity 6000.6.0f1**로 엽니다. 웹 빌드는 Web Build Support 모듈이 필요합니다.
-3. 최초 실행 시 Unity가 패키지와 Library를 복원할 때까지 기다립니다.
-4. `Assets/Afterecho/Scenes/Stage01_BlackCorridor.unity`를 열고 Play를 누릅니다.
+2. Unity Hub에서 폴더를 추가하고 6000.6.0f1로 엽니다.
+3. 패키지 복원이 끝나면 `Assets/Afterecho/Scenes/Stage01_RunnerCircle.unity`를 열고 Play를 누릅니다.
+4. 입문·보통·도전을 고르고 안전한 연습 또는 4박 후 시작을 누릅니다.
 
-Feel 6.1, DOTween 및 DOTween Pro, 음원, 채보, 게임 스프라이트와 `.meta` 파일을 함께 보관합니다. Git LFS 없이 일반 Git으로 복제할 수 있습니다. 구입한 에셋의 원본이 포함된 팀 개발용 비공개 저장소이며, 각 에셋의 기존 라이선스가 적용됩니다.
+원이 겹치는 순간 화면 탭·클릭 또는 일반 키보드 키를 누릅니다. Esc는 일시정지입니다. HP 100, 성공 +1, 미스 −10, 헛입력 −3이며 15콤보부터 2.4배로 질주합니다. 음악 속도와 채보 시각은 바뀌지 않습니다. PC와 모바일 가로 화면용 테스트 버전입니다.
 
-## 플레이와 이번 변경
+## 빌드와 테스트
 
-- 화면 탭·클릭 또는 Space/F/J로 입력합니다. Esc로 일시정지합니다.
-- 튜토리얼은 별도 연습입니다. 실전 시작을 누르면 4박 준비 후 원곡과 채보가 0초에서 함께 시작합니다.
-- 오디오 준비를 기다린 뒤 예약하며, 재생이 예기치 않게 중단되면 판정도 멈추고 4박 준비 후 재개합니다.
-- Feel 이동 피드백: 140ms 탄성 변형, 작은 도약과 기울기, 잔상과 발밑 먼지를 추가했습니다. 움직임 줄이기 옵션과 일시정지·재시작 시 초기화를 지원합니다.
-- 기존 Feel 판정·공격 효과, Gameaify 스프라이트와 ElevenLabs 효과음을 유지합니다.
+개편용 프로필: `Assets/Settings/Build Profiles/Afterecho_RunnerCircle_Web_Test.asset`
 
-## 웹 빌드
+Web Build Support 모듈을 설치하고 위 프로필로 `Builds/RunnerCircleWeb`에 빌드합니다. 사용자 지정 웹 실행 화면은 빌드 후 `python3 Tools/Runner/web_launcher.py`로 복원합니다. 로컬 플레이는 `python3 Tools/Runner/serve.py` 실행 후 `http://127.0.0.1:8777`을 엽니다.
 
-Build Profiles에서 **Afterecho_Web_Team_0913 - Desktop - Release**를 선택합니다.
+- `Afterecho > Runner > Run Tests`: 판정·HP·질주·입력·완주 101개 검사.
+- `Afterecho > Chart Lab`: runner 모드의 실제 채보와 규칙 편집, 자동 입력·무적·로그.
+- [팀 실행·규칙·채보 안내](PlaytestExports/Runner/README.md)
+- [Gameaify UI 제작 및 적용](PlaytestExports/Runner/UI_GAMEAIFY_20260921.md)
+- [전체 개편 검증 기록](PlaytestExports/Runner/검증기록.md)
 
-프로필 경로: `Assets/Settings/Build Profiles/Afterecho_Web_Team_0913 - Desktop - Release.asset`
+실제 휴대폰 오디오 지연·한 손 난이도·첫 로딩은 팀 실기기 검수 항목입니다. Chrome 화면 크기 에뮬레이션에서 새로고침 직후 화면이 작게 표시될 수 있으며 창 크기 변경/회전으로 정상화됩니다.
 
-이 프로필이 버전 `0.2.2-movement.20260913` 등 배포 설정을 덮어씁니다. 프로필을 사용하지 않는 기본 Player Settings에는 이전 버전 값이 남아 있으므로 팀 배포에는 위 프로필을 사용합니다. 출력 위치는 `Builds/` 아래로 지정합니다. 빌드 결과물·캐시·임시 백업은 Git에서 제외합니다.
+## 원본 보존과 팀 공유
 
-## 검증과 개발 도구
+기존 복도 씬 `Stage01_BlackCorridor.unity`와 [이전 공개 빌드](https://play.unity.com/en/games/cc1a30d0-6ce8-46ae-90f4-9dab209b3d83/afterecho-0913)는 비교용으로 보존합니다. 기존 씬 안내는 [이전 README](PlaytestExports/Runner/LEGACY_README_20260913.md)를 참고하세요.
 
-- `Afterecho > Run Core Tests`: 채보 및 게임 규칙 111개 검사 통과.
-- `Afterecho > Run Music and Movement Playtest`: Play 모드에서 실행하는 음악·이동 실시간 검사 19개 통과.
-- `Afterecho > Chart Lab`: 채보 편집 및 테스트.
-- `Afterecho > Feedback Test Panel`: 판정·전투 피드백 확인.
-- 실제 공유 웹 빌드에서 튜토리얼, 직접 입력, 100% 완료와 메뉴 복귀를 확인했습니다.
-
-[음악·이동 변경과 Unity CLI 실행 안내](PlaytestExports/MUSIC_MOVEMENT_20260913.md), [실시간 검사 결과](PlaytestExports/music-movement-live.json), [웹 배포 확인 기록](PlaytestExports/music-movement-web.json), [효과음·이펙트 출처와 이전 QA](PlaytestExports/FEEDBACK_PROVENANCE_QA.md)를 참고하세요.
-
-실제 휴대폰의 스피커 지연과 한 손 난이도는 팀 실기기 검증 항목입니다. 기존 선택적 패키지의 빌드 경고와 웹 FSR 경고는 검사 기록에 별도로 남겨 두었습니다.
+구입한 Feel 6.1, DOTween 및 DOTween Pro 원본이 포함된 **팀 개발용 비공개 저장소**입니다. 각 에셋의 라이선스가 적용됩니다. 웹에는 실행 빌드만 게시하며 프로젝트 원본·계정 정보·개발 로그를 올리지 않습니다. 빌드·Library·Deliverables는 Git에서 제외합니다.

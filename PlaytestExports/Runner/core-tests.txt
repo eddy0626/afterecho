@@ -1,0 +1,102 @@
+101 checks passed
+PASS easy density, IDs, duration, four-hit recovery
+PASS easy inclusive boundary -1
+PASS easy outside boundary -1
+PASS easy inclusive boundary 1
+PASS easy outside boundary 1
+PASS easy initial health and no combat
+PASS easy intro silence safe
+PASS easy omitted note once
+PASS easy hit recovery
+PASS easy recovery cap
+PASS easy duplicate contact ignored
+PASS easy extra damage and combo reset
+PASS easy 14 normal
+PASS easy 15 boost
+PASS easy extra ends boost
+PASS easy miss ends boost
+PASS easy no-input loses after ten misses
+PASS easy game over once
+PASS easy no decisions after loss
+PASS easy 20Hz spam loses
+PASS easy old door does not end runner
+PASS easy full song autoplay wins
+PASS easy completion once
+PASS easy invincible completion
+PASS easy safe tutorial no damage
+PASS easy safe resume pending note
+PASS easy rest safe
+PASS easy saved and actual window agree
+PASS normal density, IDs, duration, four-hit recovery
+PASS normal inclusive boundary -1
+PASS normal outside boundary -1
+PASS normal inclusive boundary 1
+PASS normal outside boundary 1
+PASS normal initial health and no combat
+PASS normal intro silence safe
+PASS normal omitted note once
+PASS normal hit recovery
+PASS normal recovery cap
+PASS normal duplicate contact ignored
+PASS normal extra damage and combo reset
+PASS normal 14 normal
+PASS normal 15 boost
+PASS normal extra ends boost
+PASS normal miss ends boost
+PASS normal no-input loses after ten misses
+PASS normal game over once
+PASS normal no decisions after loss
+PASS normal 20Hz spam loses
+PASS normal old door does not end runner
+PASS normal full song autoplay wins
+PASS normal completion once
+PASS normal invincible completion
+PASS normal safe tutorial no damage
+PASS normal safe resume pending note
+PASS normal rest safe
+PASS normal saved and actual window agree
+PASS hard density, IDs, duration, four-hit recovery
+PASS hard inclusive boundary -1
+PASS hard outside boundary -1
+PASS hard inclusive boundary 1
+PASS hard outside boundary 1
+PASS hard initial health and no combat
+PASS hard intro silence safe
+PASS hard omitted note once
+PASS hard hit recovery
+PASS hard recovery cap
+PASS hard duplicate contact ignored
+PASS hard extra damage and combo reset
+PASS hard 14 normal
+PASS hard 15 boost
+PASS hard extra ends boost
+PASS hard miss ends boost
+PASS hard no-input loses after ten misses
+PASS hard game over once
+PASS hard no decisions after loss
+PASS hard 20Hz spam loses
+PASS hard old door does not end runner
+PASS hard full song autoplay wins
+PASS hard completion once
+PASS hard invincible completion
+PASS hard safe tutorial no damage
+PASS hard safe resume pending note
+PASS hard rest safe
+PASS hard saved and actual window agree
+PASS runner side 0
+PASS runner side 1
+PASS runner side 2
+PASS runner side 3
+PASS ordinary key Space
+PASS ordinary key A
+PASS ordinary key F
+PASS ordinary key J
+PASS ordinary key Digit1
+PASS ordinary key UpArrow
+PASS reserved key Escape
+PASS reserved key LeftCommand
+PASS reserved key LeftCtrl
+PASS reserved key LeftAlt
+PASS reserved key Tab
+PASS reserved key F1
+PASS reserved key F12

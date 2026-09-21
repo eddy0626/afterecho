@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-21",
+  "url": "https://play.unity.com/en/games/c81e0f9d-00d9-4904-87ee-8844fdfe0af6/afterecho-runner",
+  "visibility": "Public",
+  "buildId": "build_f935b3542eb2",
+  "uploadZip": "AFTERECHO_RunnerCircle_Web_20260921.zip",
+  "zipSha256": "06601f95d875c159c4eb76f10c3c1e8528c264c86afab7263b576d0f300f426c",
+  "observed": [
+    "Unity Play upload success and saved public page",
+    "Public iframe loads Gameaify menu",
+    "4-beat count and music start",
+    "Keyboard F input and OFF BEAT -3 health response",
+    "Health fill follows numeric HP",
+    "Focus pause and resume menu",
+    "No browser console error entries at inspection"
+  ],
+  "limits": [
+    "Physical phone audio latency and one-handed play pending",
+    "Full song regression results in existing Runner QA reports; this release UI checked in Editor and public browser"
+  ],
+  "oldPublicBuildPreserved": true
+}
