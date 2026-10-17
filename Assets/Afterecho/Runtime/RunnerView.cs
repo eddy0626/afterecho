@@ -6,6 +6,7 @@ using TMPro;
 using DG.Tweening;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using Afterecho.Feedback;
 
 namespace Afterecho
 {
@@ -29,6 +30,7 @@ namespace Afterecho
         public float[] runFeet,sprintFeet,fallFeet,recoverFeet;
         public AudioSource effects;
         public AudioClip hitSound,perfectSound,fallSound,boostSound,clearSound;
+        public RunnerFeedbackPlayer feedback;
         public int CurrentSide {get;private set;}
         public double LapPosition {get;private set;}
         public bool Falling=>fallUntil>game.ActiveSeconds;
@@ -38,7 +40,6 @@ namespace Afterecho
         double fallStart,fallUntil=-1;
         float messageUntil,impactUntil,ghostAt;
         bool boosted;
-        MMF_Player hitFeel,hpFeel,boostFeel,fallFeel;
         Tween stumbleTween;
         UnityEngine.UI.Image[] ghosts;
         float[] ghostEnd;
@@ -52,10 +53,7 @@ namespace Afterecho
         public void Initialize(RunnerGame owner)
         {
             game=owner;
-            hitFeel=Feel("HitFeel",hitRing.transform,.115f,1.16f);
-            hpFeel=Feel("HpFeel",healthRoot,.17f,1.10f);
-            boostFeel=Feel("BoostFeel",runnerVisual,.18f,1.22f);
-            fallFeel=Feel("FallFeel",runnerVisual,.15f,.8f);
+            RegisterFeedbackFallbacks();
             ghosts=new UnityEngine.UI.Image[10];ghostEnd=new float[10];
             for(int i=0;i<ghosts.Length;i++)
             {
@@ -80,6 +78,17 @@ namespace Afterecho
             motionToggle.SetIsOnWithoutNotify(game.reducedMotion);motionToggle.onValueChanged.AddListener(game.SetReducedMotion);
             ResetRun();
         }
+        // Code-built players stay as fallbacks for any id the scene does not bind yet.
+        void RegisterFeedbackFallbacks()
+        {
+            if(feedback==null)feedback=GetComponent<RunnerFeedbackPlayer>();
+            if(feedback==null)feedback=gameObject.AddComponent<RunnerFeedbackPlayer>();
+            if(!feedback.Has(FeedbackId.HitGood)||!feedback.Has(FeedbackId.HitPerfect))
+            {var hit=new FeelFeedback(Feel("HitFeel",hitRing.transform,.115f,1.16f));feedback.RegisterFallback(FeedbackId.HitGood,FeedbackChannel.Motion,hit);feedback.RegisterFallback(FeedbackId.HitPerfect,FeedbackChannel.Motion,hit);}
+            if(!feedback.Has(FeedbackId.HpLoss))feedback.RegisterFallback(FeedbackId.HpLoss,FeedbackChannel.Motion,new FeelFeedback(Feel("HpFeel",healthRoot,.17f,1.10f)));
+            if(!feedback.Has(FeedbackId.BoostStart))feedback.RegisterFallback(FeedbackId.BoostStart,FeedbackChannel.Motion,new FeelFeedback(Feel("BoostFeel",runnerVisual,.18f,1.22f)));
+            if(!feedback.Has(FeedbackId.Fall))feedback.RegisterFallback(FeedbackId.Fall,FeedbackChannel.Motion,new FeelFeedback(Feel("FallFeel",runnerVisual,.15f,.8f)));
+        }
         MMF_Player Feel(string name,Transform target,float duration,float peak)
         {
             var go=new GameObject(name){hideFlags=HideFlags.DontSave};go.transform.SetParent(transform,false);
@@ -92,8 +101,8 @@ namespace Afterecho
                 Timing=new MMFeedbackTiming{TimescaleMode=TimescaleModes.Unscaled,CooldownDuration=0}});
             p.PreInitialization();p.Initialization(true);return p;
         }
-        void Play(MMF_Player p)
-        {if(game.reducedMotion)return;p.StopFeedbacks();p.RestoreInitialValues();p.ResetAllCooldowns();p.PlayFeedbacks();FeedbackPlays++;}
+        void Play(FeedbackId id)
+        {feedback.ReducedMotion=game.reducedMotion;if(feedback.Play(id))FeedbackPlays++;}
         void Primary()
         {
             if(game.Phase==GamePhase.Paused)game.ResumeGame();
@@ -185,7 +194,7 @@ namespace Afterecho
             if(Time.unscaledTime>messageUntil)status.text=game.Phase==GamePhase.Preparing?"준비 · 4박 후 시작":game.Phase==GamePhase.Playing?(ShownNotes==0?"다음 원을 기다려요":game.IsTutorial?"연습 · 실수해도 괜찮아요":""):"";
             PlaceRunner();AnimateRunner();RenderNotes(active);RenderGhosts();RenderFootSparks();
             if(game.Run.Boosted!=boosted)
-            {boosted=game.Run.Boosted;if(boosted){Play(boostFeel);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);}}
+            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);}}
             hitRing.gameObject.SetActive(active&&Time.unscaledTime<impactUntil);
             if(hitRing.gameObject.activeSelf){float p=1-(impactUntil-Time.unscaledTime)/.16f;hitRing.SetDiameter(116+p*45,3,new Color(1,1,1,1-p));}
         }
@@ -241,16 +250,16 @@ namespace Afterecho
             {
                 bool perfect=Math.Abs(e.error)<=Math.Min(.035,game.Run.WindowAt(e.index)*.5);
                 Message(perfect?"PERFECT":"GOOD",perfect?paper:ink,.23f);impactUntil=Time.unscaledTime+.16f;
-                Play(hitFeel);Sound(perfect?perfectSound:hitSound,perfect?.62f:.42f);
+                Play(perfect?FeedbackId.HitPerfect:FeedbackId.HitGood);Sound(perfect?perfectSound:hitSound,perfect?.62f:.42f);
             }
             if(e.kind=="miss")
             {
                 Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);
-                if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;Play(fallFeel);Sound(fallSound,.55f);}
-                if(!e.practice)Play(hpFeel);
+                if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;Play(FeedbackId.Fall);Sound(fallSound,.55f);}
+                if(!e.practice)Play(FeedbackId.HpLoss);
             }
             if(e.kind=="extra")
-            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);if(!game.reducedMotion)PlayStumble();if(!e.practice)Play(hpFeel);}
+            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);if(!game.reducedMotion)PlayStumble();if(!e.practice)Play(FeedbackId.HpLoss);}
             if(e.kind=="won")Sound(clearSound,.65f);
         }
         void PlayStumble()
@@ -272,7 +281,7 @@ namespace Afterecho
             StopStumble();
             if(dust!=null)foreach(var d in dust)d.gameObject.SetActive(false);
             if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);
-            foreach(var p in new[]{hitFeel,hpFeel,boostFeel,fallFeel})if(p!=null){p.StopFeedbacks();p.RestoreInitialValues();}
+            if(feedback!=null)feedback.StopAll();
             if(ghosts!=null)foreach(var g in ghosts)g.gameObject.SetActive(false);
             if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);
             judge.localScale=healthRoot.localScale=runnerVisual.localScale=Vector3.one;
