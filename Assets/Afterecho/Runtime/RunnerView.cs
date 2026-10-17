@@ -31,6 +31,11 @@ namespace Afterecho
         public AudioClip hitSound,perfectSound,fallSound,boostSound,clearSound;
         public RunnerFeedbackPlayer feedback;
         public MMProgressBar hpBar;
+        [Header("Combo text growth")]
+        [Tooltip("Combo at which the combo number reaches its largest size.")]
+        public int comboGrowthFullAt=50;
+        [Tooltip("Extra size of the combo number at full growth (0.6 = 160%). Combo 0 shows 100%.")]
+        public float comboGrowthMax=.6f;
         public int CurrentSide {get;private set;}
         public double LapPosition {get;private set;}
         public bool Falling=>fallUntil>game.ActiveSeconds;
@@ -42,6 +47,7 @@ namespace Afterecho
         bool boosted;
         float shownHealth=-1;
         int shownCombo=-1,nextBeat=-1,shownCount=-1;
+        Vector2 statusBasePivot,statusBasePos;bool statusLayoutKnown;
         UnityEngine.UI.Image[] ghosts;
         float[] ghostEnd;
         UnityEngine.UI.Image[] dust;
@@ -55,6 +61,7 @@ namespace Afterecho
         {
             game=owner;
             RegisterFeedbackFallbacks();AlignHealthTrail();
+            statusBasePivot=status.rectTransform.pivot;statusBasePos=status.rectTransform.anchoredPosition;statusLayoutKnown=true;
             ghosts=new UnityEngine.UI.Image[10];ghostEnd=new float[10];
             for(int i=0;i<ghosts.Length;i++)
             {
@@ -100,11 +107,34 @@ namespace Afterecho
             trail.sprite=hpFill.sprite;trail.type=hpFill.type;trail.fillMethod=hpFill.fillMethod;trail.fillOrigin=hpFill.fillOrigin;
         }
         // Combo grows: pop. Combo resets after at least one hit: negative feedback.
+        // The number grows with the combo up to comboGrowthFullAt and is rebuilt only when it changes.
         void ReactToCombo()
         {
-            int value=game.Run.Combo;
-            if(shownCombo>=0&&value!=shownCombo){if(value>shownCombo)Play(FeedbackId.ComboUp);else if(value==0)Play(FeedbackId.ComboBreak);}
+            int value=game.Run.Combo;if(value==shownCombo)return;
+            if(shownCombo>=0){if(value>shownCombo)Play(FeedbackId.ComboUp);else if(value==0)Play(FeedbackId.ComboBreak);}
             shownCombo=value;
+            float growth=comboGrowthFullAt>0?Mathf.Clamp01(value/(float)comboGrowthFullAt)*Mathf.Max(0,comboGrowthMax):0;
+            combo.text=$"<size={100+growth*100:0}%>{value}</size><size=18>  COMBO</size>";
+        }
+        // GOOD / PERFECT / OVERDRIVE pop around the text centre; MISS / OFF BEAT tilt around the left
+        // edge of the glyphs. Other text effects are stopped first so pivot changes happen at rest.
+        void ShowJudgement(FeedbackId id)
+        {
+            feedback.Stop(FeedbackId.JudgementText);feedback.Stop(FeedbackId.JudgementPerfect);feedback.Stop(FeedbackId.JudgementMiss);
+            PivotStatus(id==FeedbackId.JudgementMiss);Play(id);
+        }
+        // Moves the judgement text pivot without moving the text: the anchored position is derived
+        // from the original layout, so repeated changes never drift.
+        void PivotStatus(bool leftEdge)
+        {
+            if(!statusLayoutKnown)return;
+            var rt=status.rectTransform;var r=rt.rect;Vector2 pivot=statusBasePivot;
+            if(leftEdge&&status.text.Length>0&&r.width>0&&r.height>0)
+            {
+                status.ForceMeshUpdate();var b=status.textBounds;
+                if(b.size.x>0)pivot=new Vector2((b.min.x-r.xMin)/r.width,(b.center.y-r.yMin)/r.height);
+            }
+            rt.pivot=pivot;rt.anchoredPosition=statusBasePos+Vector2.Scale(pivot-statusBasePivot,r.size);
         }
         // Pulses on the stage beat grid using the same song time as judgement (sync offset included).
         // Resyncs without a burst after start, resume, seek or loop.
@@ -212,7 +242,7 @@ namespace Afterecho
                 var guide=portrait.GetComponentInChildren<TMP_Text>();guide.fontSize=Mathf.Max(35,22/canvas.scaleFactor);
                 guide.rectTransform.sizeDelta=new Vector2(Screen.width/canvas.scaleFactor-80,220/canvas.scaleFactor);
             }
-            combo.text=$"{game.Run.Combo}<size=18>  COMBO</size>";ReactToCombo();PulseBeats();
+            ReactToCombo();PulseBeats();
             ShowHealth(game.Run.Health/(float)game.rules.maxHealth);hpText.text=$"HP  {game.Run.Health:000} / {game.rules.maxHealth}";
             hpFill.color=game.Run.Health<=25?new Color(1f,.22f,.18f):new Color(.12f,.85f,.91f);
             if(overdriveBadge!=null)overdriveBadge.gameObject.SetActive(hud&&game.Run.Boosted);
@@ -229,7 +259,7 @@ namespace Afterecho
             if(Time.unscaledTime>messageUntil)status.text=game.Phase==GamePhase.Preparing?"준비 · 4박 후 시작":game.Phase==GamePhase.Playing?(ShownNotes==0?"다음 원을 기다려요":game.IsTutorial?"연습 · 실수해도 괜찮아요":""):"";
             PlaceRunner();AnimateRunner();RenderNotes(active);RenderGhosts();RenderFootSparks();
             if(game.Run.Boosted!=boosted)
-            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);Play(FeedbackId.JudgementText);}}
+            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);ShowJudgement(FeedbackId.JudgementText);}}
             hitRing.gameObject.SetActive(active&&Time.unscaledTime<impactUntil);
             if(hitRing.gameObject.activeSelf){float p=1-(impactUntil-Time.unscaledTime)/.16f;hitRing.SetDiameter(116+p*45,3,new Color(1,1,1,1-p));}
         }
@@ -284,17 +314,17 @@ namespace Afterecho
             if(e.kind=="step")
             {
                 bool perfect=Math.Abs(e.error)<=Math.Min(.035,game.Run.WindowAt(e.index)*.5);
-                Message(perfect?"PERFECT":"GOOD",perfect?paper:ink,.23f);Play(FeedbackId.JudgementText);impactUntil=Time.unscaledTime+.16f;
+                Message(perfect?"PERFECT":"GOOD",perfect?paper:ink,.23f);ShowJudgement(perfect?FeedbackId.JudgementPerfect:FeedbackId.JudgementText);impactUntil=Time.unscaledTime+.16f;
                 Play(perfect?FeedbackId.HitPerfect:FeedbackId.HitGood);Sound(perfect?perfectSound:hitSound,perfect?.62f:.42f);
             }
             if(e.kind=="miss")
             {
-                Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);Play(FeedbackId.JudgementText);
+                Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);ShowJudgement(FeedbackId.JudgementMiss);
                 if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;Play(FeedbackId.Fall);Sound(fallSound,.55f);}
                 if(!e.practice)Play(FeedbackId.HpLoss);
             }
             if(e.kind=="extra")
-            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);Play(FeedbackId.JudgementText);Play(FeedbackId.Stumble);if(!e.practice)Play(FeedbackId.HpLoss);}
+            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);ShowJudgement(FeedbackId.JudgementMiss);Play(FeedbackId.Stumble);if(!e.practice)Play(FeedbackId.HpLoss);}
             if(e.kind=="won")Sound(clearSound,.65f);
         }
         void Sound(AudioClip clip,float volume){if(clip!=null)effects.PlayOneShot(clip,volume);}
@@ -304,6 +334,7 @@ namespace Afterecho
             if(dust!=null)foreach(var d in dust)d.gameObject.SetActive(false);
             if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);
             if(feedback!=null)feedback.StopAll();
+            PivotStatus(false);
             runnerImage.rectTransform.localRotation=Quaternion.identity;
             if(hpBar!=null&&shownHealth>=0)hpBar.SetBar01(shownHealth);
             if(ghosts!=null)foreach(var g in ghosts)g.gameObject.SetActive(false);

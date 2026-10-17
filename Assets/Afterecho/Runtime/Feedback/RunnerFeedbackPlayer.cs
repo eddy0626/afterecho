@@ -59,6 +59,17 @@ namespace Afterecho.Feedback
             return played;
         }
 
+        // Stops one id's effects and returns their targets to rest (e.g. before another effect
+        // reuses the same target with a different pivot).
+        public void Stop(FeedbackId id)
+        {
+            LoadBindings();
+            if (!entries.TryGetValue(id, out var list))
+                return;
+            for (int i = 0; i < list.Count; i++)
+                list[i].Feedback.Stop();
+        }
+
         public void StopAll()
         {
             foreach (var list in entries.Values)

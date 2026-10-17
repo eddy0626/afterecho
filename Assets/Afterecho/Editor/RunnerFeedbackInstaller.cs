@@ -33,6 +33,8 @@ namespace Afterecho.Editor
         const string ComboBreakColorPrefab = "FB_Runner_ComboBreakColor";
         const string BeatPulsePrefab = "FB_Runner_BeatPulse";
         const string BeatRingName = "BeatPulse";
+        const string JudgementPerfectPrefab = "FB_Runner_JudgementPerfect";
+        const string JudgementTiltPrefab = "FB_Runner_JudgementTilt";
         static readonly Color Paper = new Color(1f, 0.97f, 0.88f);
         static readonly Color Danger = new Color(1f, 0.22f, 0.18f);
 
@@ -66,6 +68,9 @@ namespace Afterecho.Editor
             new PrefabSpec(ComboBreakColorPrefab, name => TextColorFlash(name, 0.45f, Danger)),
             // Ring that breathes on the stage beat grid (fast attack, slow release).
             new PrefabSpec(BeatPulsePrefab, name => Pulse(name, 0.45f, 1.12f)),
+            // MISS / OFF BEAT: the text drops clockwise around its left edge, rebounds, drops again
+            // and settles (a head-nod). RunnerView moves the pivot to the glyphs' left edge first.
+            new PrefabSpec(JudgementTiltPrefab, name => Nod(name, 0.5f, -12f)),
             // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
             // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
@@ -86,6 +91,8 @@ namespace Afterecho.Editor
         static readonly VariantSpec[] Variants =
         {
             new VariantSpec(HitPerfectPrefab, HitPrefab, 1.25f),
+            // PERFECT text pops bigger than GOOD / OVERDRIVE (1.4).
+            new VariantSpec(JudgementPerfectPrefab, JudgementTextPrefab, 1.7f),
         };
 
         [MenuItem("Afterecho/Runner/Install Feedbacks In Open Scene")]
@@ -131,6 +138,8 @@ namespace Afterecho.Editor
             var comboBreakWobble = PlaceInstance(container, ComboBreakWobblePrefab, view.combo.rectTransform);
             var comboBreakColor = PlaceInstance(container, ComboBreakColorPrefab, view.combo.rectTransform);
             var beatPulse = PlaceInstance(container, BeatPulsePrefab, EnsureBeatRing(view.judge));
+            var judgementPerfect = PlaceInstance(container, JudgementPerfectPrefab, view.status.rectTransform);
+            var judgementTilt = PlaceInstance(container, JudgementTiltPrefab, view.status.rectTransform);
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
             var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
             var resultPop = PlaceInstance(container, ResultPopPrefab, view.overlay.transform);
@@ -157,7 +166,9 @@ namespace Afterecho.Editor
                 (FeedbackId.ComboBreak, FeedbackChannel.Motion, comboBreakWobble),
                 // Colour is information, not motion: it stays with Reduced Motion.
                 (FeedbackId.ComboBreak, FeedbackChannel.Text, comboBreakColor),
-                (FeedbackId.Beat, FeedbackChannel.Motion, beatPulse));
+                (FeedbackId.Beat, FeedbackChannel.Motion, beatPulse),
+                (FeedbackId.JudgementPerfect, FeedbackChannel.Motion, judgementPerfect),
+                (FeedbackId.JudgementMiss, FeedbackChannel.Motion, judgementTilt));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -395,6 +406,33 @@ namespace Afterecho.Editor
                 AnimateY = false,
                 AnimateZ = true,
                 AnimateRotationTweenZ = new MMTweenType(PunchCurve(), "AnimateZ"),
+                RemapCurveZero = 0,
+                RemapCurveOne = degrees,
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Two clockwise drops with a rebound in between, then back to rest (fraction of the angle).
+        static AnimationCurve NodCurve()
+        {
+            return new AnimationCurve(
+                new Keyframe(0, 0), new Keyframe(0.1f, 1), new Keyframe(0.25f, 0.4f), new Keyframe(0.4f, 0.9f),
+                new Keyframe(0.58f, 0.45f), new Keyframe(0.78f, 0.15f), new Keyframe(1, 0));
+        }
+
+        static MMF_Feedback Nod(string label, float duration, float degrees)
+        {
+            return new MMF_Rotation
+            {
+                Label = label,
+                Mode = MMF_Rotation.Modes.Absolute,
+                RotationSpace = Space.Self,
+                AnimateRotationDuration = duration,
+                AnimateX = false,
+                AnimateY = false,
+                AnimateZ = true,
+                AnimateRotationTweenZ = new MMTweenType(NodCurve(), "AnimateZ"),
                 RemapCurveZero = 0,
                 RemapCurveOne = degrees,
                 AllowAdditivePlays = false,

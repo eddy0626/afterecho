@@ -15,6 +15,8 @@ namespace Afterecho.Feedback
         ComboUp = 8,
         ComboBreak = 9,
         Beat = 10,
+        JudgementPerfect = 11,
+        JudgementMiss = 12,
     }
 
     // Reduced Motion turns off Motion and Flash but keeps Audio and Text.
