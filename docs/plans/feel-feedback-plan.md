@@ -26,7 +26,7 @@
 | 0. 준비 | 일부 완료. 작업 브랜치를 만들었고, 팀 합의(8장)와 로컬 설정 변경 정리가 남음 | — |
 | 1. 피드백 계층 도입 | 완료 | `b5088b4` |
 | 2. 기존 효과 프리팹 이전 | 완료 | `12ad2f6` |
-| 3. 새 효과 추가 | 진행 중. 하나씩 제안하고 함께 정한 뒤 진행. 1번 PERFECT 강조(`193bfb5`), 판정 글자(`f206517`), 2번 HP바 완료 | (이번 커밋) |
+| 3. 새 효과 추가 | 완료 (6번 박자 맥동은 선택 항목으로 남김). PERFECT `193bfb5`, 판정 글자 `f206517`→1.4배 `d2dbb39`, HP바 `9ae34d3`, HP 흔들림 `fe357e3`, 질주 `6056cce`, 비틀거림 `ba70271`, 결과 창 `50673db` | 위 커밋들 |
 | 4. 튜닝·QA | 대기 | — |
 | 5. 정리 | 대기 (대체용 코드 `RunnerView.Feel()` 삭제 등) | — |
 
@@ -43,7 +43,7 @@
 ### 프리팹 효과 튜닝 방법
 
 1. `Stage01_RunnerCircle` 씬에서 Play를 누른다.
-2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/FB_Runner_Hit`을 선택한다. 나머지는 `FB_Runner_HitPerfect`, `FB_Runner_JudgementText`, `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall`이다. HP바의 늦게 따라오는 바는 `RunnerCanvas/SafeArea/Health/HpBackground`의 `MMProgressBar`에서 조정한다(`DecreasingDelay`, `LerpDecreasingDelayedBarDuration`).
+2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/` 아래의 효과를 선택한다: `FB_Runner_Hit`, `FB_Runner_HitPerfect`, `FB_Runner_JudgementText`, `FB_Runner_HpLoss`, `FB_Runner_HpShake`, `FB_Runner_BoostStart`, `FB_Runner_BoostFlash`, `FB_Runner_Fall`, `FB_Runner_Stumble`, `FB_Runner_ResultPop`. HP바의 늦게 따라오는 바는 `RunnerCanvas/SafeArea/Health/HpBackground`의 `MMProgressBar`에서 조정한다(`DecreasingDelay`, `LerpDecreasingDelayedBarDuration`).
 3. 인스펙터의 MMF_Player에서 **Keep Playmode Changes**를 켜고 값을 조정한다. 각 피드백 오른쪽의 재생 버튼으로 바로 확인할 수 있다.
 4. Play를 멈추면 값이 씬에 남는다. 확정할 값이면 인스펙터 상단의 **Overrides → Apply All**로 프리팹에 반영한다.
 5. Keep Playmode Changes를 다시 끈다.
@@ -195,6 +195,8 @@ flowchart LR
 
 현재 `FeedbackId`는 `HitGood`, `HitPerfect`, `HpLoss`, `Fall`, `BoostStart` 다섯 개입니다. `HitGood`과 `HitPerfect`는 지금 같은 효과를 씁니다. 3단계에서 PERFECT 강조를 따로 주기 위한 자리입니다.
 
+한 ID에 여러 효과를 묶을 수 있습니다(예: `HpLoss` = 튀는 효과 + 흔들림, `BoostStart` = 캐릭터 확대 + 화면 번쩍임). 효과마다 채널이 따로 있어서 움직임 줄이기 필터도 따로 적용됩니다. 프리팹 하나에는 효과 하나와 대상 하나만 둡니다.
+
 `FeedbackChannel`은 한 가지 값만 가집니다(`Motion`, `Flash`, `Audio`, `Text`). 움직임 줄이기를 켜면 `Motion`·`Flash`가 꺼집니다. 그래서 `MMF_Player` 하나에는 한 채널의 효과만 담습니다.
 
 `RunnerView`는 효과를 직접 만들거나 부르지 않고 ID로 요청합니다.
@@ -275,11 +277,11 @@ void Play(FeedbackId id)
 | 우선 | 이벤트 | 제안 효과 | 참고 데모 | 주의 |
 |---|---|---|---|---|
 | 1 ✅ | `step` (PERFECT) | **완료:** `FB_Runner_HitPerfect`(`FB_Runner_Hit`의 Prefab Variant, 최대 배율 1.16 → 1.25) | Letters | 0.15초 이하, 번쩍임 없음 |
-| 1-2 ✅ | `step` / `miss` / `extra` | **완료:** 판정 글자 튀어나옴. `FB_Runner_JudgementText`(`MMF_Scale`, 1.2배, 0.12초) | Letters | Motion 채널이라 움직임 줄이기 때 꺼짐 |
-| 2 ✅ | `miss` / `extra` | **완료:** HP바 뒤에 늦게 따라 줄어드는 바(`HpDelayed`)를 넣고 Feel의 `MMProgressBar`가 구동. 0.2초 대기 후 0.3초 동안 따라감. 튀는 효과는 기존 `FB_Runner_HpLoss`가 맡음 | MMProgressBar | 성공(+1 HP)이 오면 따라오던 바가 바로 맞춰짐(Feel 동작). 움직임 줄이기 때는 즉시 갱신 |
-| 3 | 질주 시작 | 화면 가장자리 강조와 작은 카메라 흔들림 | Snake | 화면 번쩍임은 이때 1회만 |
-| 4 | `extra` | 비틀거림을 DOTween에서 Feel로 옮길지 결정 | — | 기존 느낌 유지 |
-| 5 | `won` | 결과 화면 등장 연출 | CardsUI, ParallaxUI | |
+| 1-2 ✅ | `step` / `miss` / `extra` / OVERDRIVE | **완료:** 판정 글자 튀어나옴. `FB_Runner_JudgementText`(`MMF_Scale`, 1.4배, 0.12초) | Letters | Motion 채널이라 움직임 줄이기 때 꺼짐 |
+| 2 ✅ | `miss` / `extra` | **완료:** HP바 뒤에 늦게 따라 줄어드는 바(`HpDelayed`)를 넣고 Feel의 `MMProgressBar`가 구동. 0.2초 대기 후 0.3초 동안 따라감. 추가로 게이지가 좌우로 흔들림(`FB_Runner_HpShake`, `MMF_Position`, 7, 0.25초). 튀는 효과는 기존 `FB_Runner_HpLoss` | MMProgressBar | 성공(+1 HP)이 오면 따라오던 바가 바로 맞춰짐(Feel 동작). 움직임 줄이기 때는 즉시 갱신, 흔들림 없음 |
+| 3 ✅ | 질주 시작 | **완료:** 화면 번쩍임 1회(`FB_Runner_BoostFlash`, `MMF_ImageAlpha`, 투명도 0.45, 0.3초, Flash 채널)와 OVERDRIVE 글자 튀어나옴. 카메라 흔들림은 쓰지 않음: 화면 전체가 카메라에 붙은 Canvas라서 카메라를 흔들어도 화면이 같이 움직임. 가장자리 강조는 새 아트가 필요해 보류 | Snake | 번쩍임은 15콤보마다 최대 1회라 초당 3회 기준보다 훨씬 적다 |
+| 4 ✅ | `extra` | **완료:** 비틀거림을 DOTween에서 Feel로 이전(`FB_Runner_Stumble`, `MMF_Rotation`, −9도, 0.12초). `RunnerView`는 더 이상 DOTween을 쓰지 않음. `presentation_regressions.cs`의 12개 검사를 Feel 기준으로 바꿈(의도는 같음) | — | 기존 느낌 유지 |
+| 5 ✅ | 결과 화면 (클리어·실패) | **완료:** 결과 창이 0.85배에서 1.015배까지 살짝 넘쳤다가 1배로 자리 잡음(`FB_Runner_ResultPop`, `MMF_Scale`, 0.3초) | CardsUI, ParallaxUI | 움직임 줄이기 때는 바로 1배 |
 | 6 (선택) | 박자 | 배경이나 링이 박자에 맞춰 맥동 | Brass (참고만) | 규칙 11 |
 
 - 1번 메모: GOOD과 PERFECT 효과가 같은 대상(`HitResponse` 링)을 쓴다. 효과 길이(0.115초)가 노트 최소 간격(0.17초)보다 짧아서 두 효과가 겹치지 않는다. 길이를 늘릴 때는 이 조건을 다시 확인한다.
@@ -287,6 +289,8 @@ void Play(FeedbackId id)
 - 판정 글자 검증: 1.2배까지 커졌다 원래대로. 움직임 줄이기 때는 글자만 바뀌고 크기는 그대로. 이 연출이 추가되면서 `FeedbackPlays`가 판정마다 1씩 더 늘어난다. 이 값을 쓰는 테스트는 없다.
 - HP바 검증: HP −10이면 HP바는 즉시 0.90, 늦게 따라오는 바는 0.1초 시점에 1.00 → 0.7초 시점에 0.90. 움직임 줄이기 때는 둘 다 즉시. 메뉴로 돌아가면 둘 다 1.00. Run Tests 173/173, 연출 회귀 검사 통과, 기존 효과 크기 변화 없음, 새 콘솔 에러·경고 없음.
 - HP바 메모: 늦게 따라오는 바의 위치·크기·스프라이트는 실행 시 `HpFill`에서 복사한다. UI 스타일 스크립트가 `HpFill`을 바꿔도 맞춰진다.
+- 3·4·5번 검증: Run Tests 173/173, 연출 회귀 검사 10/10. 측정값: 번쩍임 0.45 → 0, 결과 창 0.85 → 1.015 → 1.000, 비틀거림 좌우로 흔들린 뒤 0도로 복귀(DOTween 트윈 0개). 움직임 줄이기 때는 모두 동작하지 않음. 새 콘솔 에러·경고 없음.
+- 연출 회귀 검사 변경 메모: "첫 비틀거림 도중 두 번째 헛입력" 확인은 0.05초 뒤 상태를 본다. 비틀거림 곡선이 이 시점 근처에서 0도를 지나므로 각도는 확인하지 않는다. 에디터 프레임이 길어져 0.12초 효과가 먼저 끝나면 최대 3번 다시 시도한다. 다시 시작한 순간 각도가 0인지는 그대로 확인한다.
 - 모든 PR에는 변경 전후 GIF나 영상을 첨부한다.
 
 ### 4단계: 튜닝·QA (1~2일)
