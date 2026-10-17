@@ -109,6 +109,8 @@ flowchart LR
 
 ## 2. 목표와 범위
 
+**작업 대상 씬:** `Assets/Afterecho/Scenes/Stage01_RunnerCircle.unity`만 다룹니다. `Stage01_BlackCorridor.unity`(이전 복도 버전)는 사용하지 않고 수정하지 않습니다.
+
 **이번에 하는 것**
 - 러너 모드 피드백을 프리팹 기반 `MMF_Player`로 전환
 - 피드백 계층(`RunnerFeedbackPlayer`) 도입
@@ -388,6 +390,7 @@ git config --global user.name "이름"
 | D8 | Feel 라이선스 | 팀원별 좌석 라이선스가 필요한지 확인 | 에디터 확장 에셋은 보통 사용자마다 라이선스가 필요하다 |
 | D9 | Pipeline 패키지 0.8.0 업그레이드 | 보류 | 실험(exp) 패키지라 변화가 크다 |
 | D10 | PR 승인 규칙 | 1명 승인, Squash merge | 6.3절 |
+| D11 | 전역 빌드 설정의 씬 | 전역 Build Settings를 `Stage01_RunnerCircle`로 바꾸거나 복도 씬을 빼기 | 지금 전역 설정에는 쓰지 않는 `Stage01_BlackCorridor`만 켜져 있다. 러너 빌드 프로필이 씬 목록을 덮어써서 프로필로 빌드하면 문제없지만, 기본 설정으로 빌드하면 복도 씬이 빌드된다 |
 
 ---
 
