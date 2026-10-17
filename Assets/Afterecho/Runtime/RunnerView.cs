@@ -213,7 +213,7 @@ namespace Afterecho
             if(Time.unscaledTime>messageUntil)status.text=game.Phase==GamePhase.Preparing?"준비 · 4박 후 시작":game.Phase==GamePhase.Playing?(ShownNotes==0?"다음 원을 기다려요":game.IsTutorial?"연습 · 실수해도 괜찮아요":""):"";
             PlaceRunner();AnimateRunner();RenderNotes(active);RenderGhosts();RenderFootSparks();
             if(game.Run.Boosted!=boosted)
-            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);}}
+            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);Play(FeedbackId.JudgementText);}}
             hitRing.gameObject.SetActive(active&&Time.unscaledTime<impactUntil);
             if(hitRing.gameObject.activeSelf){float p=1-(impactUntil-Time.unscaledTime)/.16f;hitRing.SetDiameter(116+p*45,3,new Color(1,1,1,1-p));}
         }

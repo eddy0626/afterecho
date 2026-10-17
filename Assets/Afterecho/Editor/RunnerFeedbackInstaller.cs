@@ -25,6 +25,8 @@ namespace Afterecho.Editor
         const string FallPrefab = "FB_Runner_Fall";
         const string JudgementTextPrefab = "FB_Runner_JudgementText";
         const string HpShakePrefab = "FB_Runner_HpShake";
+        const string BoostFlashPrefab = "FB_Runner_BoostFlash";
+        const string BoostFlashName = "BoostFlash";
         const string HealthTrailName = "HpDelayed";
         static readonly Color HealthTrailColor = new Color(1f, 0.97f, 0.88f, 0.9f);
 
@@ -40,6 +42,8 @@ namespace Afterecho.Editor
             new PrefabSpec(JudgementTextPrefab, name => Pop(name, 0.12f, 1.4f)),
             // Left-right shake of the HP gauge, like Feel's MMProgressBar demo (which shakes vertically).
             new PrefabSpec(HpShakePrefab, name => ShakeX(name, 0.25f, 7f)),
+            // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
+            new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
         };
 
         // Scene-object fields the feedbacks animate; scene instances override them.
@@ -86,6 +90,7 @@ namespace Afterecho.Editor
             var fall = PlaceInstance(container, FallPrefab, view.runnerVisual);
             var judgementText = PlaceInstance(container, JudgementTextPrefab, view.status.rectTransform);
             var hpShake = PlaceInstance(container, HpShakePrefab, view.hpFill.transform.parent);
+            var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
 
             var player = view.GetComponent<RunnerFeedbackPlayer>();
             if (player == null)
@@ -97,11 +102,34 @@ namespace Afterecho.Editor
                 (FeedbackId.HpLoss, FeedbackChannel.Motion, hpShake),
                 (FeedbackId.Fall, FeedbackChannel.Motion, fall),
                 (FeedbackId.BoostStart, FeedbackChannel.Motion, boostStart),
+                (FeedbackId.BoostStart, FeedbackChannel.Flash, boostFlash),
                 (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
             EditorUtility.SetDirty(view);
+        }
+
+        // Full-screen white image, invisible until the flash feedback raises its alpha.
+        static Transform EnsureFlashImage(Transform canvas)
+        {
+            var existing = canvas.Find(BoostFlashName);
+            if (existing != null)
+                return existing;
+            var flashObject = new GameObject(BoostFlashName, typeof(RectTransform), typeof(UnityEngine.UI.Image));
+            var rect = (RectTransform)flashObject.transform;
+            rect.SetParent(canvas, false);
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            rect.SetAsLastSibling();
+            var image = flashObject.GetComponent<UnityEngine.UI.Image>();
+            image.color = new Color(1f, 1f, 1f, 0f);
+            image.raycastTarget = false;
+            // Skip drawing the full-screen quad while it is transparent (fill rate on mobile web).
+            image.canvasRenderer.cullTransparentMesh = true;
+            return rect;
         }
 
         // Adds a delayed damage trail behind the HP fill and lets Feel's MMProgressBar drive both.
@@ -276,6 +304,22 @@ namespace Afterecho.Editor
                 RemapCurveOne = peak,
                 UniformScaling = true,
                 AnimateScaleTweenX = new MMTweenType(PopCurve()),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Raises a UI image's alpha to peakAlpha and back.
+        static MMF_Feedback Flash(string label, float duration, float peakAlpha)
+        {
+            return new MMF_ImageAlpha
+            {
+                Label = label,
+                Mode = MMF_ImageAlpha.Modes.OverTime,
+                Duration = duration,
+                Curve = new MMTweenType(new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.15f, 1), new Keyframe(1, 0))),
+                CurveRemapZero = 0,
+                CurveRemapOne = peakAlpha,
                 AllowAdditivePlays = false,
                 Timing = UnscaledTiming(),
             };
