@@ -36,6 +36,9 @@ namespace Afterecho
         public int comboGrowthFullAt=30;
         [Tooltip("Extra size of the combo number at full growth (0.8 = 180%). Combo 0 shows 100%.")]
         public float comboGrowthMax=.8f;
+        [Header("HP danger")]
+        [Tooltip("At or below this HP the bar turns red and its beat pulse becomes a heartbeat.")]
+        public int dangerHealth=25;
         public int CurrentSide {get;private set;}
         public double LapPosition {get;private set;}
         public bool Falling=>fallUntil>game.ActiveSeconds;
@@ -144,7 +147,16 @@ namespace Afterecho
             if(beats==null||game.Phase!=GamePhase.Playing){nextBeat=-1;return;}
             double t=game.LogicalTime;
             if(nextBeat<0||(nextBeat>0&&t<beats[nextBeat-1])){nextBeat=0;while(nextBeat<beats.Length&&beats[nextBeat]<=t)nextBeat++;return;}
-            if(nextBeat<beats.Length&&t>=beats[nextBeat]){Play(FeedbackId.Beat);while(nextBeat<beats.Length&&beats[nextBeat]<=t)nextBeat++;}
+            if(nextBeat<beats.Length&&t>=beats[nextBeat]){PlayBeat();while(nextBeat<beats.Length&&beats[nextBeat]<=t)nextBeat++;}
+        }
+        // Every beat: the ring pulses and the HP gauge does a small pulse, or a stronger double-thump
+        // heartbeat while HP is in danger. The other gauge pulse is stopped so they never overlap.
+        void PlayBeat()
+        {
+            Play(FeedbackId.Beat);
+            bool danger=game.Run!=null&&game.Run.Health<=dangerHealth;
+            feedback.Stop(danger?FeedbackId.HpBeat:FeedbackId.HpHeartbeat);
+            Play(danger?FeedbackId.HpHeartbeat:FeedbackId.HpBeat);
         }
         // Feel's MMProgressBar moves the fill and the delayed damage trail; only real changes are pushed.
         void ShowHealth(float value)
@@ -244,7 +256,7 @@ namespace Afterecho
             }
             ReactToCombo();PulseBeats();
             ShowHealth(game.Run.Health/(float)game.rules.maxHealth);hpText.text=$"HP  {game.Run.Health:000} / {game.rules.maxHealth}";
-            hpFill.color=game.Run.Health<=25?new Color(1f,.22f,.18f):new Color(.12f,.85f,.91f);
+            hpFill.color=game.Run.Health<=dangerHealth?new Color(1f,.22f,.18f):new Color(.12f,.85f,.91f);
             if(overdriveBadge!=null)overdriveBadge.gameObject.SetActive(hud&&game.Run.Boosted);
             score.text=$"{game.Run.Score:000000}<size=14>  ×{game.Run.Multiplier}</size>";
             float completion=game.IsTutorial?0:(float)Math.Clamp(game.LogicalTime/game.Stage.duration,0,1);
@@ -358,7 +370,7 @@ namespace Afterecho
         public void Pause()=>Overlay("잠시 쉬어가기","음악과 원, 달리기가 함께 멈췄습니다.\n4박 준비 후 같은 위치에서 이어갑니다.","계속 달리기","처음으로",false);
         public void AudioProblem(string text)=>Overlay("음악 연결 확인",text,"다시 이어가기","처음으로",false);
         // Called every frame while preparing; the count-in beat pulses only when the number changes.
-        public void Count(int value){countText.text=value==0?"LOADING":value.ToString();status.text="준비 · 원이 겹칠 때 입력";if(value>0&&value!=shownCount)Play(FeedbackId.Beat);shownCount=value;}
+        public void Count(int value){countText.text=value==0?"LOADING":value.ToString();status.text="준비 · 원이 겹칠 때 입력";if(value>0&&value!=shownCount)PlayBeat();shownCount=value;}
         public void Result(bool won)
         {
             var r=game.Run;double accuracy=r.Hits*100d/Math.Max(1,r.Hits+r.Misses+r.Extras);

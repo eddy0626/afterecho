@@ -35,6 +35,8 @@ namespace Afterecho.Editor
         const string BeatRingName = "BeatPulse";
         const string JudgementPerfectPrefab = "FB_Runner_JudgementPerfect";
         const string JudgementTiltPrefab = "FB_Runner_JudgementTilt";
+        const string HpBeatPrefab = "FB_Runner_HpBeat";
+        const string HpHeartbeatPrefab = "FB_Runner_HpHeartbeat";
         static readonly Color Paper = new Color(1f, 0.97f, 0.88f);
         static readonly Color Danger = new Color(1f, 0.22f, 0.18f);
 
@@ -71,6 +73,11 @@ namespace Afterecho.Editor
             // MISS / OFF BEAT: the text drops clockwise around its left edge, rebounds, drops again
             // and settles (a head-nod). RunnerView moves the pivot to the glyphs' left edge first.
             new PrefabSpec(JudgementTiltPrefab, name => Nod(name, 0.5f, -12f)),
+            // HP gauge on every beat: a barely visible pulse, kept far below the HP-loss squash (1.1)
+            // and wobble so damage stays the strongest signal on the bar.
+            new PrefabSpec(HpBeatPrefab, name => Pulse(name, 0.3f, 1.03f)),
+            // While HP is in danger the same beat becomes a double-thump heartbeat.
+            new PrefabSpec(HpHeartbeatPrefab, name => Heartbeat(name, 0.5f, 1.08f)),
             // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
             // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
@@ -140,6 +147,8 @@ namespace Afterecho.Editor
             var beatPulse = PlaceInstance(container, BeatPulsePrefab, EnsureBeatRing(view.judge));
             var judgementPerfect = PlaceInstance(container, JudgementPerfectPrefab, view.status.rectTransform);
             var judgementTilt = PlaceInstance(container, JudgementTiltPrefab, view.status.rectTransform);
+            var hpBeat = PlaceInstance(container, HpBeatPrefab, view.hpFill.transform.parent);
+            var hpHeartbeat = PlaceInstance(container, HpHeartbeatPrefab, view.hpFill.transform.parent);
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
             var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
             var resultPop = PlaceInstance(container, ResultPopPrefab, view.overlay.transform);
@@ -168,7 +177,9 @@ namespace Afterecho.Editor
                 (FeedbackId.ComboBreak, FeedbackChannel.Text, comboBreakColor),
                 (FeedbackId.Beat, FeedbackChannel.Motion, beatPulse),
                 (FeedbackId.JudgementPerfect, FeedbackChannel.Motion, judgementPerfect),
-                (FeedbackId.JudgementMiss, FeedbackChannel.Motion, judgementTilt));
+                (FeedbackId.JudgementMiss, FeedbackChannel.Motion, judgementTilt),
+                (FeedbackId.HpBeat, FeedbackChannel.Motion, hpBeat),
+                (FeedbackId.HpHeartbeat, FeedbackChannel.Motion, hpHeartbeat));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -435,6 +446,25 @@ namespace Afterecho.Editor
                 AnimateRotationTweenZ = new MMTweenType(NodCurve(), "AnimateZ"),
                 RemapCurveZero = 0,
                 RemapCurveOne = degrees,
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // "Ba-dum": a strong thump, a short dip, a second slightly weaker thump, then rest.
+        static MMF_Feedback Heartbeat(string label, float duration, float peak)
+        {
+            return new MMF_Scale
+            {
+                Label = label,
+                Mode = MMF_Scale.Modes.Absolute,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = 1,
+                RemapCurveOne = peak,
+                UniformScaling = true,
+                AnimateScaleTweenX = new MMTweenType(new AnimationCurve(
+                    new Keyframe(0, 0), new Keyframe(0.08f, 1), new Keyframe(0.2f, 0.25f), new Keyframe(0.32f, 0.85f),
+                    new Keyframe(0.5f, 0.1f), new Keyframe(1, 0)), "AnimateX"),
                 AllowAdditivePlays = false,
                 Timing = UnscaledTiming(),
             };

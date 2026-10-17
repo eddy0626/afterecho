@@ -1,6 +1,6 @@
 # AFTERECHO Feel 연출 조정 가이드
 
-> **마지막 갱신:** 2026-10-17 (콤보 30/180%, PERFECT 2배 반영) · 대상 씬: `Stage01_RunnerCircle`
+> **마지막 갱신:** 2026-10-17 (HP 게이지 박자 맥동·위험 두근거림 반영) · 대상 씬: `Stage01_RunnerCircle`
 > 연출을 추가하거나 바꿀 때마다 이 문서도 함께 고칩니다. 아래 "현재 값"은 씬과 프리팹에서 직접 읽은 값입니다.
 
 ---
@@ -77,6 +77,9 @@
 | HP바 튐 | 프리팹 `FB_Runner_HpLoss` → `…/SafeArea/Health` | Squash 1.1, 0.17초 | |
 | HP 게이지 휘청임 | 프리팹 `FB_Runner_HpWobble` → `…/Health/HpBackground` | Rotation 7도, 0.35초 | |
 | 늦게 따라오는 바 | `…/Health/HpBackground`의 **MMProgressBar** | `DecreasingDelay` 0.2초, `LerpDecreasingDelayedBarDuration` 0.3초 | `LerpForegroundBar`는 끔(HP는 즉시 갱신). 바 자체 튐(`BumpScaleOnChange`)도 끔. 성공으로 HP가 오르면 바로 맞춰짐 |
+| HP 게이지 박자 맥동 (평소) | 프리팹 `FB_Runner_HpBeat` → `…/Health/HpBackground` | Scale 1.03, 0.3초 | 박자 링과 같은 박자에 둠칫한다. HP 감소 연출(튐 1.1, 휘청임 7도)보다 일부러 훨씬 작게 둬서, 감소가 HP바에서 가장 강한 신호로 남게 한다 |
+| HP 게이지 두근거림 (위험) | 프리팹 `FB_Runner_HpHeartbeat` → `…/Health/HpBackground` | Scale 1.08, 0.5초, "두근-두근" 곡선 | HP가 위험 기준 이하일 때 평소 맥동 대신 재생된다. 곡선(`AnimateScaleTweenX`)은 강하게 한 번, 약하게 한 번 뛰는 모양이다 |
+| 위험 기준 HP | `Afterecho_RunnerCircle`의 **RunnerView** → HP danger → `dangerHealth` | 25 | 이 값 이하에서 HP바가 빨갛게 바뀌고 두근거림으로 전환된다. 코드 값이라 씬만 저장하면 된다 |
 | 늦게 따라오는 바 색 | `…/HpBackground/HpDelayed`의 Image Color | `#FFF7E0`, 알파 0.9 | 위치·크기·스프라이트는 실행할 때 `HpFill`에서 복사됨 |
 
 ### 콤보
@@ -135,6 +138,8 @@
 | `ComboUp` | 콤보 증가 | ComboPop |
 | `ComboBreak` | 콤보 끊김 | ComboBreakWobble, ComboBreakColor(Text 채널) |
 | `Beat` | 박자, 준비 카운트 | BeatPulse |
+| `HpBeat` | 박자 (HP가 위험 기준 초과) | HpBeat |
+| `HpHeartbeat` | 박자 (HP가 위험 기준 이하) | HpHeartbeat |
 | `ResultShow` | 결과 창 표시 | ResultPop |
 
 ---
@@ -153,3 +158,4 @@
 | 2026-10-17 | HP 좌우 흔들림 → 휘청임(회전), 고정 링·가운데 점 튐, 콤보 튐·끊김, 박자 링 | `7d7a240` |
 | 2026-10-17 | 콤보 숫자 커지기, PERFECT 글자 1.7, MISS·OFF BEAT 글자 기울기 | `cbd513e` |
 | 2026-10-17 | 콤보 숫자 50콤보 160% → 30콤보 180% (15콤보 140%), PERFECT 글자 1.7 → 2.0 | (이번 커밋) |
+| 2026-10-17 | HP 게이지 박자 맥동(1.03), 위험 시 두근거림(1.08), 위험 기준 `dangerHealth` 25 | (이번 커밋) |

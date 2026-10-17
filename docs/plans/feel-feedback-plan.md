@@ -287,6 +287,7 @@ void Play(FeedbackId id)
 | 6 ✅ | 박자 | **완료:** 판정 UI 바깥에 박자 링(`BeatPulse`, 지름 300)을 두고 박자마다 1.12배로 숨 쉬듯 맥동(`FB_Runner_BeatPulse`, 0.45초). `stage.json`의 `beats`와 `LogicalTime`(판정과 같은 음악 시계, 싱크 보정 포함)으로 박자를 찾고, 준비 카운트에서도 맥동 | Brass (참고만) | 오디오 분석(`MMAudioAnalyzer`)은 웹 빌드에서 스펙트럼 데이터를 쓸 수 없어 사용하지 않음 |
 | 7 ✅ | `step` | **완료:** 성공할 때마다 고정 링(1.12배)과 가운데 점(1.6배)이 튐(`FB_Runner_TargetPop`, `FB_Runner_DotPop`) | — | 박자 링과 다른 오브젝트라 서로 간섭하지 않음 |
 | 8 ✅ | 콤보 | **완료:** 콤보가 오르면 글자가 튐(1.25배, `FB_Runner_ComboPop`). 끊기면 휘청이고(10도) 빨갛게 번쩍임(`FB_Runner_ComboBreakWobble`, `FB_Runner_ComboBreakColor`/`MMF_TMPColor`) | — | 색은 정보라 Text 채널: 움직임 줄이기 때도 유지 |
+| 9 ✅ | 박자 + HP 상태 | **완료:** HP 게이지가 박자마다 살짝 둠칫(1.03배, `FB_Runner_HpBeat`), HP 25 이하에서는 "두근-두근" 심장박동(1.08배, `FB_Runner_HpHeartbeat`). 성공 때 HP바 연출은 넣지 않음: 성공 피드백은 시선이 있는 가운데에 모으고, HP바의 큰 움직임은 감소 경고로만 남긴다 | — | 위험 기준은 `RunnerView.dangerHealth`(HP바 빨간색과 공유) |
 
 - 1번 메모: GOOD과 PERFECT 효과가 같은 대상(`HitResponse` 링)을 쓴다. 효과 길이(0.115초)가 노트 최소 간격(0.17초)보다 짧아서 두 효과가 겹치지 않는다. 길이를 늘릴 때는 이 조건을 다시 확인한다.
 - 1번 검증: GOOD 1.16배, PERFECT 1.25배로 재생되고 둘 다 원래 크기로 돌아옴. Run Tests 173/173, 연출 회귀 검사 통과, 새 콘솔 에러·경고 없음.
