@@ -9,7 +9,8 @@ using Object = UnityEngine.Object;
 
 namespace Afterecho.Editor
 {
-    // Places the runner's feedback prefabs in the scene and binds them to RunnerFeedbackPlayer.
+    // Places the runner's feedback prefabs in the scene, binds them to RunnerFeedbackPlayer,
+    // and sets up the HP bar's delayed damage trail (Feel MMProgressBar).
     // Idempotent: RunnerSceneBuilder calls it for new scenes, and the menu item updates an
     // existing scene without rebuilding it. Prefabs are created only when missing, so values
     // tuned in the Inspector are never overwritten.
@@ -23,6 +24,8 @@ namespace Afterecho.Editor
         const string BoostStartPrefab = "FB_Runner_BoostStart";
         const string FallPrefab = "FB_Runner_Fall";
         const string JudgementTextPrefab = "FB_Runner_JudgementText";
+        const string HealthTrailName = "HpDelayed";
+        static readonly Color HealthTrailColor = new Color(1f, 0.97f, 0.88f, 0.9f);
 
         // The first four use the values RunnerView.Feel() used, so the migration does not change the feel.
         static readonly PrefabSpec[] Specs =
@@ -90,7 +93,74 @@ namespace Afterecho.Editor
                 (FeedbackId.JudgementText, judgementText));
 
             view.feedback = player;
+            view.hpBar = InstallHealthBar(view.hpFill);
             EditorUtility.SetDirty(view);
+        }
+
+        // Adds a delayed damage trail behind the HP fill and lets Feel's MMProgressBar drive both.
+        // Existing bar settings are kept so Inspector tuning survives a re-install.
+        static MMProgressBar InstallHealthBar(UnityEngine.UI.Image fill)
+        {
+            var housing = fill.transform.parent;
+            var trailTransform = housing.Find(HealthTrailName);
+            UnityEngine.UI.Image trail;
+            if (trailTransform == null)
+            {
+                var trailObject = new GameObject(HealthTrailName, typeof(RectTransform), typeof(UnityEngine.UI.Image));
+                trailObject.transform.SetParent(housing, false);
+                // Same parent, earlier sibling: drawn behind the fill.
+                trailObject.transform.SetSiblingIndex(fill.transform.GetSiblingIndex());
+                trail = trailObject.GetComponent<UnityEngine.UI.Image>();
+                trail.raycastTarget = false;
+                trail.color = HealthTrailColor;
+            }
+            else
+            {
+                trail = trailTransform.GetComponent<UnityEngine.UI.Image>();
+            }
+            CopyFillLayout(fill, trail);
+
+            var bar = housing.GetComponent<MMProgressBar>();
+            if (bar == null)
+            {
+                bar = housing.gameObject.AddComponent<MMProgressBar>();
+                bar.FillMode = MMProgressBar.FillModes.FillAmount;
+                bar.BarDirection = MMProgressBar.BarDirections.LeftToRight;
+                bar.TimeScale = MMProgressBar.TimeScales.UnscaledTime;
+                bar.BarFillMode = MMProgressBar.BarFillModes.FixedDuration;
+                // HP itself updates instantly as before; only the trail lags behind.
+                bar.LerpForegroundBar = false;
+                // Short delay: the next successful hit (+1 HP) resets the trail anyway.
+                bar.DecreasingDelay = 0.2f;
+                bar.LerpDecreasingDelayedBar = true;
+                bar.LerpDecreasingDelayedBarDuration = 0.3f;
+                // The HP squash already comes from FB_Runner_HpLoss.
+                bar.BumpScaleOnChange = false;
+                bar.BumpOnIncrease = false;
+                bar.BumpOnDecrease = false;
+                bar.ChangeColorWhenBumping = false;
+            }
+            bar.ForegroundBar = fill.transform;
+            bar.DelayedBarDecreasing = trail.transform;
+            EditorUtility.SetDirty(bar);
+            return bar;
+        }
+
+        static void CopyFillLayout(UnityEngine.UI.Image from, UnityEngine.UI.Image to)
+        {
+            var source = from.rectTransform;
+            var target = to.rectTransform;
+            target.anchorMin = source.anchorMin;
+            target.anchorMax = source.anchorMax;
+            target.pivot = source.pivot;
+            target.sizeDelta = source.sizeDelta;
+            target.anchoredPosition = source.anchoredPosition;
+            to.sprite = from.sprite;
+            to.type = from.type;
+            to.fillMethod = from.fillMethod;
+            to.fillOrigin = from.fillOrigin;
+            to.fillAmount = from.fillAmount;
+            EditorUtility.SetDirty(to);
         }
 
         static void EnsurePrefabs()

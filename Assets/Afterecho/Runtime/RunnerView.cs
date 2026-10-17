@@ -31,6 +31,7 @@ namespace Afterecho
         public AudioSource effects;
         public AudioClip hitSound,perfectSound,fallSound,boostSound,clearSound;
         public RunnerFeedbackPlayer feedback;
+        public MMProgressBar hpBar;
         public int CurrentSide {get;private set;}
         public double LapPosition {get;private set;}
         public bool Falling=>fallUntil>game.ActiveSeconds;
@@ -40,6 +41,7 @@ namespace Afterecho
         double fallStart,fallUntil=-1;
         float messageUntil,impactUntil,ghostAt;
         bool boosted;
+        float shownHealth=-1;
         Tween stumbleTween;
         UnityEngine.UI.Image[] ghosts;
         float[] ghostEnd;
@@ -53,7 +55,7 @@ namespace Afterecho
         public void Initialize(RunnerGame owner)
         {
             game=owner;
-            RegisterFeedbackFallbacks();
+            RegisterFeedbackFallbacks();AlignHealthTrail();
             ghosts=new UnityEngine.UI.Image[10];ghostEnd=new float[10];
             for(int i=0;i<ghosts.Length;i++)
             {
@@ -89,6 +91,23 @@ namespace Afterecho
             if(!feedback.Has(FeedbackId.BoostStart))feedback.RegisterFallback(FeedbackId.BoostStart,FeedbackChannel.Motion,new FeelFeedback(Feel("BoostFeel",runnerVisual,.18f,1.22f)));
             if(!feedback.Has(FeedbackId.Fall))feedback.RegisterFallback(FeedbackId.Fall,FeedbackChannel.Motion,new FeelFeedback(Feel("FallFeel",runnerVisual,.15f,.8f)));
         }
+        // UI styling may resize or reskin hpFill, so the delayed trail copies its layout at startup.
+        void AlignHealthTrail()
+        {
+            if(hpBar==null||hpBar.DelayedBarDecreasing==null)return;
+            var trail=hpBar.DelayedBarDecreasing.GetComponent<UnityEngine.UI.Image>();if(trail==null)return;
+            var from=hpFill.rectTransform;var to=trail.rectTransform;
+            to.anchorMin=from.anchorMin;to.anchorMax=from.anchorMax;to.pivot=from.pivot;to.sizeDelta=from.sizeDelta;to.anchoredPosition=from.anchoredPosition;
+            trail.sprite=hpFill.sprite;trail.type=hpFill.type;trail.fillMethod=hpFill.fillMethod;trail.fillOrigin=hpFill.fillOrigin;
+        }
+        // Feel's MMProgressBar moves the fill and the delayed damage trail; only real changes are pushed.
+        void ShowHealth(float value)
+        {
+            if(hpBar==null){hpFill.fillAmount=value;return;}
+            if(value==shownHealth)return;
+            if(shownHealth<0||game.reducedMotion)hpBar.SetBar01(value);else hpBar.UpdateBar01(value);
+            shownHealth=value;
+        }
         MMF_Player Feel(string name,Transform target,float duration,float peak)
         {
             var go=new GameObject(name){hideFlags=HideFlags.DontSave};go.transform.SetParent(transform,false);
@@ -109,7 +128,7 @@ namespace Afterecho
             else if(game.Phase==GamePhase.Ready)game.BeginMain();else game.StartRun(false);
         }
         public void ResetRun()
-        {LapPosition=0;CurrentSide=0;fallUntil=-1;boosted=false;messageUntil=0;impactUntil=0;ghostAt=0;ghostCursor=0;dustAt=0;dustCursor=0;if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);status.text="";PlaceRunner();}
+        {LapPosition=0;CurrentSide=0;fallUntil=-1;boosted=false;shownHealth=-1;messageUntil=0;impactUntil=0;ghostAt=0;ghostCursor=0;dustAt=0;dustCursor=0;if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);status.text="";PlaceRunner();}
         public void AdvanceRunner(float dt)
         {
             double speed=game.Run.Boosted?game.rules.boostSpeed:1;
@@ -178,7 +197,7 @@ namespace Afterecho
                 guide.rectTransform.sizeDelta=new Vector2(Screen.width/canvas.scaleFactor-80,220/canvas.scaleFactor);
             }
             combo.text=$"{game.Run.Combo}<size=18>  COMBO</size>";
-            hpFill.fillAmount=game.Run.Health/(float)game.rules.maxHealth;hpText.text=$"HP  {game.Run.Health:000} / {game.rules.maxHealth}";
+            ShowHealth(game.Run.Health/(float)game.rules.maxHealth);hpText.text=$"HP  {game.Run.Health:000} / {game.rules.maxHealth}";
             hpFill.color=game.Run.Health<=25?new Color(1f,.22f,.18f):new Color(.12f,.85f,.91f);
             if(overdriveBadge!=null)overdriveBadge.gameObject.SetActive(hud&&game.Run.Boosted);
             score.text=$"{game.Run.Score:000000}<size=14>  ×{game.Run.Multiplier}</size>";
@@ -282,6 +301,7 @@ namespace Afterecho
             if(dust!=null)foreach(var d in dust)d.gameObject.SetActive(false);
             if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);
             if(feedback!=null)feedback.StopAll();
+            if(hpBar!=null&&shownHealth>=0)hpBar.SetBar01(shownHealth);
             if(ghosts!=null)foreach(var g in ghosts)g.gameObject.SetActive(false);
             if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);
             judge.localScale=healthRoot.localScale=runnerVisual.localScale=Vector3.one;
