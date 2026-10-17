@@ -19,6 +19,7 @@ namespace Afterecho.Feedback
         JudgementMiss = 12,
         HpBeat = 13,
         HpHeartbeat = 14,
+        RunnerBeat = 15,
     }
 
     // Reduced Motion turns off Motion and Flash but keeps Audio and Text.

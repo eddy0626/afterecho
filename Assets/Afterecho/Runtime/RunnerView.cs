@@ -157,6 +157,9 @@ namespace Afterecho
             bool danger=game.Run!=null&&game.Run.Health<=dangerHealth;
             feedback.Stop(danger?FeedbackId.HpBeat:FeedbackId.HpHeartbeat);
             Play(danger?FeedbackId.HpHeartbeat:FeedbackId.HpBeat);
+            // The runner's beat squash shares runnerVisual's scale with Fall and BoostStart: skip it while
+            // those play (they also stop it when they start) so the effects never overwrite each other.
+            if(!Falling&&!feedback.IsPlaying(FeedbackId.Fall)&&!feedback.IsPlaying(FeedbackId.BoostStart))Play(FeedbackId.RunnerBeat);
         }
         // Feel's MMProgressBar moves the fill and the delayed damage trail; only real changes are pushed.
         void ShowHealth(float value)
@@ -271,7 +274,7 @@ namespace Afterecho
             if(Time.unscaledTime>messageUntil)status.text=game.Phase==GamePhase.Preparing?"준비 · 4박 후 시작":game.Phase==GamePhase.Playing?(ShownNotes==0?"다음 원을 기다려요":game.IsTutorial?"연습 · 실수해도 괜찮아요":""):"";
             PlaceRunner();AnimateRunner();RenderNotes(active);RenderGhosts();RenderFootSparks();
             if(game.Run.Boosted!=boosted)
-            {boosted=game.Run.Boosted;if(boosted){Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);ShowJudgement(FeedbackId.JudgementText);}}
+            {boosted=game.Run.Boosted;if(boosted){feedback.Stop(FeedbackId.RunnerBeat);Play(FeedbackId.BoostStart);Sound(boostSound,.65f);Message("OVERDRIVE",paper,.65f);ShowJudgement(FeedbackId.JudgementText);}}
             hitRing.gameObject.SetActive(active&&Time.unscaledTime<impactUntil);
             if(hitRing.gameObject.activeSelf){float p=1-(impactUntil-Time.unscaledTime)/.16f;hitRing.SetDiameter(116+p*45,3,new Color(1,1,1,1-p));}
         }
@@ -332,7 +335,7 @@ namespace Afterecho
             if(e.kind=="miss")
             {
                 Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);ShowJudgement(FeedbackId.JudgementMiss);
-                if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;Play(FeedbackId.Fall);Sound(fallSound,.55f);}
+                if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;feedback.Stop(FeedbackId.RunnerBeat);Play(FeedbackId.Fall);Sound(fallSound,.55f);}
                 if(!e.practice)Play(FeedbackId.HpLoss);
             }
             if(e.kind=="extra")

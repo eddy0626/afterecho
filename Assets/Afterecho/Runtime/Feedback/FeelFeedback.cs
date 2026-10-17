@@ -15,6 +15,8 @@ namespace Afterecho.Feedback
             this.player = player;
         }
 
+        public bool IsPlaying => player != null && player.IsPlaying;
+
         // Always restart from the rest pose so judgements closer together than the effect
         // never start from another play's in-flight scale.
         public void Play()

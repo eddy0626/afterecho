@@ -5,6 +5,8 @@ namespace Afterecho.Feedback
     {
         void Play();
 
+        bool IsPlaying { get; }
+
         // Returns targets to their rest pose (pause, retry, menu).
         void Stop();
     }

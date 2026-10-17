@@ -37,6 +37,7 @@ namespace Afterecho.Editor
         const string JudgementTiltPrefab = "FB_Runner_JudgementTilt";
         const string HpBeatPrefab = "FB_Runner_HpBeat";
         const string HpHeartbeatPrefab = "FB_Runner_HpHeartbeat";
+        const string RunnerBeatPrefab = "FB_Runner_RunnerBeat";
         static readonly Color Paper = new Color(1f, 0.97f, 0.88f);
         static readonly Color Danger = new Color(1f, 0.22f, 0.18f);
 
@@ -78,6 +79,9 @@ namespace Afterecho.Editor
             new PrefabSpec(HpBeatPrefab, name => Pulse(name, 0.3f, 1.03f)),
             // While HP is in danger the same beat becomes a double-thump heartbeat.
             new PrefabSpec(HpHeartbeatPrefab, name => Heartbeat(name, 0.5f, 1.08f)),
+            // The runner dips on every beat (squash from the feet), far smaller than Fall (0.8) and
+            // BoostStart (1.22) so those moments stay distinct.
+            new PrefabSpec(RunnerBeatPrefab, name => BeatSquash(name, 0.25f, 0.95f)),
             // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
             // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
@@ -149,6 +153,7 @@ namespace Afterecho.Editor
             var judgementTilt = PlaceInstance(container, JudgementTiltPrefab, view.status.rectTransform);
             var hpBeat = PlaceInstance(container, HpBeatPrefab, view.hpFill.transform.parent);
             var hpHeartbeat = PlaceInstance(container, HpHeartbeatPrefab, view.hpFill.transform.parent);
+            var runnerBeat = PlaceInstance(container, RunnerBeatPrefab, view.runnerVisual);
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
             var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
             var resultPop = PlaceInstance(container, ResultPopPrefab, view.overlay.transform);
@@ -179,7 +184,8 @@ namespace Afterecho.Editor
                 (FeedbackId.JudgementPerfect, FeedbackChannel.Motion, judgementPerfect),
                 (FeedbackId.JudgementMiss, FeedbackChannel.Motion, judgementTilt),
                 (FeedbackId.HpBeat, FeedbackChannel.Motion, hpBeat),
-                (FeedbackId.HpHeartbeat, FeedbackChannel.Motion, hpHeartbeat));
+                (FeedbackId.HpHeartbeat, FeedbackChannel.Motion, hpHeartbeat),
+                (FeedbackId.RunnerBeat, FeedbackChannel.Motion, runnerBeat));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -382,6 +388,23 @@ namespace Afterecho.Editor
                 RemapCurveZero = 1,
                 RemapCurveOne = peak,
                 AnimateCurve = PopCurve(),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Squash & stretch with a fast attack (reaches the peak at 15%) for beat dips.
+        static MMF_Feedback BeatSquash(string label, float duration, float peak)
+        {
+            return new MMF_SquashAndStretch
+            {
+                Label = label,
+                Mode = MMF_SquashAndStretch.Modes.Absolute,
+                Axis = MMF_SquashAndStretch.PossibleAxis.YtoX,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = 1,
+                RemapCurveOne = peak,
+                AnimateCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.15f, 1), new Keyframe(1, 0)),
                 AllowAdditivePlays = false,
                 Timing = UnscaledTiming(),
             };
