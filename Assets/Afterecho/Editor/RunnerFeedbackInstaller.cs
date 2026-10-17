@@ -17,6 +17,7 @@ namespace Afterecho.Editor
         public const string PrefabFolder = "Assets/Afterecho/Runner/Feedbacks";
         const string ContainerName = "Feedbacks";
         const string HitPrefab = "FB_Runner_Hit";
+        const string HitPerfectPrefab = "FB_Runner_HitPerfect";
         const string HpLossPrefab = "FB_Runner_HpLoss";
         const string BoostStartPrefab = "FB_Runner_BoostStart";
         const string FallPrefab = "FB_Runner_Fall";
@@ -28,6 +29,13 @@ namespace Afterecho.Editor
             new PrefabSpec(HpLossPrefab, 0.17f, 1.10f),
             new PrefabSpec(BoostStartPrefab, 0.18f, 1.22f),
             new PrefabSpec(FallPrefab, 0.15f, 0.8f),
+        };
+
+        // Variants inherit everything from their base prefab and override only the peak,
+        // so tuning the base (duration, curve) carries over.
+        static readonly VariantSpec[] Variants =
+        {
+            new VariantSpec(HitPerfectPrefab, HitPrefab, 1.25f),
         };
 
         [MenuItem("Afterecho/Runner/Install Feedbacks In Open Scene")]
@@ -55,6 +63,7 @@ namespace Afterecho.Editor
             }
 
             var hit = PlaceInstance(container, HitPrefab, view.hitRing.transform);
+            var hitPerfect = PlaceInstance(container, HitPerfectPrefab, view.hitRing.transform);
             var hpLoss = PlaceInstance(container, HpLossPrefab, view.healthRoot);
             var boostStart = PlaceInstance(container, BoostStartPrefab, view.runnerVisual);
             var fall = PlaceInstance(container, FallPrefab, view.runnerVisual);
@@ -64,7 +73,7 @@ namespace Afterecho.Editor
                 player = view.gameObject.AddComponent<RunnerFeedbackPlayer>();
             SetBindings(player,
                 (FeedbackId.HitGood, hit),
-                (FeedbackId.HitPerfect, hit),
+                (FeedbackId.HitPerfect, hitPerfect),
                 (FeedbackId.HpLoss, hpLoss),
                 (FeedbackId.Fall, fall),
                 (FeedbackId.BoostStart, boostStart));
@@ -91,6 +100,32 @@ namespace Afterecho.Editor
                 finally
                 {
                     Object.DestroyImmediate(root);
+                }
+            }
+
+            foreach (var variant in Variants)
+            {
+                string path = PrefabPath(variant.Name);
+                if (AssetDatabase.LoadAssetAtPath<GameObject>(path) != null)
+                    continue;
+                var basePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath(variant.BaseName));
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(basePrefab);
+                try
+                {
+                    instance.name = variant.Name;
+                    var serialized = new SerializedObject(instance.GetComponent<MMF_Player>());
+                    ForEachFeedback(serialized, feedback =>
+                    {
+                        SetFloat(feedback, "RemapCurveOne", variant.Peak);
+                        SetString(feedback, "Label", variant.Name);
+                    });
+                    serialized.ApplyModifiedPropertiesWithoutUndo();
+                    // Saving a prefab instance as a new asset creates a Prefab Variant of its base.
+                    PrefabUtility.SaveAsPrefabAsset(instance, path);
+                }
+                finally
+                {
+                    Object.DestroyImmediate(instance);
                 }
             }
         }
@@ -136,15 +171,35 @@ namespace Afterecho.Editor
 
             var player = instance.GetComponent<MMF_Player>();
             var serialized = new SerializedObject(player);
-            var feedbacks = serialized.FindProperty("FeedbacksList");
-            for (int i = 0; i < feedbacks.arraySize; i++)
+            ForEachFeedback(serialized, feedback =>
             {
-                var targetProperty = feedbacks.GetArrayElementAtIndex(i).FindPropertyRelative("SquashAndStretchTarget");
+                var targetProperty = feedback.FindPropertyRelative("SquashAndStretchTarget");
                 if (targetProperty != null)
                     targetProperty.objectReferenceValue = target;
-            }
+            });
             serialized.ApplyModifiedPropertiesWithoutUndo();
             return player;
+        }
+
+        static void ForEachFeedback(SerializedObject player, Action<SerializedProperty> action)
+        {
+            var feedbacks = player.FindProperty("FeedbacksList");
+            for (int i = 0; i < feedbacks.arraySize; i++)
+                action(feedbacks.GetArrayElementAtIndex(i));
+        }
+
+        static void SetFloat(SerializedProperty feedback, string name, float value)
+        {
+            var property = feedback.FindPropertyRelative(name);
+            if (property != null)
+                property.floatValue = value;
+        }
+
+        static void SetString(SerializedProperty feedback, string name, string value)
+        {
+            var property = feedback.FindPropertyRelative(name);
+            if (property != null)
+                property.stringValue = value;
         }
 
         static void SetBindings(RunnerFeedbackPlayer player, params (FeedbackId id, MMF_Player feel)[] bindings)
@@ -174,6 +229,20 @@ namespace Afterecho.Editor
             {
                 Name = name;
                 Duration = duration;
+                Peak = peak;
+            }
+        }
+
+        readonly struct VariantSpec
+        {
+            public readonly string Name;
+            public readonly string BaseName;
+            public readonly float Peak;
+
+            public VariantSpec(string name, string baseName, float peak)
+            {
+                Name = name;
+                BaseName = baseName;
                 Peak = peak;
             }
         }

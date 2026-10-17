@@ -26,7 +26,7 @@
 | 0. 준비 | 일부 완료. 작업 브랜치를 만들었고, 팀 합의(8장)와 로컬 설정 변경 정리가 남음 | — |
 | 1. 피드백 계층 도입 | 완료 | `b5088b4` |
 | 2. 기존 효과 프리팹 이전 | 완료 | `12ad2f6` |
-| 3. 새 효과 추가 | 보류. 하나씩 제안하고 함께 정한 뒤 진행 | — |
+| 3. 새 효과 추가 | 진행 중. 하나씩 제안하고 함께 정한 뒤 진행. 1번(PERFECT 강조) 완료 | (이번 커밋) |
 | 4. 튜닝·QA | 대기 | — |
 | 5. 정리 | 대기 (대체용 코드 `RunnerView.Feel()` 삭제 등) | — |
 
@@ -43,7 +43,7 @@
 ### 프리팹 효과 튜닝 방법
 
 1. `Stage01_RunnerCircle` 씬에서 Play를 누른다.
-2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/FB_Runner_Hit`을 선택한다. 나머지는 `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall`이다.
+2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/FB_Runner_Hit`을 선택한다. 나머지는 `FB_Runner_HitPerfect`, `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall`이다.
 3. 인스펙터의 MMF_Player에서 **Keep Playmode Changes**를 켜고 값을 조정한다. 각 피드백 오른쪽의 재생 버튼으로 바로 확인할 수 있다.
 4. Play를 멈추면 값이 씬에 남는다. 확정할 값이면 인스펙터 상단의 **Overrides → Apply All**로 프리팹에 반영한다.
 5. Keep Playmode Changes를 다시 끈다.
@@ -274,13 +274,15 @@ void Play(FeedbackId id)
 
 | 우선 | 이벤트 | 제안 효과 | 참고 데모 | 주의 |
 |---|---|---|---|---|
-| 1 | `step` (PERFECT) | 링 펀치 강화와 판정 글자 튀어나옴(크기·투명도) | Letters | 0.15초 이하, 번쩍임 없음 |
+| 1 ✅ | `step` (PERFECT) | **완료:** `FB_Runner_HitPerfect`(`FB_Runner_Hit`의 Prefab Variant, 최대 배율 1.16 → 1.25). 판정 글자 연출은 별도 항목으로 남김 | Letters | 0.15초 이하, 번쩍임 없음 |
 | 2 | `miss` / `extra` | HP바: 늦게 따라 줄어드는 바와 맞을 때 튀는 효과 | MMProgressBar | 현재 HUD 구조 확인 필요 |
 | 3 | 질주 시작 | 화면 가장자리 강조와 작은 카메라 흔들림 | Snake | 화면 번쩍임은 이때 1회만 |
 | 4 | `extra` | 비틀거림을 DOTween에서 Feel로 옮길지 결정 | — | 기존 느낌 유지 |
 | 5 | `won` | 결과 화면 등장 연출 | CardsUI, ParallaxUI | |
 | 6 (선택) | 박자 | 배경이나 링이 박자에 맞춰 맥동 | Brass (참고만) | 규칙 11 |
 
+- 1번 메모: GOOD과 PERFECT 효과가 같은 대상(`HitResponse` 링)을 쓴다. 효과 길이(0.115초)가 노트 최소 간격(0.17초)보다 짧아서 두 효과가 겹치지 않는다. 길이를 늘릴 때는 이 조건을 다시 확인한다.
+- 1번 검증: GOOD 1.16배, PERFECT 1.25배로 재생되고 둘 다 원래 크기로 돌아옴. Run Tests 173/173, 연출 회귀 검사 통과, 새 콘솔 에러·경고 없음.
 - 모든 PR에는 변경 전후 GIF나 영상을 첨부한다.
 
 ### 4단계: 튜닝·QA (1~2일)
@@ -473,7 +475,7 @@ git config --global user.name "이름"
 
 | 효과 | 대상 | 시간(초) | 최대 배율 |
 |---|---|---|---|
-| HitFeel | `hitRing` | 0.115 | 1.16 |
+| HitFeel | `hitRing` | 0.115 | 1.16 (PERFECT는 Variant에서 1.25) |
 | HpFeel | `healthRoot` | 0.17 | 1.10 |
 | BoostFeel | `runnerVisual` | 0.18 | 1.22 |
 | FallFeel | `runnerVisual` | 0.15 | 0.80 |
