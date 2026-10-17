@@ -4942,6 +4942,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: 785045690}
   m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+--- !u!1001 &1168513733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1611369901}
+    m_Modifications:
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256331537176591994, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: managedReferences[8164257955459367066].AnimateScaleTarget
+      value: 
+      objectReference: {fileID: 113073323}
+    - target: {fileID: 8556761398526257619, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+      propertyPath: m_Name
+      value: FB_Runner_JudgementText
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+--- !u!114 &1168513734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8256331537176591994, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+  m_PrefabInstance: {fileID: 1168513733}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Feedbacks.MMF_Player
+--- !u!4 &1168513735 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6142521396806934822, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
+  m_PrefabInstance: {fileID: 1168513733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1172189029
 GameObject:
   m_ObjectHideFlags: 0
@@ -7474,6 +7551,7 @@ Transform:
   - {fileID: 287975292}
   - {fileID: 1414836380}
   - {fileID: 89199468}
+  - {fileID: 1168513735}
   m_Father: {fileID: 2102856191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1616439015
@@ -9605,6 +9683,9 @@ MonoBehaviour:
   - id: 4
     channel: 0
     player: {fileID: 287975291}
+  - id: 5
+    channel: 0
+    player: {fileID: 1168513734}
 --- !u!1 &2116438048
 GameObject:
   m_ObjectHideFlags: 0

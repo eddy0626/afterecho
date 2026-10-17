@@ -1,6 +1,7 @@
 using System;
 using Afterecho.Feedback;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -21,15 +22,23 @@ namespace Afterecho.Editor
         const string HpLossPrefab = "FB_Runner_HpLoss";
         const string BoostStartPrefab = "FB_Runner_BoostStart";
         const string FallPrefab = "FB_Runner_Fall";
+        const string JudgementTextPrefab = "FB_Runner_JudgementText";
 
-        // Same values RunnerView.Feel() used, so the migration does not change the feel.
+        // The first four use the values RunnerView.Feel() used, so the migration does not change the feel.
         static readonly PrefabSpec[] Specs =
         {
-            new PrefabSpec(HitPrefab, 0.115f, 1.16f),
-            new PrefabSpec(HpLossPrefab, 0.17f, 1.10f),
-            new PrefabSpec(BoostStartPrefab, 0.18f, 1.22f),
-            new PrefabSpec(FallPrefab, 0.15f, 0.8f),
+            new PrefabSpec(HitPrefab, 0.115f, 1.16f, EffectKind.SquashAndStretch),
+            new PrefabSpec(HpLossPrefab, 0.17f, 1.10f, EffectKind.SquashAndStretch),
+            new PrefabSpec(BoostStartPrefab, 0.18f, 1.22f, EffectKind.SquashAndStretch),
+            new PrefabSpec(FallPrefab, 0.15f, 0.8f, EffectKind.SquashAndStretch),
+            // Uniform pop for PERFECT / GOOD / MISS / OFF BEAT text; shorter than the 0.17 s minimum note gap.
+            new PrefabSpec(JudgementTextPrefab, 0.12f, 1.2f, EffectKind.Scale),
         };
+
+        enum EffectKind { SquashAndStretch, Scale }
+
+        // Scene-object fields each effect kind animates; scene instances override them.
+        static readonly string[] TargetProperties = { "SquashAndStretchTarget", "AnimateScaleTarget" };
 
         // Variants inherit everything from their base prefab and override only the peak,
         // so tuning the base (duration, curve) carries over.
@@ -67,6 +76,7 @@ namespace Afterecho.Editor
             var hpLoss = PlaceInstance(container, HpLossPrefab, view.healthRoot);
             var boostStart = PlaceInstance(container, BoostStartPrefab, view.runnerVisual);
             var fall = PlaceInstance(container, FallPrefab, view.runnerVisual);
+            var judgementText = PlaceInstance(container, JudgementTextPrefab, view.status.rectTransform);
 
             var player = view.GetComponent<RunnerFeedbackPlayer>();
             if (player == null)
@@ -76,7 +86,8 @@ namespace Afterecho.Editor
                 (FeedbackId.HitPerfect, hitPerfect),
                 (FeedbackId.HpLoss, hpLoss),
                 (FeedbackId.Fall, fall),
-                (FeedbackId.BoostStart, boostStart));
+                (FeedbackId.BoostStart, boostStart),
+                (FeedbackId.JudgementText, judgementText));
 
             view.feedback = player;
             EditorUtility.SetDirty(view);
@@ -139,19 +150,43 @@ namespace Afterecho.Editor
             player.CooldownDuration = 0;
             player.StopFeedbacksOnDisable = true;
             player.RestoreInitialValuesOnDisable = true;
-            // The target is a scene object, so each scene instance overrides SquashAndStretchTarget.
-            player.AddFeedback(new MMF_SquashAndStretch
+            // Targets are scene objects, so each scene instance overrides the target field.
+            player.AddFeedback(CreateFeedback(spec));
+        }
+
+        static MMF_Feedback CreateFeedback(PrefabSpec spec)
+        {
+            var pop = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1), new Keyframe(1, 0));
+            var timing = new MMFeedbackTiming { TimescaleMode = TimescaleModes.Unscaled, CooldownDuration = 0 };
+            switch (spec.Kind)
             {
-                Label = spec.Name,
-                Mode = MMF_SquashAndStretch.Modes.Absolute,
-                Axis = MMF_SquashAndStretch.PossibleAxis.YtoX,
-                AnimateScaleDuration = spec.Duration,
-                RemapCurveZero = 1,
-                RemapCurveOne = spec.Peak,
-                AnimateCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1), new Keyframe(1, 0)),
-                AllowAdditivePlays = false,
-                Timing = new MMFeedbackTiming { TimescaleMode = TimescaleModes.Unscaled, CooldownDuration = 0 },
-            });
+                case EffectKind.Scale:
+                    return new MMF_Scale
+                    {
+                        Label = spec.Name,
+                        Mode = MMF_Scale.Modes.Absolute,
+                        AnimateScaleDuration = spec.Duration,
+                        RemapCurveZero = 1,
+                        RemapCurveOne = spec.Peak,
+                        UniformScaling = true,
+                        AnimateScaleTweenX = new MMTweenType(pop),
+                        AllowAdditivePlays = false,
+                        Timing = timing,
+                    };
+                default:
+                    return new MMF_SquashAndStretch
+                    {
+                        Label = spec.Name,
+                        Mode = MMF_SquashAndStretch.Modes.Absolute,
+                        Axis = MMF_SquashAndStretch.PossibleAxis.YtoX,
+                        AnimateScaleDuration = spec.Duration,
+                        RemapCurveZero = 1,
+                        RemapCurveOne = spec.Peak,
+                        AnimateCurve = pop,
+                        AllowAdditivePlays = false,
+                        Timing = timing,
+                    };
+            }
         }
 
         static MMF_Player PlaceInstance(Transform container, string prefabName, Transform target)
@@ -173,9 +208,12 @@ namespace Afterecho.Editor
             var serialized = new SerializedObject(player);
             ForEachFeedback(serialized, feedback =>
             {
-                var targetProperty = feedback.FindPropertyRelative("SquashAndStretchTarget");
-                if (targetProperty != null)
-                    targetProperty.objectReferenceValue = target;
+                foreach (string name in TargetProperties)
+                {
+                    var targetProperty = feedback.FindPropertyRelative(name);
+                    if (targetProperty != null)
+                        targetProperty.objectReferenceValue = target;
+                }
             });
             serialized.ApplyModifiedPropertiesWithoutUndo();
             return player;
@@ -224,12 +262,14 @@ namespace Afterecho.Editor
             public readonly string Name;
             public readonly float Duration;
             public readonly float Peak;
+            public readonly EffectKind Kind;
 
-            public PrefabSpec(string name, float duration, float peak)
+            public PrefabSpec(string name, float duration, float peak, EffectKind kind)
             {
                 Name = name;
                 Duration = duration;
                 Peak = peak;
+                Kind = kind;
             }
         }
 

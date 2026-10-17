@@ -249,17 +249,17 @@ namespace Afterecho
             if(e.kind=="step")
             {
                 bool perfect=Math.Abs(e.error)<=Math.Min(.035,game.Run.WindowAt(e.index)*.5);
-                Message(perfect?"PERFECT":"GOOD",perfect?paper:ink,.23f);impactUntil=Time.unscaledTime+.16f;
+                Message(perfect?"PERFECT":"GOOD",perfect?paper:ink,.23f);Play(FeedbackId.JudgementText);impactUntil=Time.unscaledTime+.16f;
                 Play(perfect?FeedbackId.HitPerfect:FeedbackId.HitGood);Sound(perfect?perfectSound:hitSound,perfect?.62f:.42f);
             }
             if(e.kind=="miss")
             {
-                Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);
+                Message(e.practice?"다음 원에 맞춰보세요":$"MISS  −{game.rules.missDamage}",ink,.4f);Play(FeedbackId.JudgementText);
                 if(!Falling){fallStart=game.ActiveSeconds;fallUntil=fallStart+game.rules.fallSeconds;Play(FeedbackId.Fall);Sound(fallSound,.55f);}
                 if(!e.practice)Play(FeedbackId.HpLoss);
             }
             if(e.kind=="extra")
-            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);if(!game.reducedMotion)PlayStumble();if(!e.practice)Play(FeedbackId.HpLoss);}
+            {Message(e.practice?"원이 겹칠 때 입력":$"OFF BEAT  −{game.rules.extraDamage}",ink,.25f);Play(FeedbackId.JudgementText);if(!game.reducedMotion)PlayStumble();if(!e.practice)Play(FeedbackId.HpLoss);}
             if(e.kind=="won")Sound(clearSound,.65f);
         }
         void PlayStumble()
