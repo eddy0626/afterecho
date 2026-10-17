@@ -6,8 +6,9 @@ using UnityEngine;
 namespace Afterecho.Feedback
 {
     // Single entry point for runner presentation feedbacks. Views ask for a FeedbackId;
-    // the bindings below decide which MMF_Player answers, so effects are tuned in the
-    // Inspector instead of in code.
+    // the bindings below decide which MMF_Players answer, so effects are tuned in the
+    // Inspector instead of in code. An id may have several bindings (e.g. a squash and a
+    // shake), each with its own channel so Reduced Motion can filter them separately.
     public sealed class RunnerFeedbackPlayer : MonoBehaviour
     {
         [Serializable]
@@ -20,7 +21,7 @@ namespace Afterecho.Feedback
 
         [SerializeField] Binding[] bindings = Array.Empty<Binding>();
 
-        readonly Dictionary<FeedbackId, Entry> entries = new Dictionary<FeedbackId, Entry>();
+        readonly Dictionary<FeedbackId, List<Entry>> entries = new Dictionary<FeedbackId, List<Entry>>();
         bool bindingsLoaded;
 
         public bool ReducedMotion { get; set; }
@@ -28,7 +29,7 @@ namespace Afterecho.Feedback
         public bool Has(FeedbackId id)
         {
             LoadBindings();
-            return entries.ContainsKey(id);
+            return entries.TryGetValue(id, out var list) && list.Count > 0;
         }
 
         // Used while code-built effects are migrated to bound MMF_Players:
@@ -37,32 +38,49 @@ namespace Afterecho.Feedback
         {
             if (fallback == null)
                 throw new ArgumentNullException(nameof(fallback));
-            LoadBindings();
-            if (!entries.ContainsKey(id))
-                entries.Add(id, new Entry(fallback, channel));
+            if (!Has(id))
+                Add(id, new Entry(fallback, channel));
         }
 
-        // Returns false when nothing played (unknown id, or filtered by Reduced Motion).
+        // Returns false when nothing played (unknown id, or everything filtered by Reduced Motion).
         public bool Play(FeedbackId id)
         {
             LoadBindings();
-            if (!entries.TryGetValue(id, out var entry))
+            if (!entries.TryGetValue(id, out var list))
                 return false;
-            if (ReducedMotion && IsMotion(entry.Channel))
-                return false;
-            entry.Feedback.Play();
-            return true;
+            bool played = false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (ReducedMotion && IsMotion(list[i].Channel))
+                    continue;
+                list[i].Feedback.Play();
+                played = true;
+            }
+            return played;
         }
 
         public void StopAll()
         {
-            foreach (var entry in entries.Values)
-                entry.Feedback.Stop();
+            foreach (var list in entries.Values)
+            {
+                for (int i = 0; i < list.Count; i++)
+                    list[i].Feedback.Stop();
+            }
         }
 
         static bool IsMotion(FeedbackChannel channel)
         {
             return channel == FeedbackChannel.Motion || channel == FeedbackChannel.Flash;
+        }
+
+        void Add(FeedbackId id, Entry entry)
+        {
+            if (!entries.TryGetValue(id, out var list))
+            {
+                list = new List<Entry>(2);
+                entries.Add(id, list);
+            }
+            list.Add(entry);
         }
 
         // Lazy so the result does not depend on Awake order between this and RunnerView.
@@ -74,7 +92,7 @@ namespace Afterecho.Feedback
             foreach (var binding in bindings)
             {
                 if (binding.player != null)
-                    entries[binding.id] = new Entry(new FeelFeedback(binding.player), binding.channel);
+                    Add(binding.id, new Entry(new FeelFeedback(binding.player), binding.channel));
             }
         }
 

@@ -24,24 +24,29 @@ namespace Afterecho.Editor
         const string BoostStartPrefab = "FB_Runner_BoostStart";
         const string FallPrefab = "FB_Runner_Fall";
         const string JudgementTextPrefab = "FB_Runner_JudgementText";
+        const string HpShakePrefab = "FB_Runner_HpShake";
         const string HealthTrailName = "HpDelayed";
         static readonly Color HealthTrailColor = new Color(1f, 0.97f, 0.88f, 0.9f);
 
-        // The first four use the values RunnerView.Feel() used, so the migration does not change the feel.
+        // One prefab = one MMF_Player with one feedback, so every effect has a single target and a
+        // single channel. The first four use the values RunnerView.Feel() used.
         static readonly PrefabSpec[] Specs =
         {
-            new PrefabSpec(HitPrefab, 0.115f, 1.16f, EffectKind.SquashAndStretch),
-            new PrefabSpec(HpLossPrefab, 0.17f, 1.10f, EffectKind.SquashAndStretch),
-            new PrefabSpec(BoostStartPrefab, 0.18f, 1.22f, EffectKind.SquashAndStretch),
-            new PrefabSpec(FallPrefab, 0.15f, 0.8f, EffectKind.SquashAndStretch),
+            new PrefabSpec(HitPrefab, name => Squash(name, 0.115f, 1.16f)),
+            new PrefabSpec(HpLossPrefab, name => Squash(name, 0.17f, 1.10f)),
+            new PrefabSpec(BoostStartPrefab, name => Squash(name, 0.18f, 1.22f)),
+            new PrefabSpec(FallPrefab, name => Squash(name, 0.15f, 0.8f)),
             // Uniform pop for PERFECT / GOOD / MISS / OFF BEAT text; shorter than the 0.17 s minimum note gap.
-            new PrefabSpec(JudgementTextPrefab, 0.12f, 1.4f, EffectKind.Scale),
+            new PrefabSpec(JudgementTextPrefab, name => Pop(name, 0.12f, 1.4f)),
+            // Left-right shake of the HP gauge, like Feel's MMProgressBar demo (which shakes vertically).
+            new PrefabSpec(HpShakePrefab, name => ShakeX(name, 0.25f, 7f)),
         };
 
-        enum EffectKind { SquashAndStretch, Scale }
-
-        // Scene-object fields each effect kind animates; scene instances override them.
-        static readonly string[] TargetProperties = { "SquashAndStretchTarget", "AnimateScaleTarget" };
+        // Scene-object fields the feedbacks animate; scene instances override them.
+        static readonly string[] TargetProperties =
+        {
+            "SquashAndStretchTarget", "AnimateScaleTarget", "AnimatePositionTarget", "AnimateRotationTarget", "BoundImage",
+        };
 
         // Variants inherit everything from their base prefab and override only the peak,
         // so tuning the base (duration, curve) carries over.
@@ -80,17 +85,19 @@ namespace Afterecho.Editor
             var boostStart = PlaceInstance(container, BoostStartPrefab, view.runnerVisual);
             var fall = PlaceInstance(container, FallPrefab, view.runnerVisual);
             var judgementText = PlaceInstance(container, JudgementTextPrefab, view.status.rectTransform);
+            var hpShake = PlaceInstance(container, HpShakePrefab, view.hpFill.transform.parent);
 
             var player = view.GetComponent<RunnerFeedbackPlayer>();
             if (player == null)
                 player = view.gameObject.AddComponent<RunnerFeedbackPlayer>();
             SetBindings(player,
-                (FeedbackId.HitGood, hit),
-                (FeedbackId.HitPerfect, hitPerfect),
-                (FeedbackId.HpLoss, hpLoss),
-                (FeedbackId.Fall, fall),
-                (FeedbackId.BoostStart, boostStart),
-                (FeedbackId.JudgementText, judgementText));
+                (FeedbackId.HitGood, FeedbackChannel.Motion, hit),
+                (FeedbackId.HitPerfect, FeedbackChannel.Motion, hitPerfect),
+                (FeedbackId.HpLoss, FeedbackChannel.Motion, hpLoss),
+                (FeedbackId.HpLoss, FeedbackChannel.Motion, hpShake),
+                (FeedbackId.Fall, FeedbackChannel.Motion, fall),
+                (FeedbackId.BoostStart, FeedbackChannel.Motion, boostStart),
+                (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -221,42 +228,78 @@ namespace Afterecho.Editor
             player.StopFeedbacksOnDisable = true;
             player.RestoreInitialValuesOnDisable = true;
             // Targets are scene objects, so each scene instance overrides the target field.
-            player.AddFeedback(CreateFeedback(spec));
+            player.AddFeedback(spec.Create(spec.Name));
         }
 
-        static MMF_Feedback CreateFeedback(PrefabSpec spec)
+        static MMFeedbackTiming UnscaledTiming()
         {
-            var pop = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1), new Keyframe(1, 0));
-            var timing = new MMFeedbackTiming { TimescaleMode = TimescaleModes.Unscaled, CooldownDuration = 0 };
-            switch (spec.Kind)
+            return new MMFeedbackTiming { TimescaleMode = TimescaleModes.Unscaled, CooldownDuration = 0 };
+        }
+
+        static AnimationCurve PopCurve()
+        {
+            return new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1), new Keyframe(1, 0));
+        }
+
+        // Decaying left-right oscillation that ends where it started.
+        static AnimationCurve ShakeCurve()
+        {
+            return new AnimationCurve(
+                new Keyframe(0, 0), new Keyframe(0.1f, 1), new Keyframe(0.3f, -0.8f), new Keyframe(0.5f, 0.55f),
+                new Keyframe(0.7f, -0.3f), new Keyframe(0.85f, 0.12f), new Keyframe(1, 0));
+        }
+
+        static MMF_Feedback Squash(string label, float duration, float peak)
+        {
+            return new MMF_SquashAndStretch
             {
-                case EffectKind.Scale:
-                    return new MMF_Scale
-                    {
-                        Label = spec.Name,
-                        Mode = MMF_Scale.Modes.Absolute,
-                        AnimateScaleDuration = spec.Duration,
-                        RemapCurveZero = 1,
-                        RemapCurveOne = spec.Peak,
-                        UniformScaling = true,
-                        AnimateScaleTweenX = new MMTweenType(pop),
-                        AllowAdditivePlays = false,
-                        Timing = timing,
-                    };
-                default:
-                    return new MMF_SquashAndStretch
-                    {
-                        Label = spec.Name,
-                        Mode = MMF_SquashAndStretch.Modes.Absolute,
-                        Axis = MMF_SquashAndStretch.PossibleAxis.YtoX,
-                        AnimateScaleDuration = spec.Duration,
-                        RemapCurveZero = 1,
-                        RemapCurveOne = spec.Peak,
-                        AnimateCurve = pop,
-                        AllowAdditivePlays = false,
-                        Timing = timing,
-                    };
-            }
+                Label = label,
+                Mode = MMF_SquashAndStretch.Modes.Absolute,
+                Axis = MMF_SquashAndStretch.PossibleAxis.YtoX,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = 1,
+                RemapCurveOne = peak,
+                AnimateCurve = PopCurve(),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        static MMF_Feedback Pop(string label, float duration, float peak)
+        {
+            return new MMF_Scale
+            {
+                Label = label,
+                Mode = MMF_Scale.Modes.Absolute,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = 1,
+                RemapCurveOne = peak,
+                UniformScaling = true,
+                AnimateScaleTweenX = new MMTweenType(PopCurve()),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Moves a UI element left and right around its anchored position (amplitude in canvas units).
+        static MMF_Feedback ShakeX(string label, float duration, float amplitude)
+        {
+            return new MMF_Position
+            {
+                Label = label,
+                Mode = MMF_Position.Modes.AlongCurve,
+                Space = MMF_Position.Spaces.RectTransform,
+                RelativePosition = true,
+                AnimatePositionDuration = duration,
+                AnimateX = true,
+                AnimateY = false,
+                AnimateZ = false,
+                AnimatePositionTweenX = new MMTweenType(ShakeCurve()),
+                RemapCurveZero = 0,
+                RemapCurveOne = amplitude,
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
         }
 
         static MMF_Player PlaceInstance(Transform container, string prefabName, Transform target)
@@ -282,11 +325,25 @@ namespace Afterecho.Editor
                 {
                     var targetProperty = feedback.FindPropertyRelative(name);
                     if (targetProperty != null)
-                        targetProperty.objectReferenceValue = target;
+                        targetProperty.objectReferenceValue = TargetValue(name, target);
                 }
             });
             serialized.ApplyModifiedPropertiesWithoutUndo();
             return player;
+        }
+
+        // Feel feedbacks reference their targets with different types.
+        static Object TargetValue(string property, Transform target)
+        {
+            switch (property)
+            {
+                case "AnimatePositionTarget":
+                    return target.gameObject;
+                case "BoundImage":
+                    return target.GetComponent<UnityEngine.UI.Image>();
+                default:
+                    return target;
+            }
         }
 
         static void ForEachFeedback(SerializedObject player, Action<SerializedProperty> action)
@@ -310,7 +367,7 @@ namespace Afterecho.Editor
                 property.stringValue = value;
         }
 
-        static void SetBindings(RunnerFeedbackPlayer player, params (FeedbackId id, MMF_Player feel)[] bindings)
+        static void SetBindings(RunnerFeedbackPlayer player, params (FeedbackId id, FeedbackChannel channel, MMF_Player feel)[] bindings)
         {
             var serialized = new SerializedObject(player);
             var array = serialized.FindProperty("bindings");
@@ -319,7 +376,7 @@ namespace Afterecho.Editor
             {
                 var element = array.GetArrayElementAtIndex(i);
                 element.FindPropertyRelative("id").intValue = (int)bindings[i].id;
-                element.FindPropertyRelative("channel").intValue = (int)FeedbackChannel.Motion;
+                element.FindPropertyRelative("channel").intValue = (int)bindings[i].channel;
                 element.FindPropertyRelative("player").objectReferenceValue = bindings[i].feel;
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
@@ -330,16 +387,12 @@ namespace Afterecho.Editor
         readonly struct PrefabSpec
         {
             public readonly string Name;
-            public readonly float Duration;
-            public readonly float Peak;
-            public readonly EffectKind Kind;
+            public readonly Func<string, MMF_Feedback> Create;
 
-            public PrefabSpec(string name, float duration, float peak, EffectKind kind)
+            public PrefabSpec(string name, Func<string, MMF_Feedback> create)
             {
                 Name = name;
-                Duration = duration;
-                Peak = peak;
-                Kind = kind;
+                Create = create;
             }
         }
 
