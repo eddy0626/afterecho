@@ -2,6 +2,7 @@ using System;
 using Afterecho.Feedback;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -24,7 +25,19 @@ namespace Afterecho.Editor
         const string BoostStartPrefab = "FB_Runner_BoostStart";
         const string FallPrefab = "FB_Runner_Fall";
         const string JudgementTextPrefab = "FB_Runner_JudgementText";
-        const string HpShakePrefab = "FB_Runner_HpShake";
+        const string HpWobblePrefab = "FB_Runner_HpWobble";
+        const string TargetPopPrefab = "FB_Runner_TargetPop";
+        const string DotPopPrefab = "FB_Runner_DotPop";
+        const string ComboPopPrefab = "FB_Runner_ComboPop";
+        const string ComboBreakWobblePrefab = "FB_Runner_ComboBreakWobble";
+        const string ComboBreakColorPrefab = "FB_Runner_ComboBreakColor";
+        const string BeatPulsePrefab = "FB_Runner_BeatPulse";
+        const string BeatRingName = "BeatPulse";
+        static readonly Color Paper = new Color(1f, 0.97f, 0.88f);
+        static readonly Color Danger = new Color(1f, 0.22f, 0.18f);
+
+        // Instances that earlier versions placed and that are no longer bound; removed on install.
+        static readonly string[] RetiredInstances = { "FB_Runner_HpShake" };
         const string BoostFlashPrefab = "FB_Runner_BoostFlash";
         const string BoostFlashName = "BoostFlash";
         const string StumblePrefab = "FB_Runner_Stumble";
@@ -42,8 +55,17 @@ namespace Afterecho.Editor
             new PrefabSpec(FallPrefab, name => Squash(name, 0.15f, 0.8f)),
             // Uniform pop for PERFECT / GOOD / MISS / OFF BEAT text; shorter than the 0.17 s minimum note gap.
             new PrefabSpec(JudgementTextPrefab, name => Pop(name, 0.12f, 1.4f)),
-            // Left-right shake of the HP gauge, like Feel's MMProgressBar demo (which shakes vertically).
-            new PrefabSpec(HpShakePrefab, name => ShakeX(name, 0.25f, 7f)),
+            // The HP gauge staggers (tilts back and forth) when HP drops.
+            new PrefabSpec(HpWobblePrefab, name => PunchZ(name, 0.35f, 7f)),
+            // On every successful hit the fixed target ring and the centre dot pop.
+            new PrefabSpec(TargetPopPrefab, name => Pop(name, 0.12f, 1.12f)),
+            new PrefabSpec(DotPopPrefab, name => Pop(name, 0.12f, 1.6f)),
+            // Combo up: pop. Combo broken: stagger plus a red flash of the text.
+            new PrefabSpec(ComboPopPrefab, name => Pop(name, 0.12f, 1.25f)),
+            new PrefabSpec(ComboBreakWobblePrefab, name => PunchZ(name, 0.35f, 10f)),
+            new PrefabSpec(ComboBreakColorPrefab, name => TextColorFlash(name, 0.45f, Danger)),
+            // Ring that breathes on the stage beat grid (fast attack, slow release).
+            new PrefabSpec(BeatPulsePrefab, name => Pulse(name, 0.45f, 1.12f)),
             // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
             // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
@@ -56,6 +78,7 @@ namespace Afterecho.Editor
         static readonly string[] TargetProperties =
         {
             "SquashAndStretchTarget", "AnimateScaleTarget", "AnimatePositionTarget", "AnimateRotationTarget", "BoundImage",
+            "TargetTMPText",
         };
 
         // Variants inherit everything from their base prefab and override only the peak,
@@ -95,7 +118,19 @@ namespace Afterecho.Editor
             var boostStart = PlaceInstance(container, BoostStartPrefab, view.runnerVisual);
             var fall = PlaceInstance(container, FallPrefab, view.runnerVisual);
             var judgementText = PlaceInstance(container, JudgementTextPrefab, view.status.rectTransform);
-            var hpShake = PlaceInstance(container, HpShakePrefab, view.hpFill.transform.parent);
+            foreach (string retired in RetiredInstances)
+            {
+                var stale = container.Find(retired);
+                if (stale != null)
+                    Object.DestroyImmediate(stale.gameObject);
+            }
+            var hpWobble = PlaceInstance(container, HpWobblePrefab, view.hpFill.transform.parent);
+            var targetPop = PlaceInstance(container, TargetPopPrefab, view.targetRing.transform);
+            var dotPop = PlaceInstance(container, DotPopPrefab, view.judge.Find("CenterDot"));
+            var comboPop = PlaceInstance(container, ComboPopPrefab, view.combo.rectTransform);
+            var comboBreakWobble = PlaceInstance(container, ComboBreakWobblePrefab, view.combo.rectTransform);
+            var comboBreakColor = PlaceInstance(container, ComboBreakColorPrefab, view.combo.rectTransform);
+            var beatPulse = PlaceInstance(container, BeatPulsePrefab, EnsureBeatRing(view.judge));
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
             var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
             var resultPop = PlaceInstance(container, ResultPopPrefab, view.overlay.transform);
@@ -105,19 +140,46 @@ namespace Afterecho.Editor
                 player = view.gameObject.AddComponent<RunnerFeedbackPlayer>();
             SetBindings(player,
                 (FeedbackId.HitGood, FeedbackChannel.Motion, hit),
+                (FeedbackId.HitGood, FeedbackChannel.Motion, targetPop),
+                (FeedbackId.HitGood, FeedbackChannel.Motion, dotPop),
                 (FeedbackId.HitPerfect, FeedbackChannel.Motion, hitPerfect),
+                (FeedbackId.HitPerfect, FeedbackChannel.Motion, targetPop),
+                (FeedbackId.HitPerfect, FeedbackChannel.Motion, dotPop),
                 (FeedbackId.HpLoss, FeedbackChannel.Motion, hpLoss),
-                (FeedbackId.HpLoss, FeedbackChannel.Motion, hpShake),
+                (FeedbackId.HpLoss, FeedbackChannel.Motion, hpWobble),
                 (FeedbackId.Fall, FeedbackChannel.Motion, fall),
                 (FeedbackId.BoostStart, FeedbackChannel.Motion, boostStart),
                 (FeedbackId.BoostStart, FeedbackChannel.Flash, boostFlash),
                 (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText),
                 (FeedbackId.Stumble, FeedbackChannel.Motion, stumble),
-                (FeedbackId.ResultShow, FeedbackChannel.Motion, resultPop));
+                (FeedbackId.ResultShow, FeedbackChannel.Motion, resultPop),
+                (FeedbackId.ComboUp, FeedbackChannel.Motion, comboPop),
+                (FeedbackId.ComboBreak, FeedbackChannel.Motion, comboBreakWobble),
+                // Colour is information, not motion: it stays with Reduced Motion.
+                (FeedbackId.ComboBreak, FeedbackChannel.Text, comboBreakColor),
+                (FeedbackId.Beat, FeedbackChannel.Motion, beatPulse));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
             EditorUtility.SetDirty(view);
+        }
+
+        // Decorative ring outside the largest approach ring (268), drawn behind the judge UI.
+        static Transform EnsureBeatRing(Transform judge)
+        {
+            var existing = judge.Find(BeatRingName);
+            if (existing != null)
+                return existing;
+            var ringObject = new GameObject(BeatRingName, typeof(RectTransform));
+            var rect = (RectTransform)ringObject.transform;
+            rect.SetParent(judge, false);
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = Vector2.zero;
+            rect.SetAsFirstSibling();
+            var ring = ringObject.AddComponent<RunnerRing>();
+            ring.raycastTarget = false;
+            ring.SetDiameter(300, 2, new Color(Paper.r, Paper.g, Paper.b, 0.45f));
+            return rect;
         }
 
         // Full-screen white image, invisible until the flash feedback raises its alpha.
@@ -279,14 +341,6 @@ namespace Afterecho.Editor
             return new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1), new Keyframe(1, 0));
         }
 
-        // Decaying left-right oscillation that ends where it started.
-        static AnimationCurve ShakeCurve()
-        {
-            return new AnimationCurve(
-                new Keyframe(0, 0), new Keyframe(0.1f, 1), new Keyframe(0.3f, -0.8f), new Keyframe(0.5f, 0.55f),
-                new Keyframe(0.7f, -0.3f), new Keyframe(0.85f, 0.12f), new Keyframe(1, 0));
-        }
-
         // Damped back-and-forth that ends at rest, shaped like DOTween's punch (vibrato 3).
         static AnimationCurve PunchCurve()
         {
@@ -348,6 +402,39 @@ namespace Afterecho.Editor
             };
         }
 
+        // Uniform scale with a fast attack and a slower release, for beat pulses.
+        static MMF_Feedback Pulse(string label, float duration, float peak)
+        {
+            return new MMF_Scale
+            {
+                Label = label,
+                Mode = MMF_Scale.Modes.Absolute,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = 1,
+                RemapCurveOne = peak,
+                UniformScaling = true,
+                AnimateScaleTweenX = new MMTweenType(
+                    new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.1f, 1), new Keyframe(1, 0)), "AnimateX"),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Tints a TextMeshPro text towards color and back to its own colour.
+        static MMF_Feedback TextColorFlash(string label, float duration, Color color)
+        {
+            return new MMF_TMPColor
+            {
+                Label = label,
+                ColorMode = MMF_TMPColor.ColorModes.Interpolate,
+                Duration = duration,
+                DestinationColor = color,
+                ColorCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.15f, 1), new Keyframe(1, 0)),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
         // Raises a UI image's alpha to peakAlpha and back.
         static MMF_Feedback Flash(string label, float duration, float peakAlpha)
         {
@@ -382,26 +469,6 @@ namespace Afterecho.Editor
             };
         }
 
-        // Moves a UI element left and right around its anchored position (amplitude in canvas units).
-        static MMF_Feedback ShakeX(string label, float duration, float amplitude)
-        {
-            return new MMF_Position
-            {
-                Label = label,
-                Mode = MMF_Position.Modes.AlongCurve,
-                Space = MMF_Position.Spaces.RectTransform,
-                RelativePosition = true,
-                AnimatePositionDuration = duration,
-                AnimateX = true,
-                AnimateY = false,
-                AnimateZ = false,
-                AnimatePositionTweenX = new MMTweenType(ShakeCurve()),
-                RemapCurveZero = 0,
-                RemapCurveOne = amplitude,
-                AllowAdditivePlays = false,
-                Timing = UnscaledTiming(),
-            };
-        }
 
         static MMF_Player PlaceInstance(Transform container, string prefabName, Transform target)
         {
@@ -442,6 +509,8 @@ namespace Afterecho.Editor
                     return target.gameObject;
                 case "BoundImage":
                     return target.GetComponent<UnityEngine.UI.Image>();
+                case "TargetTMPText":
+                    return target.GetComponent<TMP_Text>();
                 default:
                     return target;
             }

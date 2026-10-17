@@ -41,6 +41,7 @@ namespace Afterecho
         float messageUntil,impactUntil,ghostAt;
         bool boosted;
         float shownHealth=-1;
+        int shownCombo=-1,nextBeat=-1,shownCount=-1;
         UnityEngine.UI.Image[] ghosts;
         float[] ghostEnd;
         UnityEngine.UI.Image[] dust;
@@ -98,6 +99,23 @@ namespace Afterecho
             to.anchorMin=from.anchorMin;to.anchorMax=from.anchorMax;to.pivot=from.pivot;to.sizeDelta=from.sizeDelta;to.anchoredPosition=from.anchoredPosition;
             trail.sprite=hpFill.sprite;trail.type=hpFill.type;trail.fillMethod=hpFill.fillMethod;trail.fillOrigin=hpFill.fillOrigin;
         }
+        // Combo grows: pop. Combo resets after at least one hit: negative feedback.
+        void ReactToCombo()
+        {
+            int value=game.Run.Combo;
+            if(shownCombo>=0&&value!=shownCombo){if(value>shownCombo)Play(FeedbackId.ComboUp);else if(value==0)Play(FeedbackId.ComboBreak);}
+            shownCombo=value;
+        }
+        // Pulses on the stage beat grid using the same song time as judgement (sync offset included).
+        // Resyncs without a burst after start, resume, seek or loop.
+        void PulseBeats()
+        {
+            var beats=game.Stage!=null?game.Stage.beats:null;
+            if(beats==null||game.Phase!=GamePhase.Playing){nextBeat=-1;return;}
+            double t=game.LogicalTime;
+            if(nextBeat<0||(nextBeat>0&&t<beats[nextBeat-1])){nextBeat=0;while(nextBeat<beats.Length&&beats[nextBeat]<=t)nextBeat++;return;}
+            if(nextBeat<beats.Length&&t>=beats[nextBeat]){Play(FeedbackId.Beat);while(nextBeat<beats.Length&&beats[nextBeat]<=t)nextBeat++;}
+        }
         // Feel's MMProgressBar moves the fill and the delayed damage trail; only real changes are pushed.
         void ShowHealth(float value)
         {
@@ -126,7 +144,7 @@ namespace Afterecho
             else if(game.Phase==GamePhase.Ready)game.BeginMain();else game.StartRun(false);
         }
         public void ResetRun()
-        {LapPosition=0;CurrentSide=0;fallUntil=-1;boosted=false;shownHealth=-1;messageUntil=0;impactUntil=0;ghostAt=0;ghostCursor=0;dustAt=0;dustCursor=0;if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);status.text="";PlaceRunner();}
+        {LapPosition=0;CurrentSide=0;fallUntil=-1;boosted=false;shownHealth=-1;shownCombo=-1;nextBeat=-1;shownCount=-1;messageUntil=0;impactUntil=0;ghostAt=0;ghostCursor=0;dustAt=0;dustCursor=0;if(dustEnd!=null)Array.Clear(dustEnd,0,dustEnd.Length);if(ghostEnd!=null)Array.Clear(ghostEnd,0,ghostEnd.Length);status.text="";PlaceRunner();}
         public void AdvanceRunner(float dt)
         {
             double speed=game.Run.Boosted?game.rules.boostSpeed:1;
@@ -194,7 +212,7 @@ namespace Afterecho
                 var guide=portrait.GetComponentInChildren<TMP_Text>();guide.fontSize=Mathf.Max(35,22/canvas.scaleFactor);
                 guide.rectTransform.sizeDelta=new Vector2(Screen.width/canvas.scaleFactor-80,220/canvas.scaleFactor);
             }
-            combo.text=$"{game.Run.Combo}<size=18>  COMBO</size>";
+            combo.text=$"{game.Run.Combo}<size=18>  COMBO</size>";ReactToCombo();PulseBeats();
             ShowHealth(game.Run.Health/(float)game.rules.maxHealth);hpText.text=$"HP  {game.Run.Health:000} / {game.rules.maxHealth}";
             hpFill.color=game.Run.Health<=25?new Color(1f,.22f,.18f):new Color(.12f,.85f,.91f);
             if(overdriveBadge!=null)overdriveBadge.gameObject.SetActive(hud&&game.Run.Boosted);
@@ -308,7 +326,8 @@ namespace Afterecho
         public void Ready()=>Overlay("리듬을 잡았나요?","미스 −10 · 헛입력 −3 · 성공 +1 HP\n4박 준비 후 노래가 처음부터 시작됩니다.","실전 시작","처음으로",false);
         public void Pause()=>Overlay("잠시 쉬어가기","음악과 원, 달리기가 함께 멈췄습니다.\n4박 준비 후 같은 위치에서 이어갑니다.","계속 달리기","처음으로",false);
         public void AudioProblem(string text)=>Overlay("음악 연결 확인",text,"다시 이어가기","처음으로",false);
-        public void Count(int value){countText.text=value==0?"LOADING":value.ToString();status.text="준비 · 원이 겹칠 때 입력";}
+        // Called every frame while preparing; the count-in beat pulses only when the number changes.
+        public void Count(int value){countText.text=value==0?"LOADING":value.ToString();status.text="준비 · 원이 겹칠 때 입력";if(value>0&&value!=shownCount)Play(FeedbackId.Beat);shownCount=value;}
         public void Result(bool won)
         {
             var r=game.Run;double accuracy=r.Hits*100d/Math.Max(1,r.Hits+r.Misses+r.Extras);
