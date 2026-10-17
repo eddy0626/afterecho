@@ -35,7 +35,7 @@ namespace Afterecho.Editor
             new PrefabSpec(BoostStartPrefab, 0.18f, 1.22f, EffectKind.SquashAndStretch),
             new PrefabSpec(FallPrefab, 0.15f, 0.8f, EffectKind.SquashAndStretch),
             // Uniform pop for PERFECT / GOOD / MISS / OFF BEAT text; shorter than the 0.17 s minimum note gap.
-            new PrefabSpec(JudgementTextPrefab, 0.12f, 1.2f, EffectKind.Scale),
+            new PrefabSpec(JudgementTextPrefab, 0.12f, 1.4f, EffectKind.Scale),
         };
 
         enum EffectKind { SquashAndStretch, Scale }
