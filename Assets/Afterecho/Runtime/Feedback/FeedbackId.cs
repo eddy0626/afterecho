@@ -10,6 +10,7 @@ namespace Afterecho.Feedback
         Fall = 3,
         BoostStart = 4,
         JudgementText = 5,
+        Stumble = 6,
     }
 
     // Reduced Motion turns off Motion and Flash but keeps Audio and Text.

@@ -17,10 +17,15 @@ var output="PlaytestExports/Runner/presentation-regressions.txt";
 double started=UnityEditor.EditorApplication.timeSinceStartup;
 double phaseStarted=started;
 int phase=0;
+int retries=0;
 bool finished=false;
 UnityEngine.GameObject probe=null;
 DG.Tweening.Tween unrelated=null;
-DG.Tweening.Tween firstPunch=null;
+// The off-beat stumble is a Feel MMF_Player bound by RunnerFeedbackInstaller.
+var stumbleObject=UnityEngine.GameObject.Find("Afterecho_RunnerCircle/Feedbacks/FB_Runner_Stumble");
+if(stumbleObject==null)
+    throw new System.InvalidOperationException("FB_Runner_Stumble is missing; run Afterecho > Runner > Install Feedbacks In Open Scene.");
+var stumble=stumbleObject.GetComponent<MoreMountains.Feedbacks.MMF_Player>();
 UnityEditor.EditorApplication.CallbackFunction tick=null;
 
 System.Action<bool,string> check=(condition,message)=>{
@@ -65,8 +70,7 @@ try
     // Sharing the old broad ID proves cleanup no longer kills unrelated feedback.
     DG.Tweening.TweenSettingsExtensions.SetId(unrelated,v);
     v.React(new Afterecho.RunEvent("extra",p:true));
-    check(activeSpriteTweens()==1,"first offbeat starts exactly one sprite tween");
-    firstPunch=DG.Tweening.DOTween.TweensByTarget(sprite,false)[0];
+    check(stumble.IsPlaying&&activeSpriteTweens()==0,"first offbeat starts the Feel stumble without a sprite tween");
     phaseStarted=UnityEditor.EditorApplication.timeSinceStartup;
 }
 catch(System.Exception ex)
@@ -84,33 +88,39 @@ tick=()=>{
         if(now-started>5)throw new System.TimeoutException("Presentation regression exceeded five seconds.");
         if(phase==0&&now-phaseStarted>=.05)
         {
-            check(DG.Tweening.TweenExtensions.IsActive(firstPunch),"second offbeat arrives while the first punch is active");
+            // A long editor frame can finish the 0.12 s stumble before this tick; retry instead of failing.
+            // (The angle is not checked here: the punch crosses zero around this time.)
+            if(!stumble.IsPlaying&&retries<3)
+            {
+                retries++;v.React(new Afterecho.RunEvent("extra",p:true));phaseStarted=now;return;
+            }
+            check(stumble.IsPlaying,"second offbeat arrives while the first stumble is active");
             v.React(new Afterecho.RunEvent("extra",p:true));
-            check(!DG.Tweening.TweenExtensions.IsActive(firstPunch),"second offbeat cancels the previous punch");
-            check(activeSpriteTweens()==1,"overlapping offbeats retain exactly one sprite tween");
+            check(stumble.IsPlaying&&neutral(),"second offbeat restarts the stumble from the rest pose");
+            check(activeSpriteTweens()==0,"overlapping offbeats create no sprite tween");
             phaseStarted=now;phase=1;
         }
         else if(phase==1&&now-phaseStarted>=.25)
         {
             check(neutral(),"overlapping offbeats return sprite rotation to zero");
-            check(activeSpriteTweens()==0,"completed offbeat leaves no active sprite tween");
+            check(!stumble.IsPlaying&&activeSpriteTweens()==0,"completed offbeat leaves no active stumble");
             v.React(new Afterecho.RunEvent("extra",p:true));
             v.StopFeedback();
-            check(neutral()&&activeSpriteTweens()==0,"feedback cleanup cancels punch and restores neutral rotation");
+            check(neutral()&&!stumble.IsPlaying,"feedback cleanup stops the stumble and restores neutral rotation");
             check(DG.Tweening.TweenExtensions.IsActive(unrelated),"feedback cleanup preserves an unrelated tween with the same view ID");
             g.StartRun(false);
             v.React(new Afterecho.RunEvent("extra",p:true));
             g.PauseGame();
-            check(g.Phase==Afterecho.GamePhase.Paused&&neutral()&&activeSpriteTweens()==0,"pause during preparation cancels punch and restores neutral rotation");
+            check(g.Phase==Afterecho.GamePhase.Paused&&neutral()&&!stumble.IsPlaying,"pause during preparation stops the stumble and restores neutral rotation");
             check(DG.Tweening.TweenExtensions.IsActive(unrelated),"pause preserves unrelated tween");
             g.reducedMotion=true;
             v.React(new Afterecho.RunEvent("extra",p:true));
-            check(activeSpriteTweens()==0,"reduced motion creates no punch tween");
+            check(!stumble.IsPlaying&&activeSpriteTweens()==0,"reduced motion does not start the stumble");
             phaseStarted=now;phase=2;
         }
         else if(phase==2&&now-phaseStarted>=.18)
         {
-            check(neutral()&&activeSpriteTweens()==0,"reduced motion keeps neutral rotation after feedback interval");
+            check(neutral()&&!stumble.IsPlaying,"reduced motion keeps neutral rotation after feedback interval");
             lines.Add("PASS all presentation regressions");
             finish();UnityEngine.Debug.Log("Runner presentation regressions passed: "+output);
         }

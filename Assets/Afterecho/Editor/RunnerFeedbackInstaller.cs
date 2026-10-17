@@ -27,6 +27,7 @@ namespace Afterecho.Editor
         const string HpShakePrefab = "FB_Runner_HpShake";
         const string BoostFlashPrefab = "FB_Runner_BoostFlash";
         const string BoostFlashName = "BoostFlash";
+        const string StumblePrefab = "FB_Runner_Stumble";
         const string HealthTrailName = "HpDelayed";
         static readonly Color HealthTrailColor = new Color(1f, 0.97f, 0.88f, 0.9f);
 
@@ -44,6 +45,8 @@ namespace Afterecho.Editor
             new PrefabSpec(HpShakePrefab, name => ShakeX(name, 0.25f, 7f)),
             // One full-screen flash per OVERDRIVE start (rare, far below 3 flashes per second).
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
+            // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
+            new PrefabSpec(StumblePrefab, name => PunchZ(name, 0.12f, -9f)),
         };
 
         // Scene-object fields the feedbacks animate; scene instances override them.
@@ -91,6 +94,7 @@ namespace Afterecho.Editor
             var judgementText = PlaceInstance(container, JudgementTextPrefab, view.status.rectTransform);
             var hpShake = PlaceInstance(container, HpShakePrefab, view.hpFill.transform.parent);
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
+            var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
 
             var player = view.GetComponent<RunnerFeedbackPlayer>();
             if (player == null)
@@ -103,7 +107,8 @@ namespace Afterecho.Editor
                 (FeedbackId.Fall, FeedbackChannel.Motion, fall),
                 (FeedbackId.BoostStart, FeedbackChannel.Motion, boostStart),
                 (FeedbackId.BoostStart, FeedbackChannel.Flash, boostFlash),
-                (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText));
+                (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText),
+                (FeedbackId.Stumble, FeedbackChannel.Motion, stumble));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -277,6 +282,14 @@ namespace Afterecho.Editor
                 new Keyframe(0.7f, -0.3f), new Keyframe(0.85f, 0.12f), new Keyframe(1, 0));
         }
 
+        // Damped back-and-forth that ends at rest, shaped like DOTween's punch (vibrato 3).
+        static AnimationCurve PunchCurve()
+        {
+            return new AnimationCurve(
+                new Keyframe(0, 0), new Keyframe(0.1f, 1), new Keyframe(0.3f, -0.67f), new Keyframe(0.5f, 0.44f),
+                new Keyframe(0.7f, -0.22f), new Keyframe(0.85f, 0.07f), new Keyframe(1, 0));
+        }
+
         static MMF_Feedback Squash(string label, float duration, float peak)
         {
             return new MMF_SquashAndStretch
@@ -304,6 +317,27 @@ namespace Afterecho.Editor
                 RemapCurveOne = peak,
                 UniformScaling = true,
                 AnimateScaleTweenX = new MMTweenType(PopCurve()),
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Rotates around local Z from the rest pose and back; Absolute mode re-applies from the
+        // initial rotation every frame, so restarts never stack angles.
+        static MMF_Feedback PunchZ(string label, float duration, float degrees)
+        {
+            return new MMF_Rotation
+            {
+                Label = label,
+                Mode = MMF_Rotation.Modes.Absolute,
+                RotationSpace = Space.Self,
+                AnimateRotationDuration = duration,
+                AnimateX = false,
+                AnimateY = false,
+                AnimateZ = true,
+                AnimateRotationTweenZ = new MMTweenType(PunchCurve(), "AnimateZ"),
+                RemapCurveZero = 0,
+                RemapCurveOne = degrees,
                 AllowAdditivePlays = false,
                 Timing = UnscaledTiming(),
             };
