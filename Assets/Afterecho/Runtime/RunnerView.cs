@@ -33,9 +33,9 @@ namespace Afterecho
         public MMProgressBar hpBar;
         [Header("Combo text growth")]
         [Tooltip("Combo at which the combo number reaches its largest size.")]
-        public int comboGrowthFullAt=50;
-        [Tooltip("Extra size of the combo number at full growth (0.6 = 160%). Combo 0 shows 100%.")]
-        public float comboGrowthMax=.6f;
+        public int comboGrowthFullAt=30;
+        [Tooltip("Extra size of the combo number at full growth (0.8 = 180%). Combo 0 shows 100%.")]
+        public float comboGrowthMax=.8f;
         public int CurrentSide {get;private set;}
         public double LapPosition {get;private set;}
         public bool Falling=>fallUntil>game.ActiveSeconds;

@@ -91,8 +91,8 @@ namespace Afterecho.Editor
         static readonly VariantSpec[] Variants =
         {
             new VariantSpec(HitPerfectPrefab, HitPrefab, 1.25f),
-            // PERFECT text pops bigger than GOOD / OVERDRIVE (1.4).
-            new VariantSpec(JudgementPerfectPrefab, JudgementTextPrefab, 1.7f),
+            // PERFECT text pops to twice its size (GOOD / OVERDRIVE: 1.4).
+            new VariantSpec(JudgementPerfectPrefab, JudgementTextPrefab, 2f),
         };
 
         [MenuItem("Afterecho/Runner/Install Feedbacks In Open Scene")]

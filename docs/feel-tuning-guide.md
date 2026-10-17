@@ -1,6 +1,6 @@
 # AFTERECHO Feel 연출 조정 가이드
 
-> **마지막 갱신:** 2026-10-17 (커밋 `cbd513e` 기준) · 대상 씬: `Stage01_RunnerCircle`
+> **마지막 갱신:** 2026-10-17 (콤보 30/180%, PERFECT 2배 반영) · 대상 씬: `Stage01_RunnerCircle`
 > 연출을 추가하거나 바꿀 때마다 이 문서도 함께 고칩니다. 아래 "현재 값"은 씬과 프리팹에서 직접 읽은 값입니다.
 
 ---
@@ -60,7 +60,7 @@
 | 고정 링 튐 | `FB_Runner_TargetPop` | `…/Judge/FixedTarget` | Scale 1.12, 0.12초 | GOOD·PERFECT 공통 |
 | 가운데 점 튐 | `FB_Runner_DotPop` | `…/Judge/CenterDot` | Scale 1.6, 0.12초 | GOOD·PERFECT 공통 |
 | 판정 글자 (GOOD, OVERDRIVE) | `FB_Runner_JudgementText` | `…/SafeArea/Judgement` | Scale 1.4, 0.12초 | |
-| 판정 글자 (PERFECT) | `FB_Runner_JudgementPerfect` | 같음 | 1.7 | `FB_Runner_JudgementText`의 Variant |
+| 판정 글자 (PERFECT) | `FB_Runner_JudgementPerfect` | 같음 | 2.0 | `FB_Runner_JudgementText`의 Variant |
 
 ### 미스 / 헛입력
 
@@ -86,7 +86,7 @@
 | 콤보 증가 튐 | 프리팹 `FB_Runner_ComboPop` → `…/SafeArea/Combo` | Scale 1.25, 0.12초 | |
 | 콤보 끊김 휘청임 | 프리팹 `FB_Runner_ComboBreakWobble` → `Combo` | Rotation 10도, 0.35초 | |
 | 콤보 끊김 빨간색 | 프리팹 `FB_Runner_ComboBreakColor` → `Combo` | `DestinationColor` `#FF382E`, 0.45초 | Text 채널이라 움직임 줄이기 때도 유지 |
-| 콤보 숫자 커지기 | `Afterecho_RunnerCircle`의 **RunnerView** → Combo text growth | `comboGrowthFullAt` 50, `comboGrowthMax` 0.6 | Feel이 아닌 코드 값이다. 50콤보에서 최대(160%)가 되고, 0이 되면 100%로 돌아간다. 씬 값이라 Apply 없이 씬만 저장하면 된다 |
+| 콤보 숫자 커지기 | `Afterecho_RunnerCircle`의 **RunnerView** → Combo text growth | `comboGrowthFullAt` 30, `comboGrowthMax` 0.8 | Feel이 아닌 코드 값이다. 콤보에 비례해 커진다: 15콤보 140%, 30콤보부터 최대 180%, 0이 되면 100%. 씬 값이라 Apply 없이 씬만 저장하면 된다 |
 
 ### 박자
 
@@ -152,3 +152,4 @@
 | 2026-10-17 | 결과 창 등장 | `50673db` |
 | 2026-10-17 | HP 좌우 흔들림 → 휘청임(회전), 고정 링·가운데 점 튐, 콤보 튐·끊김, 박자 링 | `7d7a240` |
 | 2026-10-17 | 콤보 숫자 커지기, PERFECT 글자 1.7, MISS·OFF BEAT 글자 기울기 | `cbd513e` |
+| 2026-10-17 | 콤보 숫자 50콤보 160% → 30콤보 180% (15콤보 140%), PERFECT 글자 1.7 → 2.0 | (이번 커밋) |

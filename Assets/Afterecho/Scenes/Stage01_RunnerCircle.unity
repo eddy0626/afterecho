@@ -11037,8 +11037,8 @@ MonoBehaviour:
   clearSound: {fileID: 8300000, guid: b66c203dddc56430d806276ecb085d4d, type: 3}
   feedback: {fileID: 2102856192}
   hpBar: {fileID: 360902356}
-  comboGrowthFullAt: 50
-  comboGrowthMax: 0.6
+  comboGrowthFullAt: 30
+  comboGrowthMax: 0.8
 --- !u!114 &2102856190
 MonoBehaviour:
   m_ObjectHideFlags: 0

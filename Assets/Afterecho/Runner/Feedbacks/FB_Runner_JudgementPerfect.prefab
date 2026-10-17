@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8256331537176591994, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
       propertyPath: managedReferences[8164257955459367066].RemapCurveOne
-      value: 1.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8556761398526257619, guid: b2c454c762beb894181b2ed2e03d344b, type: 3}
       propertyPath: m_Name
