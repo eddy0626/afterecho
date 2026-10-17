@@ -17,6 +17,39 @@
 
 ---
 
+## 진행 상황 (2026-10-17)
+
+브랜치 `feature/feel-feedback-layer` (로컬, 아직 push 안 함)
+
+| 단계 | 상태 | 커밋 |
+|---|---|---|
+| 0. 준비 | 일부 완료. 작업 브랜치를 만들었고, 팀 합의(8장)와 로컬 설정 변경 정리가 남음 | — |
+| 1. 피드백 계층 도입 | 완료 | `b5088b4` |
+| 2. 기존 효과 프리팹 이전 | 완료 | `12ad2f6` |
+| 3. 새 효과 추가 | 보류. 하나씩 제안하고 함께 정한 뒤 진행 | — |
+| 4. 튜닝·QA | 대기 | — |
+| 5. 정리 | 대기 (대체용 코드 `RunnerView.Feel()` 삭제 등) | — |
+
+1·2단계 검증 결과 (바꾸기 전과 비교):
+
+| 검사 | 결과 |
+|---|---|
+| Run Tests | 173/173 통과 (바꾸기 전과 같음) |
+| 연출 회귀 검사 (`Tools/Runner/presentation_regressions.cs`) | 전부 통과 |
+| 효과 최대 크기 | 판정 링 1.16, HP바 1.10, 질주 1.22, 떨어짐 0.80. 기존 값과 같음 |
+| 움직임 줄이기 | 켜면 Feel 효과가 재생되지 않고 크기도 변하지 않음. 기존과 같음 |
+| 콘솔 | 새 에러·경고 없음 |
+
+### 프리팹 효과 튜닝 방법
+
+1. `Stage01_RunnerCircle` 씬에서 Play를 누른다.
+2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/FB_Runner_Hit`을 선택한다. 나머지는 `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall`이다.
+3. 인스펙터의 MMF_Player에서 **Keep Playmode Changes**를 켜고 값을 조정한다. 각 피드백 오른쪽의 재생 버튼으로 바로 확인할 수 있다.
+4. Play를 멈추면 값이 씬에 남는다. 확정할 값이면 인스펙터 상단의 **Overrides → Apply All**로 프리팹에 반영한다.
+5. Keep Playmode Changes를 다시 끈다.
+
+효과 대상(SquashAndStretchTarget)은 씬마다 다르므로 프리팹에 반영하지 않고 씬 쪽에 둔다. 씬을 새로 만들었거나 연결이 빠졌으면 메뉴 `Afterecho > Runner > Install Feedbacks In Open Scene`으로 다시 연결한다. 이 메뉴는 이미 있는 프리팹 값을 덮어쓰지 않는다.
+
 ## 1. 현재 상태 (2026-10-17 확인)
 
 ### 1.1 프로젝트 기본 정보
@@ -222,19 +255,18 @@ void Play(FeedbackId id)
 - 로컬 변경을 정리한다. Unity가 열면서 바꾼 설정 파일과, 로컬에서만 추가된 패키지 3개(Cinemachine, Post Processing, Recorder)는 커밋하지 않고 되돌린다.
 - **완료 조건:** 합의 내용이 기록되어 있고, 작업 폴더에 남은 변경이 없다.
 
-### 1단계: 피드백 계층 도입, 화면 변화 없음 (1~2일)
+### 1단계: 피드백 계층 도입, 화면 변화 없음 (완료)
 - `IFeedback`, `FeelFeedback`, `FeedbackId`, `RunnerFeedbackPlayer`를 추가한다.
 - `RunnerView`에서 기존 `Feel()`로 만든 4개를 `RegisterFallback`으로 등록하고, `React()`와 질주 감지 부분을 `feedback.Play(id)` 호출로 바꾼다. 재시작 경로에서는 `StopAll()`을 부른다.
 - `RunnerSceneBuilder`에도 `RunnerFeedbackPlayer` 컴포넌트를 추가해서, 씬을 다시 생성해도 유지되게 한다.
 - **완료 조건:** Run Tests 173개 통과. 바꾸기 전후 Play 녹화를 비교해 차이가 없다. PR이 승인됐다.
 
-### 2단계: 기존 효과 4개를 프리팹으로 이전 (1~2일)
-- `FB_Runner_Hit`, `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall` 프리팹을 만든다. 수치는 지금 값을 그대로 옮긴다(부록 D).
-- 효과 대상(Transform)이 씬 오브젝트이므로, 둘 중 하나로 정한다.
-  - 프리팹 인스턴스를 씬에 두고 대상을 씬에서 연결한다.
-  - 등록할 때 코드로 대상을 지정한다.
-- 인스펙터에 연결한 뒤, 대체용 코드 효과가 더 이상 쓰이지 않는지 확인한다.
-- **완료 조건:** 느낌이 기존과 같다(수치 동일). 테스트를 통과한다. 씬 생성기를 다시 돌려도 연결이 유지된다.
+### 2단계: 기존 효과 4개를 프리팹으로 이전 (완료)
+- `Assets/Afterecho/Runner/Feedbacks/`에 `FB_Runner_Hit`, `FB_Runner_HpLoss`, `FB_Runner_BoostStart`, `FB_Runner_Fall` 프리팹을 만들었다. 수치는 기존 값 그대로다(부록 D).
+- 효과 대상이 씬 오브젝트라서, 프리팹 인스턴스를 씬의 `Afterecho_RunnerCircle/Feedbacks` 아래에 두고 대상은 씬 쪽 값으로 연결했다.
+- `RunnerFeedbackInstaller`가 프리팹 생성(없을 때만), 씬 배치, 바인딩 연결을 맡는다. `RunnerSceneBuilder.Build()`도 이 도구를 호출하므로, 씬을 다시 생성해도 연결이 유지된다. 다만 씬 전체를 다시 생성하는 `Build()`는 이번에 실행하지 않았다.
+- 씬 변경은 줄 추가만 있고 기존 줄은 바뀌지 않았다.
+- **완료 조건 충족:** 수치 동일, 테스트 통과, 대체용 코드 효과가 더 이상 만들어지지 않음.
 
 ### 3단계: 새 효과 추가 (2~4일, 항목마다 PR 1개)
 
