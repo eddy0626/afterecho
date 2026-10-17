@@ -42,6 +42,8 @@
 
 ### 프리팹 효과 튜닝 방법
 
+> 효과별 위치·필드·현재 값은 [Feel 연출 조정 가이드](../feel-tuning-guide.md)에 정리하고 계속 갱신한다.
+
 1. `Stage01_RunnerCircle` 씬에서 Play를 누른다.
 2. Hierarchy에서 `Afterecho_RunnerCircle/Feedbacks/` 아래의 효과를 선택한다: `FB_Runner_Hit`, `FB_Runner_HitPerfect`, `FB_Runner_TargetPop`, `FB_Runner_DotPop`, `FB_Runner_JudgementText`, `FB_Runner_HpLoss`, `FB_Runner_HpWobble`, `FB_Runner_ComboPop`, `FB_Runner_ComboBreakWobble`, `FB_Runner_ComboBreakColor`, `FB_Runner_BeatPulse`, `FB_Runner_BoostStart`, `FB_Runner_BoostFlash`, `FB_Runner_Fall`, `FB_Runner_Stumble`, `FB_Runner_ResultPop`. HP바의 늦게 따라오는 바는 `RunnerCanvas/SafeArea/Health/HpBackground`의 `MMProgressBar`에서 조정한다(`DecreasingDelay`, `LerpDecreasingDelayedBarDuration`). 박자 링의 모양(지름·두께·색)은 `SafeArea/Judge/BeatPulse`의 `RunnerRing`에서 바꾼다.
 3. 인스펙터의 MMF_Player에서 **Keep Playmode Changes**를 켜고 값을 조정한다. 각 피드백 오른쪽의 재생 버튼으로 바로 확인할 수 있다.
