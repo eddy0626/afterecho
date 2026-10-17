@@ -28,6 +28,7 @@ namespace Afterecho.Editor
         const string BoostFlashPrefab = "FB_Runner_BoostFlash";
         const string BoostFlashName = "BoostFlash";
         const string StumblePrefab = "FB_Runner_Stumble";
+        const string ResultPopPrefab = "FB_Runner_ResultPop";
         const string HealthTrailName = "HpDelayed";
         static readonly Color HealthTrailColor = new Color(1f, 0.97f, 0.88f, 0.9f);
 
@@ -47,6 +48,8 @@ namespace Afterecho.Editor
             new PrefabSpec(BoostFlashPrefab, name => Flash(name, 0.3f, 0.45f)),
             // Off-beat stumble: same as the former DOTween DOPunchRotation(0, 0, -9), 0.12 s.
             new PrefabSpec(StumblePrefab, name => PunchZ(name, 0.12f, -9f)),
+            // Result panel grows from 85% with a slight overshoot and settles at 100%.
+            new PrefabSpec(ResultPopPrefab, name => PopIn(name, 0.3f, 0.85f)),
         };
 
         // Scene-object fields the feedbacks animate; scene instances override them.
@@ -95,6 +98,7 @@ namespace Afterecho.Editor
             var hpShake = PlaceInstance(container, HpShakePrefab, view.hpFill.transform.parent);
             var boostFlash = PlaceInstance(container, BoostFlashPrefab, EnsureFlashImage(view.canvas.transform));
             var stumble = PlaceInstance(container, StumblePrefab, view.runnerImage.rectTransform);
+            var resultPop = PlaceInstance(container, ResultPopPrefab, view.overlay.transform);
 
             var player = view.GetComponent<RunnerFeedbackPlayer>();
             if (player == null)
@@ -108,7 +112,8 @@ namespace Afterecho.Editor
                 (FeedbackId.BoostStart, FeedbackChannel.Motion, boostStart),
                 (FeedbackId.BoostStart, FeedbackChannel.Flash, boostFlash),
                 (FeedbackId.JudgementText, FeedbackChannel.Motion, judgementText),
-                (FeedbackId.Stumble, FeedbackChannel.Motion, stumble));
+                (FeedbackId.Stumble, FeedbackChannel.Motion, stumble),
+                (FeedbackId.ResultShow, FeedbackChannel.Motion, resultPop));
 
             view.feedback = player;
             view.hpBar = InstallHealthBar(view.hpFill);
@@ -354,6 +359,24 @@ namespace Afterecho.Editor
                 Curve = new MMTweenType(new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.15f, 1), new Keyframe(1, 0))),
                 CurveRemapZero = 0,
                 CurveRemapOne = peakAlpha,
+                AllowAdditivePlays = false,
+                Timing = UnscaledTiming(),
+            };
+        }
+
+        // Scales a panel in from startScale to 1 with a small overshoot; ends exactly at 1.
+        static MMF_Feedback PopIn(string label, float duration, float startScale)
+        {
+            return new MMF_Scale
+            {
+                Label = label,
+                Mode = MMF_Scale.Modes.Absolute,
+                AnimateScaleDuration = duration,
+                RemapCurveZero = startScale,
+                RemapCurveOne = 1,
+                UniformScaling = true,
+                AnimateScaleTweenX = new MMTweenType(
+                    new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.6f, 1.1f), new Keyframe(1, 1)), "AnimateX"),
                 AllowAdditivePlays = false,
                 Timing = UnscaledTiming(),
             };

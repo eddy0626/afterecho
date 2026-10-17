@@ -313,6 +313,7 @@ namespace Afterecho
         {
             var r=game.Run;double accuracy=r.Hits*100d/Math.Max(1,r.Hits+r.Misses+r.Extras);
             Overlay(won?"끝까지 달렸다!":"다시, 리듬을 잡아봐요",$"점수 {r.Score:N0}    정확도 {accuracy:0.0}%\n최고 콤보 {r.Best}    미스 {r.Misses}    헛입력 {r.Extras}","다시 달리기","처음으로",false);
+            Play(FeedbackId.ResultShow);
         }
         void OnDisable(){if(judge!=null)StopFeedback();}
     }
