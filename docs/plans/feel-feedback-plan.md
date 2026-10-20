@@ -19,7 +19,7 @@
 
 ## 진행 상황 (2026-10-17)
 
-브랜치 `feature/feel-feedback-layer` (로컬, 아직 push 안 함)
+브랜치 `feature/minkyun-feel-feedback` → `feature/runner-circle`에 병합 (2026-10-20)
 
 | 단계 | 상태 | 커밋 |
 |---|---|---|
@@ -257,7 +257,7 @@ void Play(FeedbackId id)
 
 ### 0단계: 준비 (0.5일)
 - 이 문서를 팀이 리뷰하고, 8장의 결정 사항에 합의한다.
-- 작업 브랜치를 만든다: `feature/feel-feedback-layer` (기준 브랜치는 D2에 따름)
+- 작업 브랜치를 만든다: `feature/minkyun-feel-feedback` (기준 브랜치는 D2에 따름)
 - 로컬 변경을 정리한다. Unity가 열면서 바꾼 설정 파일과, 로컬에서만 추가된 패키지 3개(Cinemachine, Post Processing, Recorder)는 커밋하지 않고 되돌린다.
 - **완료 조건:** 합의 내용이 기록되어 있고, 작업 폴더에 남은 변경이 없다.
 
